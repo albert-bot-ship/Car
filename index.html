@@ -2,9 +2,16 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0c1119">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RAV4×CR-V">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACMklEQVR42u3csU1DQRREUYwcOjESgV2BCamDjggICOjIdRDiCpwgUQMNILTir9g3+8+JESB09WadsNntDzfwk1t/AsSBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA8SBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA3GAOBAH4kAciINatim/6OPzdfk3eX87tnzZy9PH8p/1en5o+bLL/d3yn3X6/HI5MCvORoGz4XIgDmaNw6YM2RSXA3EgDtYVhwfHqAeHy4E4mC8OmzJwU1wOxMFkcdiUsZviciAOZorDpgzfFJcDcSCOP2xKF42b0sW/bUrROLo8OBp1eXA06vLgcDkQB+LwITbuQ6zLgTiYIw6bUmdTXA7EQXocNqXUprgciIPoOGxKtU1xORAH4mDCODw4Cj44XA7EQWgcNqXmprgciIPEOGxK2U1xORAHcXHYlMqb4nIgDsTBJHF4cBR/cLgciIOgOGxK/U1xORAHKXHYlIhNcTkQBxFx2JSUTXE5EAcricO/Jp4zDv+a2OVAHIjDh9gVfoh1ORAHxeOwKXGb4nIgDsrGYVMSN8XlQBzUjMOmhG6Ky4E4EAdJcXhw5D44XA7EQbU4bEr0prgc/Gaz2x/8FXA5EAfiQByIA3EgDsSBOBAHiANxIA7EgTgQB+JAHIgDcYA4EAfiQByIA3EgDsSBOBAH4gBxIA7EgTgQB+JAHIgDcSAOEAfiQByIA3FQyDce5vTVm2TwDAAAAABJRU5ErkJggg==">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 40'%3E%3Crect width='66' height='40' fill='%230c1119'/%3E%3Cpolygon points='0,40 14,0 26,0 12,40' fill='%233d8bff'/%3E%3Cpolygon points='20,40 34,0 46,0 32,40' fill='%238a5cf0'/%3E%3Cpolygon points='40,40 54,0 66,0 52,40' fill='%23e4262b'/%3E%3C/svg%3E">
 <title>RAV4 × CR-V 規格對照</title>
 <style>
 :root{
@@ -168,6 +175,169 @@ details ul{margin:0;padding:0 .875rem .75rem 2.125rem;font-size:.84375rem;color:
 details li{margin:.25rem 0;line-height:1.55}
 details a{color:#7db3ff;word-break:break-all}
 
+
+/* ===== 手機版（640 px 以下：iPhone 直向） ===== */
+.m-top,.m-bar,#mobile,.m-only,.m-only-li{display:none}
+.m-sheet-root{position:fixed;inset:0;z-index:60}
+.m-scrim{position:absolute;inset:0;background:#000;opacity:0;touch-action:none}
+.m-sheet{position:absolute;left:0;right:0;bottom:0;max-height:min(88dvh,52rem);display:flex;flex-direction:column;
+  background:rgba(26,36,54,.9);
+  -webkit-backdrop-filter:blur(calc(var(--p,0) * 1.5rem)) saturate(180%);backdrop-filter:blur(calc(var(--p,0) * 1.5rem)) saturate(180%);
+  border-radius:1.25rem 1.25rem 0 0;border-top:1px solid rgba(255,255,255,.1);
+  padding-bottom:env(safe-area-inset-bottom);will-change:transform;transform:translate3d(0,100%,0)}
+.m-sheet-head{flex:none;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+.m-grab{display:block;width:2.25rem;height:.3125rem;border-radius:.1875rem;background:rgba(255,255,255,.3);margin:.5rem auto .125rem}
+.m-sheet-bar{display:flex;align-items:center;justify-content:space-between;padding:.125rem max(1rem,env(safe-area-inset-right)) .25rem max(1rem,env(safe-area-inset-left))}
+.m-sheet-bar h2{font-size:1.0625rem;font-weight:700;letter-spacing:-.01em}
+.m-close{min-height:2.75rem;min-width:3.5rem;padding:0 .5rem;border:0;background:transparent;color:#7db3ff;font-size:1rem;font-weight:600;border-radius:.625rem}
+.m-sheet-body{overflow:auto;overscroll-behavior:contain;touch-action:pan-y;padding:0 max(.75rem,env(safe-area-inset-right)) .75rem max(.75rem,env(safe-area-inset-left));-webkit-overflow-scrolling:touch}
+.m-sheet.fit .m-sheet-body{touch-action:none}
+.m-grp-t{font-size:.8125rem;font-weight:700;color:var(--mute);letter-spacing:.01em;padding:.5rem .25rem .25rem}
+.m-opt{display:flex;align-items:center;gap:.75rem;width:100%;min-height:3.25rem;margin:0 0 .5rem;padding:.5rem .875rem .5rem .625rem;
+  border:1px solid var(--line);border-radius:.75rem;background:var(--panel2);text-align:left;font-size:1rem}
+.m-opt .o-bar{flex:none;width:.25rem;align-self:stretch;border-radius:.125rem;background:var(--line)}
+.m-opt.r .o-bar{background:var(--red)}
+.m-opt.c .o-bar{background:var(--blue)}
+.m-opt .o-main{flex:1;min-width:0;display:flex;flex-direction:column}
+.m-opt .o-n{font-weight:600}
+.m-opt .o-s{font-size:.75rem;color:var(--mute);letter-spacing:.01em}
+.m-opt .o-p{color:var(--mute);font-size:.875rem;font-variant-numeric:tabular-nums}
+.m-opt .o-ck{flex:none;width:1.25rem;height:1.25rem}
+.m-opt.on{border-color:var(--violet);background:rgba(138,92,240,.2)}
+.m-opt.on .o-ck{background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b79cff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E")}
+html.m-lock,html.m-lock body{overflow:hidden}
+
+@media (max-width:40em){
+  :root{--m-top-h:7.5rem;--m-bar-h:4rem}
+  html{scroll-padding-top:calc(var(--m-top-h) + .5rem)}
+  body{touch-action:manipulation;-webkit-touch-callout:none}
+  .top,.topnav,.skip,#quick,#full,#adv{display:none!important}
+  #mobile,.m-only{display:block}
+  .m-top{display:block}
+  .m-only-li{display:list-item}
+  .wrap{padding-left:max(1rem,env(safe-area-inset-left));padding-right:max(1rem,env(safe-area-inset-right))}
+  #intro,#notesWrap,#m-compare,#m-adv{display:none}
+  body[data-tab="intro"] #intro,body[data-tab="notes"] #notesWrap,body[data-tab="compare"] #m-compare,body[data-tab="adv"] #m-adv{display:block}
+  body[data-tab="compare"] .m-bar,body[data-tab="adv"] .m-bar{display:flex}
+  #intro{padding-top:1rem}
+  .m-notes-h{margin:1.25rem 0 .75rem}
+  main.wrap{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom))}
+  summary{display:flex;align-items:center;min-height:2.75rem}
+  details a{display:inline-block;padding:.25rem 0}
+
+  /* 頂部固定列：半透明材質，避開動態島 */
+  .m-top{position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top);
+    background:rgba(12,17,25,.78);-webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
+    border-bottom:1px solid rgba(255,255,255,.06)}
+  .m-tabs{display:flex;gap:.5rem;padding:.375rem max(.5rem,env(safe-area-inset-right)) .375rem max(.5rem,env(safe-area-inset-left))}
+  .m-tab{flex:1;min-width:0;min-height:2.75rem;border:0;border-radius:.625rem;background:transparent;color:var(--mute);font-size:.9375rem;font-weight:600;letter-spacing:.01em;
+    transition:background-color .1s ease-out,color .1s ease-out,transform .1s ease-out;-webkit-tap-highlight-color:transparent}
+  .m-tab[aria-selected="true"]{background:var(--panel2);color:var(--text)}
+  .m-tab:active{transform:scale(.97)}
+  .m-pair{display:none;grid-template-columns:1fr 1fr;gap:.5rem;padding:0 max(.75rem,env(safe-area-inset-right)) .5rem max(.75rem,env(safe-area-inset-left))}
+  body[data-tab="compare"] .m-pair,body[data-tab="adv"] .m-pair{display:grid}
+  .m-pcell{min-width:0;min-height:2.75rem;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:.3125rem .625rem;
+    border:0;border-top:.1875rem solid var(--line);border-radius:.5rem;background:var(--panel);
+    transition:transform .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+  .m-pcell.r{border-top-color:var(--red)}
+  .m-pcell.c{border-top-color:var(--blue)}
+  .m-pcell:active{transform:scale(.97);background:var(--panel2)}
+  .p-b{font-size:.6875rem;font-weight:800;letter-spacing:.01em}
+  .m-pcell.r .p-b{color:#ff6b6f}
+  .m-pcell.c .p-b{color:#7db3ff}
+  .p-n{font-size:1rem;font-weight:700;line-height:1.25;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .p-p{font-size:.75rem;color:var(--mute);font-variant-numeric:tabular-nums}
+
+  /* 內容 */
+  .m-panel{padding:.75rem max(1rem,env(safe-area-inset-right)) calc(var(--m-bar-h) + 1rem) max(1rem,env(safe-area-inset-left))}
+  .m-hero h1{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+  .m-hero p{color:var(--mute);font-size:.8125rem;margin-top:.375rem}
+  .m-kcs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.875rem 0 .5rem}
+  .m-kc{min-width:0;background:var(--panel);border:1px solid var(--line);border-top:.1875rem solid var(--line);border-radius:.75rem;padding:.625rem .75rem}
+  .m-kc.r{border-top-color:var(--red)}
+  .m-kc.c{border-top-color:var(--blue)}
+  .k-b{font-size:.75rem;font-weight:800}
+  .m-kc.r .k-b{color:#ff6b6f}
+  .m-kc.c .k-b{color:#7db3ff}
+  .k-n{font-size:1rem;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+  .k-p{font-size:1.75rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15;margin:.125rem 0 .375rem}
+  .k-p small{font-size:.8125rem;font-weight:500;letter-spacing:0;color:var(--mute)}
+  .m-kc dl{margin:0;display:grid;gap:.375rem}
+  .m-kc dl div{border-top:1px solid var(--line);padding-top:.25rem}
+  .m-kc dt{font-size:.75rem;color:var(--mute);letter-spacing:.01em}
+  .m-kc dd{margin:0;font-size:.9375rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+  .m-gap{font-size:.875rem;margin:.25rem 0 .25rem}
+  .m-gap b{color:var(--violet-text);font-size:1rem}
+  .m-jump{display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;
+    margin:.5rem calc(-1 * max(1rem,env(safe-area-inset-left))) .25rem calc(-1 * max(1rem,env(safe-area-inset-left)));
+    padding:.25rem max(1rem,env(safe-area-inset-left)) .25rem}
+  .m-jump::-webkit-scrollbar{display:none}
+  .m-chip{flex:none;scroll-snap-align:start;min-height:2.75rem;padding:0 .875rem;border:1px solid var(--line);border-radius:1.375rem;background:var(--panel2);font-size:.875rem;
+    transition:transform .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+  .m-chip:active{transform:scale(.97);background:var(--line)}
+  .m-stat{color:var(--mute);font-size:.8125rem;margin:.25rem 0 .625rem}
+  .m-empty{padding:1.25rem;color:var(--mute);text-align:center}
+  .m-card{margin:0 0 .75rem;padding:0;background:var(--panel);border:1px solid var(--line);border-radius:.75rem;scroll-margin-top:calc(var(--m-top-h) + 3.25rem)}
+  .m-cath{margin:0;position:sticky;top:var(--m-top-h);z-index:5}
+  .m-cat{width:100%;min-height:2.75rem;display:flex;align-items:center;gap:.5rem;padding:0 .875rem;
+    background:var(--glass);-webkit-backdrop-filter:blur(.875rem) saturate(160%);backdrop-filter:blur(.875rem) saturate(160%);
+    border:0;border-bottom:1px solid var(--line);border-radius:.75rem .75rem 0 0;font-size:1rem;font-weight:700;letter-spacing:-.005em;text-align:left;
+    transition:background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+  .m-cat[aria-expanded="false"]{border-bottom:0;border-radius:.75rem}
+  .m-cat:active{background:var(--line)}
+  .m-cat-t{flex:1;min-width:0}
+  .m-cat-n{font-size:.75rem;font-weight:400;color:var(--mute);letter-spacing:.01em}
+  .m-chev{flex:none;width:.5625rem;height:.5625rem;border-right:.125rem solid var(--mute);border-bottom:.125rem solid var(--mute);transform:rotate(45deg) translate(-.0625rem,-.0625rem)}
+  .m-cat[aria-expanded="false"] .m-chev{transform:rotate(-45deg)}
+  .m-row{padding:.625rem .875rem .75rem;border-bottom:1px solid var(--line)}
+  .m-row:last-child{border-bottom:0}
+  .m-lab{font-size:.8125rem;font-weight:600;color:#cbd5ea;margin-bottom:.375rem;letter-spacing:.01em;line-height:1.4}
+  .m-row.d .m-lab::before{content:"";display:inline-block;width:.375rem;height:.375rem;border-radius:50%;background:var(--violet);margin-right:.375rem;vertical-align:.0625rem}
+  .m-vals{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+  .m-val{min-width:0;background:var(--panel2);border-left:.1875rem solid var(--line);border-radius:.5rem;padding:.4375rem .625rem;font-size:.9375rem;line-height:1.4;overflow-wrap:anywhere}
+  .m-val.r{border-left-color:var(--red)}
+  .m-val.c{border-left-color:var(--blue)}
+  .m-val.hi{background:var(--diff)}
+
+  /* 底部固定操作列：拇指區，避開 Home 指示條 */
+  .m-bar{position:fixed;left:0;right:0;bottom:0;z-index:40;gap:.5rem;align-items:stretch;
+    padding:.5rem max(.75rem,env(safe-area-inset-right)) calc(.5rem + env(safe-area-inset-bottom)) max(.75rem,env(safe-area-inset-left));
+    background:rgba(12,17,25,.78);-webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
+    border-top:1px solid rgba(255,255,255,.08)}
+  .m-side{flex:1;min-width:0;min-height:2.75rem;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;
+    padding:.25rem .625rem;border:1px solid var(--line);border-radius:.75rem;background:var(--panel2);
+    transition:transform .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+  .m-side .s-b{display:flex;align-items:center;gap:.3125rem;font-size:.6875rem;font-weight:700;color:var(--mute);letter-spacing:.01em;line-height:1.2}
+  .m-side .dot{width:.4375rem;height:.4375rem;border-radius:50%;background:var(--line)}
+  .m-side.r .dot{background:var(--red)}
+  .m-side.c .dot{background:var(--blue)}
+  .m-side .s-n{max-width:100%;font-size:.9375rem;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .m-swap{flex:none;width:2.75rem;min-height:2.75rem;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:.75rem;background:var(--panel2);color:var(--text);
+    transition:transform .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+  .m-diff{flex:none;min-width:4.25rem;min-height:2.75rem;padding:0 .625rem;border:1px solid var(--line);border-radius:.75rem;background:var(--panel2);font-size:.8125rem;font-weight:600;line-height:1.25;
+    transition:transform .1s ease-out,background-color .1s ease-out,border-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+  .m-diff[aria-pressed="true"]{background:rgba(138,92,240,.35);border-color:var(--violet)}
+  .m-side:active,.m-swap:active,.m-diff:active,.m-opt:active,.m-close:active{transform:scale(.97);background:var(--line)}
+  .m-opt,.m-close{-webkit-tap-highlight-color:transparent;transition:transform .1s ease-out,background-color .1s ease-out}
+}
+@media (prefers-reduced-motion:reduce){
+  .m-tab:active,.m-pcell:active,.m-chip:active,.m-side:active,.m-swap:active,.m-diff:active,.m-opt:active,.m-close:active{transform:none;opacity:.7}
+}
+@media (prefers-reduced-transparency:reduce){
+  .m-top,.m-bar{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .m-cat{background:var(--panel2);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .m-sheet{background:var(--panel2);-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+@media (prefers-contrast:more){
+  .m-top,.m-bar{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .m-cat{background:var(--panel2);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .m-sheet{background:var(--panel2);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .m-side,.m-swap,.m-diff,.m-opt,.m-chip,.m-pcell{border-width:.125rem;border-style:solid;border-color:var(--line)}
+}
+@media (forced-colors:active){
+  .m-tab[aria-selected="true"],.m-opt.on,.m-diff[aria-pressed="true"]{outline:.125rem solid Highlight}
+}
+
 /* 說明 */
 .notes{margin:.5rem 0 2.5rem;padding:1rem 1.125rem 1rem 2.125rem;background:var(--panel);border:1px solid var(--line);border-radius:.625rem;color:var(--mute);font-size:.8125rem}
 .notes li{margin:.3125rem 0;line-height:1.55}
@@ -219,7 +389,7 @@ details a{color:#7db3ff;word-break:break-all}
 }
 </style>
 </head>
-<body>
+<body data-tab="compare">
 <a class="skip" href="#quick">跳到主要內容</a>
 
 <header class="top">
@@ -237,6 +407,21 @@ details a{color:#7db3ff;word-break:break-all}
 </header>
 
 <nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#adv">ADVENTURE 與 GR SPORT</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a></div></nav>
+
+<header class="m-top" id="mTop">
+  <div class="m-tabs" role="tablist" aria-label="頁面分頁">
+    <button type="button" class="m-tab" role="tab" id="tab-compare" aria-selected="true" aria-controls="m-compare" data-tab="compare">對照</button>
+    <button type="button" class="m-tab" role="tab" id="tab-adv" aria-selected="false" aria-controls="m-adv" data-tab="adv" tabindex="-1">ADV／GR</button>
+    <button type="button" class="m-tab" role="tab" id="tab-intro" aria-selected="false" aria-controls="intro" data-tab="intro" tabindex="-1">介紹</button>
+    <button type="button" class="m-tab" role="tab" id="tab-notes" aria-selected="false" aria-controls="notesWrap" data-tab="notes" tabindex="-1">說明</button>
+  </div>
+  <div class="m-pair" id="mPair"></div>
+</header>
+
+<div id="mobile">
+  <section class="m-panel" id="m-compare" role="tabpanel" aria-labelledby="tab-compare"></section>
+  <section class="m-panel" id="m-adv" role="tabpanel" aria-labelledby="tab-adv"></section>
+</div>
 
 <main class="wrap">
 
@@ -293,7 +478,7 @@ details a{color:#7db3ff;word-break:break-all}
   <div class="tw full" id="btable" tabindex="0" role="region" aria-label="ADVENTURE 與 GR SPORT 對照表，可上下左右捲動"></div>
 </section>
 
-<section id="intro">
+<section id="intro" role="tabpanel" aria-labelledby="tab-intro">
   <h2>官網介紹內容</h2>
   <p class="lead">兩家官網介紹頁與兩份型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入上方對照表。</p>
   <div class="info">
@@ -570,7 +755,11 @@ details a{color:#7db3ff;word-break:break-all}
   </div>
 </section>
 
+<div id="notesWrap" role="tabpanel" aria-labelledby="tab-notes">
+<h2 class="m-only m-notes-h">資料說明</h2>
 <ul class="notes" id="notes">
+  <li class="m-only-li"><b>手機版：</b>螢幕寬度 640 px 以下（例如 iPhone 直向）會自動切換為卡片式手機版；橫向或平板仍使用電腦版面。</li>
+  <li class="m-only-li"><b>加入主畫面：</b>用 Safari 開啟後，點下方的分享鈕，選「加入主畫面」，之後會以全螢幕 App 樣式開啟；頂部與底部會依動態島與 Home 指示條自動留白。iPhone 是否採用內嵌圖示由系統決定，若沒有顯示，會改用頁面截圖當圖示。</li>
   <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）、RAV4 介紹頁（toyota.com.tw/showroom/RAV4/#hybrid）與 RAV4 電子型錄 PDF（日本進口，2026 年 6 月）；Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）與 Honda CR-V 型錄 PDF（封底印製日期 2025.06），皆於 2026/09/20 讀取。價格為官網建議售價，ADVENTURE 與 GR SPORT 的價格取自 Toyota 官網車款清單。</li>
   <li><b>官網未列：</b>表示該官網頁面沒有這一項，不代表車輛沒有此配備。</li>
   <li><b>差異標色：</b>依官網文字逐項比對，不做語意判斷，同一功能在兩家的寫法不同時會被標為差異；官網未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI）已在項目名稱並列。</li>
@@ -580,8 +769,29 @@ details a{color:#7db3ff;word-break:break-all}
   <li><b>車色：</b>RAV4 各車系的車色來自型錄；CR-V 型錄沒有註明各等級可選哪些顏色，表內四款列同一組 5 色，實際各等級可選的顏色以原廠為準。</li>
   <li><b>PHEV 駕駛模式：</b>官網完整規配頁與型錄的寫法不同（官網有 EV，型錄沒有，但另列 EV/HV 模式切換鈕），表內並列兩個來源，這裡沒有判定哪個正確。</li>
 </ul>
+</div>
 
 </main>
+
+<div class="m-bar" id="mBar" role="toolbar" aria-label="比較操作">
+  <button type="button" class="m-side" id="mBtnL" data-side="l" aria-haspopup="dialog"></button>
+  <button type="button" class="m-swap" id="mSwap" aria-label="交換左右兩款">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h14M14 4l4 4-4 4"/><path d="M20 16H6M10 12l-4 4 4 4"/></svg>
+  </button>
+  <button type="button" class="m-side" id="mBtnR" data-side="r" aria-haspopup="dialog"></button>
+  <button type="button" class="m-diff" id="mDiff" aria-pressed="false">只看差異</button>
+</div>
+
+<div class="m-sheet-root" id="mSheetRoot" hidden>
+  <div class="m-scrim" id="mScrim"></div>
+  <div class="m-sheet" id="mSheet" role="dialog" aria-modal="true" aria-labelledby="mSheetTitle">
+    <div class="m-sheet-head" id="mSheetHead">
+      <span class="m-grab" aria-hidden="true"></span>
+      <div class="m-sheet-bar"><h2 id="mSheetTitle">選擇車款</h2><button type="button" class="m-close" id="mClose">完成</button></div>
+    </div>
+    <div class="m-sheet-body" id="mSheetBody"><div id="mSheetList" role="radiogroup" aria-labelledby="mSheetTitle"></div></div>
+  </div>
+</div>
 
 <script>
 /* ===== 資料 ===== */
@@ -1010,6 +1220,356 @@ document.addEventListener('touchstart',function(){},{passive:true});
     });
   },{rootMargin:'-30% 0px -60% 0px'});
   Object.keys(links).forEach(function(k){var el=document.getElementById(k); if(el) io.observe(el);});
+})();
+
+/* ===== 手機版（iPhone 直向，640 px 以下）===== */
+(function(){
+  if(!window.matchMedia) return;
+  var mq=window.matchMedia('(max-width: 40em)');
+  var rmq=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var inited=false;
+  var M={tab:'compare',scroll:{},
+    compare:{l:'r1',r:'c1',diff:false,collapsed:{},cols:[],filter:hasMain,
+      kpi:['動力型式','平均油耗 (km/L)','能源效率等級','空車重 (kg)'],
+      hero:['RAV4 × CR-V 規格對照','兩家官網與原廠型錄，2026/09/20 讀取']},
+    adv:{l:'a1',r:'a2',diff:false,collapsed:{},cols:[],filter:hasBlk,
+      kpi:['動力型式','平均油耗 (km/L)','最大綜效馬力 (ps)','空車重 (kg)'],
+      hero:['RAV4 ADVENTURE 與 GR SPORT','與旗艦（參考）一起比較；價格取自官網車款清單']}
+  };
+
+  /* ---------- 資料欄位 ---------- */
+  function buildCols(){
+    M.compare.cols=TRIMS.map(function(t,i){
+      return {id:t.id,b:t.b,brand:t.brand,name:t.name,price:PRICE.v[i],get:function(r){return r.v[i];}};
+    });
+    M.adv.cols=[{id:'a1',k:1,name:'ADVENTURE 4WD'},{id:'a2',k:2,name:'GR SPORT 4WD'},{id:'a0',k:0,name:'旗艦（參考）'}].map(function(c){
+      return {id:c.id,b:'r',brand:'RAV4',name:c.name,price:PRICE.blk[c.k],get:function(r){return r.blk[c.k];}};
+    });
+  }
+  function colById(tab,id){var a=M[tab].cols;for(var i=0;i<a.length;i++){if(a[i].id===id)return a[i];}return a[0];}
+  function isPanelTab(){return M.tab==='compare'||M.tab==='adv';}
+
+  /* ---------- 繪製 ---------- */
+  function panelHTML(tab){
+    var S=M[tab],L=colById(tab,S.l),R=colById(tab,S.r),cols=[L,R];
+    var kc=cols.map(function(c){
+      return '<div class="m-kc '+c.b+'"><div class="k-b">'+c.brand+'</div><div class="k-n">'+esc(c.name)+'</div>'+
+        '<div class="k-p">'+c.price+'<small> 萬</small></div><dl>'+
+        S.kpi.map(function(k){return '<div><dt>'+esc(k)+'</dt><dd>'+fmt(c.get(ROW[k]))+'</dd></div>';}).join('')+'</dl></div>';
+    }).join('');
+    var pl=parseFloat(L.price),pr=parseFloat(R.price),gap='';
+    if(!isNaN(pl)&&!isNaN(pr)){
+      gap=pl===pr?'兩款售價相同。':'售價差 <b>'+Math.abs(pl-pr).toFixed(1)+' 萬</b>（'+(pl>pr?esc(L.brand+' '+L.name):esc(R.brand+' '+R.name))+' 較高）';
+    }
+    var total=0,diffs=0,cards='',chips='';
+    DATA.forEach(function(cat,ci){
+      var rows=cat.rows.filter(S.filter).map(function(r){return {r:r,a:analyze(cols.map(function(c){return c.get(r);}))};});
+      if(!rows.length) return;
+      var d=rows.filter(function(x){return x.a.diff;}).length;
+      total+=rows.length;diffs+=d;
+      var list=S.diff?rows.filter(function(x){return x.a.diff;}):rows;
+      if(!list.length) return;
+      var closed=!!S.collapsed[ci],id='mc-'+tab+'-'+ci;
+      chips+='<button type="button" class="m-chip" data-target="'+id+'">'+esc(cat.name)+'</button>';
+      cards+='<section class="m-card" id="'+id+'"><h2 class="m-cath"><button type="button" class="m-cat" data-tab="'+tab+'" data-ci="'+ci+'" aria-expanded="'+(!closed)+'">'+
+        '<span class="m-cat-t">'+esc(cat.name)+'</span><span class="m-cat-n">差異 '+d+'／'+rows.length+'</span><span class="m-chev" aria-hidden="true"></span></button></h2>';
+      if(!closed){
+        cards+='<div class="m-rows">';
+        list.forEach(function(x){
+          cards+='<div class="m-row'+(x.a.diff?' d':'')+'"><div class="m-lab">'+esc(x.r.label)+'</div><div class="m-vals">'+
+            cols.map(function(c,k){return '<div class="m-val '+c.b+(x.a.hi[k]?' hi':'')+'">'+fmt(c.get(x.r))+'</div>';}).join('')+'</div></div>';
+        });
+        cards+='</div>';
+      }
+      cards+='</section>';
+    });
+    if(!cards) cards='<p class="m-empty">這兩款的所有項目內容都相同。</p>';
+    return '<div class="m-hero"><h1>'+esc(S.hero[0])+'</h1><p>'+esc(S.hero[1])+'</p></div>'+
+      '<div class="m-kcs">'+kc+'</div><p class="m-gap" aria-live="polite">'+gap+'</p>'+
+      '<div class="m-jump" aria-label="跳到分類">'+chips+'</div>'+
+      '<p class="m-stat" aria-live="polite">共 '+total+' 項，其中 '+diffs+' 項有差異'+(S.diff?'（目前只顯示差異）':'')+'</p>'+cards;
+  }
+  function renderPanel(tab){var el=document.getElementById('m-'+tab);if(el)el.innerHTML=panelHTML(tab);}
+  function renderPair(){
+    var el=document.getElementById('mPair');
+    if(!isPanelTab()){el.innerHTML='';return;}
+    var S=M[M.tab];
+    el.innerHTML=[['l',colById(M.tab,S.l)],['r',colById(M.tab,S.r)]].map(function(x){
+      var c=x[1];
+      return '<button type="button" class="m-pcell '+c.b+'" data-side="'+x[0]+'" aria-haspopup="dialog" aria-label="'+(x[0]==='l'?'左':'右')+'側車款：'+esc(c.brand+' '+c.name)+'，點按更換">'+
+        '<span class="p-b">'+c.brand+'</span><span class="p-n">'+esc(c.name)+'</span><span class="p-p">'+c.price+' 萬</span></button>';
+    }).join('');
+  }
+  function renderBar(){
+    if(!isPanelTab()) return;
+    var S=M[M.tab];
+    [['mBtnL','l'],['mBtnR','r']].forEach(function(x){
+      var c=colById(M.tab,S[x[1]]),b=document.getElementById(x[0]);
+      b.className='m-side '+c.b;
+      b.setAttribute('aria-label',(x[1]==='l'?'左':'右')+'側車款：'+c.brand+' '+c.name+'，點按更換');
+      b.innerHTML='<span class="s-b"><i class="dot"></i>'+(x[1]==='l'?'左':'右')+' · '+c.brand+'</span><span class="s-n">'+esc(c.name)+'</span>';
+    });
+    var d=document.getElementById('mDiff');
+    d.setAttribute('aria-pressed',S.diff?'true':'false');
+  }
+  function renderAll(){
+    var y=window.scrollY;
+    renderPanel(M.tab);renderPair();renderBar();updateVars();
+    window.scrollTo(0,y);
+  }
+  function updateVars(){
+    var top=document.getElementById('mTop'),bar=document.getElementById('mBar'),st=document.documentElement.style;
+    st.setProperty('--m-top-h',top.offsetHeight+'px');
+    if(bar.offsetHeight) st.setProperty('--m-bar-h',bar.offsetHeight+'px');
+  }
+
+  /* ---------- 分頁 ---------- */
+  function setTab(t){
+    if(t===M.tab) return;
+    M.scroll[M.tab]=window.scrollY;
+    M.tab=t;
+    document.body.setAttribute('data-tab',t);
+    Array.prototype.forEach.call(document.querySelectorAll('.m-tab'),function(b){
+      var on=b.getAttribute('data-tab')===t;
+      b.setAttribute('aria-selected',on?'true':'false');
+      b.tabIndex=on?0:-1;
+    });
+    renderPair();renderBar();updateVars();
+    window.scrollTo(0,M.scroll[t]||0);
+  }
+
+  /* ---------- 選擇車款與交換 ---------- */
+  function choose(id){
+    var S=M[M.tab],side=SH.side;
+    if(side==='l'){if(id===S.r)S.r=S.l;S.l=id;}
+    else{if(id===S.l)S.l=S.r;S.r=id;}
+    renderAll();
+    closeSheet();
+  }
+  function swapSides(){var S=M[M.tab],t=S.l;S.l=S.r;S.r=t;renderAll();}
+
+  /* ---------- 彈簧與手勢工具（apple-design） ---------- */
+  // 動量投射：依放開時的速度，推算慣性停下的位置
+  function project(v,rate){rate=rate||0.998;return (v/1000)*rate/(1-rate);}
+  // 邊界橡皮筋：越過邊界越用力才移動一點
+  function rubberband(over,dim,c){c=c||0.55;return (over*dim*c)/(dim+c*Math.abs(over));}
+
+  var SH={open:false,side:'l',H:0,y:0,v:0,k:0,c:0,target:0,raf:0,last:0,trigger:null,fit:false,
+          drag:null,pending:null,hist:[]};
+  var rootEl,sheetEl,scrimEl,listEl,bodyEl,titleEl;
+
+  function setY(y){
+    SH.y=y;
+    sheetEl.style.transform='translate3d(0,'+y+'px,0)';
+    var p=SH.H?Math.max(0,Math.min(1,1-y/SH.H)):0;
+    scrimEl.style.opacity=(0.55*p).toFixed(3);
+    sheetEl.style.setProperty('--p',p.toFixed(3));
+  }
+  // 以「回應時間」與「阻尼比」驅動彈簧：從目前位置與目前速度出發，可隨時被改向
+  function springTo(target,damping,response,v0){
+    if(rmq.matches){
+      cancelAnimationFrame(SH.raf);SH.raf=0;SH.v=0;SH.target=target;
+      setY(target);settle();return;
+    }
+    var w=2*Math.PI/response;
+    SH.k=w*w;SH.c=2*damping*w;SH.target=target;
+    if(typeof v0==='number') SH.v=v0;
+    if(!SH.raf){SH.last=performance.now();SH.raf=requestAnimationFrame(tick);}
+  }
+  function tick(t){
+    var dt=Math.min((t-SH.last)/1000,0.032);SH.last=t;
+    var n=Math.max(1,Math.ceil(dt/0.004)),h=dt/n;
+    for(var i=0;i<n;i++){
+      var a=-SH.k*(SH.y-SH.target)-SH.c*SH.v;
+      SH.v+=a*h;SH.y+=SH.v*h;
+    }
+    setY(SH.y);
+    if(Math.abs(SH.y-SH.target)<0.4&&Math.abs(SH.v)<8){
+      SH.v=0;SH.raf=0;setY(SH.target);settle();return;
+    }
+    SH.raf=requestAnimationFrame(tick);
+  }
+  function settle(){
+    if(!SH.open&&SH.target>=SH.H-0.5) finalizeClose();
+  }
+
+  function setInert(on){
+    ['mTop','mobile','mBar'].forEach(function(id){var e=document.getElementById(id);if(e)e.inert=on;});
+    var m=document.querySelector('main');if(m)m.inert=on;
+  }
+  function buildList(){
+    var S=M[M.tab],cols=S.cols,cur=SH.side==='l'?S.l:S.r,other=SH.side==='l'?S.r:S.l;
+    titleEl.textContent=SH.side==='l'?'選擇左側車款':'選擇右側車款';
+    var groups=M.tab==='compare'?[['RAV4',cols.filter(function(c){return c.b==='r';})],['CR-V',cols.filter(function(c){return c.b==='c';})]]:[['RAV4',cols]];
+    var h='';
+    groups.forEach(function(g){
+      h+='<div class="m-grp-t">'+g[0]+'</div>';
+      g[1].forEach(function(c){
+        var sel=c.id===cur,oth=c.id===other;
+        h+='<button type="button" role="radio" aria-checked="'+(sel?'true':'false')+'" class="m-opt '+c.b+(sel?' on':'')+'" data-id="'+c.id+'">'+
+          '<span class="o-bar"></span><span class="o-main"><span class="o-n">'+esc(c.name)+'</span>'+
+          (oth?'<span class="o-s">目前在'+(SH.side==='l'?'右':'左')+'側，選取後兩側對調</span>':'')+
+          '</span><span class="o-p">'+c.price+' 萬</span><span class="o-ck" aria-hidden="true"></span></button>';
+      });
+    });
+    listEl.innerHTML=h;
+  }
+  function openSheet(side,trigger){
+    SH.side=side;SH.trigger=trigger||null;
+    buildList();
+    var visible=!rootEl.hidden;
+    rootEl.hidden=false;
+    document.documentElement.classList.add('m-lock');
+    setInert(true);
+    SH.H=sheetEl.offsetHeight;
+    SH.fit=bodyEl.scrollHeight<=bodyEl.clientHeight+1;
+    sheetEl.classList.toggle('fit',SH.fit);
+    if(!visible){SH.v=0;setY(SH.H);}   // 若正在關閉中，就從目前位置接手，不跳回起點
+    SH.open=true;
+    if(rmq.matches){
+      sheetEl.style.opacity='0';scrimEl.style.transition='opacity .2s';sheetEl.style.transition='opacity .2s';
+      setY(0);
+      requestAnimationFrame(function(){sheetEl.style.opacity='1';});
+    }else{
+      springTo(0,1,0.4);
+    }
+    var on=listEl.querySelector('.m-opt.on')||listEl.querySelector('.m-opt');
+    if(on) on.focus({preventScroll:true});
+  }
+  function closeSheet(v0){
+    if(!SH.open&&rootEl.hidden) return;
+    SH.open=false;
+    if(rmq.matches){
+      sheetEl.style.opacity='0';SH.target=SH.H;
+      setTimeout(function(){setY(SH.H);settle();},200);
+      return;
+    }
+    springTo(SH.H,1,0.4,v0);
+  }
+  function finalizeClose(){
+    rootEl.hidden=true;
+    sheetEl.style.opacity='';sheetEl.style.transition='';scrimEl.style.transition='';
+    document.documentElement.classList.remove('m-lock');
+    setInert(false);
+    if(SH.trigger&&SH.trigger.focus) SH.trigger.focus({preventScroll:true});
+  }
+
+  /* ---------- 下拉手勢：1:1 跟手、速度承接、動量投射 ---------- */
+  function onDown(e){
+    if(rootEl.hidden||e.button>0) return;
+    var inHead=!!e.target.closest('#mSheetHead');
+    if(!inHead&&!SH.fit) return;                 // 清單可捲動時，只有頂部把手區可拖曳
+    // 可打斷：抓住正在移動的面板，從目前「畫面上的位置」接手
+    if(SH.raf){cancelAnimationFrame(SH.raf);SH.raf=0;}
+    SH.v=0;
+    SH.pending={x:e.clientX,y:e.clientY,offset:SH.y,id:e.pointerId};
+    SH.hist=[{t:e.timeStamp,y:e.clientY}];
+  }
+  function onMove(e){
+    var pd=SH.pending;
+    if(!pd) return;
+    var dx=e.clientX-pd.x,dy=e.clientY-pd.y;
+    if(!SH.drag){
+      // 約 10 px 的遲滯，並確認以垂直移動為主，才接手手勢
+      if(Math.abs(dy)<10||Math.abs(dy)<Math.abs(dx)) return;
+      SH.drag=true;
+      try{sheetEl.setPointerCapture(pd.id);}catch(_){}
+    }
+    var ny=pd.offset+dy;                          // 保留抓取點的偏移，面板貼著手指
+    if(ny<0) ny=-rubberband(-ny,SH.H);            // 拉過頂端：越拉越吃力
+    setY(ny);
+    SH.hist.push({t:e.timeStamp,y:e.clientY});
+    while(SH.hist.length>2&&e.timeStamp-SH.hist[0].t>100) SH.hist.shift();
+  }
+  function onUp(e){
+    var was=SH.drag,pid=SH.pending?SH.pending.id:e.pointerId;SH.pending=null;SH.drag=null;
+    try{sheetEl.releasePointerCapture(pid);}catch(_){}
+    if(!was) return;
+    var h=SH.hist,v=0;
+    if(h.length>1){
+      var a=h[0],b=h[h.length-1],dt=(b.t-a.t)/1000;
+      if(dt>0) v=(b.y-a.y)/dt;                    // px/s
+    }
+    var projected=SH.y+project(v);                // 依慣性推算最後會停在哪
+    var toClose=projected>SH.H/2;
+    if(rmq.matches){SH.open=!toClose;SH.target=toClose?SH.H:0;setY(SH.target);settle();return;}
+    SH.open=!toClose;
+    springTo(toClose?SH.H:0,0.8,0.3,v);           // 有動量時才用帶一點彈性的彈簧，並承接放開時的速度
+  }
+
+  /* ---------- 事件 ---------- */
+  function wire(){
+    rootEl=document.getElementById('mSheetRoot');sheetEl=document.getElementById('mSheet');
+    scrimEl=document.getElementById('mScrim');listEl=document.getElementById('mSheetList');
+    bodyEl=document.getElementById('mSheetBody');titleEl=document.getElementById('mSheetTitle');
+    sheetEl.addEventListener('pointerdown',onDown);
+    sheetEl.addEventListener('pointermove',onMove);
+    sheetEl.addEventListener('pointerup',onUp);
+    sheetEl.addEventListener('pointercancel',onUp);
+    scrimEl.addEventListener('click',function(){closeSheet();});
+    document.getElementById('mClose').addEventListener('click',function(){closeSheet();});
+    listEl.addEventListener('click',function(e){
+      var b=e.target.closest('.m-opt');if(b) choose(b.getAttribute('data-id'));
+    });
+    document.addEventListener('keydown',function(e){
+      if(rootEl.hidden) return;
+      if(e.key==='Escape'){closeSheet();return;}
+      if(e.key==='Tab'){
+        var f=sheetEl.querySelectorAll('button:not([disabled])');
+        if(!f.length) return;
+        var first=f[0],last=f[f.length-1];
+        if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+        else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+      }
+    });
+    // 分頁（支援方向鍵）
+    var tabs=document.querySelector('.m-tabs');
+    tabs.addEventListener('click',function(e){var b=e.target.closest('.m-tab');if(b) setTab(b.getAttribute('data-tab'));});
+    tabs.addEventListener('keydown',function(e){
+      if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft') return;
+      var list=Array.prototype.slice.call(tabs.querySelectorAll('.m-tab')),i=list.indexOf(document.activeElement);
+      if(i<0) return;
+      var n=list[(i+(e.key==='ArrowRight'?1:list.length-1))%list.length];
+      n.focus();setTab(n.getAttribute('data-tab'));
+    });
+    // 選車款（頂部欄位與底部按鈕都可以）
+    document.addEventListener('click',function(e){
+      var t=e.target.closest('.m-pcell,.m-side');
+      if(t&&isPanelTab()){openSheet(t.getAttribute('data-side'),t);return;}
+      if(e.target.closest('#mSwap')){swapSides();return;}
+      if(e.target.closest('#mDiff')){var S=M[M.tab];S.diff=!S.diff;renderAll();return;}
+      var c=e.target.closest('.m-cat');
+      if(c){
+        var S2=M[c.getAttribute('data-tab')],ci=c.getAttribute('data-ci');
+        S2.collapsed[ci]=!S2.collapsed[ci];renderAll();return;
+      }
+      var ch=e.target.closest('.m-chip');
+      if(ch){
+        var el=document.getElementById(ch.getAttribute('data-target'));
+        if(el) el.scrollIntoView({block:'start'});
+      }
+    });
+    if('ResizeObserver' in window){
+      var ro=new ResizeObserver(updateVars);
+      ro.observe(document.getElementById('mTop'));ro.observe(document.getElementById('mBar'));
+    }
+    window.addEventListener('resize',function(){
+      if(!rootEl.hidden&&SH.open){SH.H=sheetEl.offsetHeight;setY(SH.y<0?SH.y:0);}
+    });
+  }
+  function init(){
+    if(inited) return;
+    inited=true;
+    buildCols();wire();
+    renderPanel('compare');renderPanel('adv');
+    renderPair();renderBar();updateVars();
+  }
+  function onChange(){
+    if(mq.matches) init();
+    else if(inited&&!rootEl.hidden){SH.open=false;cancelAnimationFrame(SH.raf);SH.raf=0;SH.target=SH.H;setY(SH.H);finalizeClose();}
+  }
+  if(mq.addEventListener) mq.addEventListener('change',onChange); else if(mq.addListener) mq.addListener(onChange);
+  if(mq.matches) init();
 })();
 </script>
 </body>
