@@ -114,13 +114,33 @@ tr.cat td{padding:0;background:var(--panel2)}
 .note{margin-left:4px;color:var(--text)}
 .empty{padding:22px;color:var(--mute)}
 
+/* 官網介紹 */
+.nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:14px}
+.nav a{color:var(--mute);text-decoration:none;border-bottom:1px solid var(--line)}
+.nav a:hover{color:var(--text);border-color:var(--mute)}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.icol h3{margin:0 0 10px;font-size:15px}
+.icol.r h3{color:#ff6b6f}
+.icol.c h3{color:#7db3ff}
+details{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
+.icol.r details{border-left:3px solid var(--red)}
+.icol.c details{border-left:3px solid var(--blue)}
+summary{cursor:pointer;padding:10px 14px;font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸";display:inline-block;width:18px;color:var(--mute)}
+details[open] summary::before{content:"▾"}
+details ul{margin:0;padding:0 14px 12px 34px;font-size:13.5px;color:#cbd5ea}
+details li{margin:4px 0}
+details a{color:#7db3ff;word-break:break-all}
+.src{color:var(--mute);font-size:12px;margin:-4px 0 12px}
+
 /* 說明 */
 .notes{margin:8px 0 40px;padding:16px 18px 16px 34px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--mute);font-size:13px}
 .notes li{margin:5px 0}
 .notes b{color:var(--text)}
 
 @media (max-width:720px){
-  .picker,.kcs{grid-template-columns:1fr}
+  .picker,.kcs,.info{grid-template-columns:1fr}
   th,td{padding:7px 9px}
   table{font-size:13px}
   td{min-width:132px}
@@ -141,7 +161,8 @@ tr.cat td{padding:0;background:var(--panel2)}
     </svg>
     <div>
       <h1>RAV4 × CR-V 規格對照</h1>
-      <p class="sub">資料取自 Toyota Taiwan、Honda Taiwan 官網規格頁，2026/09/20 讀取，實車配備以原廠為準</p>
+      <p class="sub">資料取自 Toyota Taiwan、Honda Taiwan 官網規格與介紹頁，2026/09/20 讀取，實車配備以原廠為準</p>
+      <nav class="nav"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a></nav>
     </div>
   </div>
 </header>
@@ -188,12 +209,226 @@ tr.cat td{padding:0;background:var(--panel2)}
   <div class="tw full" id="ftable"></div>
 </section>
 
-<ul class="notes">
-  <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）、Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）。價格為官網建議售價。</li>
+<section id="intro">
+  <h2>官網介紹內容</h2>
+  <p class="lead">兩家官網介紹頁與 Honda CR-V 型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入上方對照表。</p>
+  <div class="info">
+
+    <div class="icol r">
+      <h3>RAV4（Toyota Taiwan 官網 RAV4 介紹頁）</h3>
+
+      <details>
+        <summary>頁面說明與連結</summary>
+        <ul>
+          <li>型錄於 2026/06/15 更新，官網註明 2026 年 6 月起生產的 RAV4，以其規配表為準。</li>
+          <li>適用 E3 酒精汽油；全車系自排車種配備 ASL 自排防暴衝裝置（已列入完整對照表）。</li>
+          <li>官網註明：日本進口是指車輛的主要構成部分，不含 E-Mirror 電子式車內後視鏡。</li>
+          <li>圖片與實車不符以實車為準；各項安全系統作動有條件限制，詳見車主手冊與經銷商說明。</li>
+          <li>HYBRID 保固說明只針對 HYBRID 系統與電池，官網沒有另外說明 PHEV 電池（已列入完整對照表）。</li>
+          <li>官網購車優惠入口列有「20 萬 20 期 0 利率（分期總額）」，並連到 RAV4 與 RAV4 PHEV 的優惠專頁，條件與期限以官網為準。</li>
+          <li>連結：
+            <a href="https://hotaicdn.azureedge.net/toyotaweb/CAR_20260615085300724627A3.pdf" target="_blank" rel="noopener">電子型錄 PDF</a>、
+            <a href="https://hotaicdn.azureedge.net/toyotaweb/car_manual_2026011413461685EE2765.pdf" target="_blank" rel="noopener">車主手冊（HV，2026.01 起適用）</a>、
+            <a href="https://hotaicdn.azureedge.net/toyotaweb/car_manual_20260615111328I7A6DQTN.pdf" target="_blank" rel="noopener">車主手冊（PHEV，2026.06 起適用）</a>、
+            <a href="https://www.toyota.com.tw/crmarketing/2026_RAV4/" target="_blank" rel="noopener">RAV4 優惠</a>、
+            <a href="https://www.toyota.com.tw/crmarketing/2026_RAV4_PHEV/" target="_blank" rel="noopener">RAV4 PHEV 優惠</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>外觀重點（官網註明等級）</summary>
+        <ul>
+          <li>LED Bi-Beam 頭燈；旗艦為雙刃光條式日行燈。</li>
+          <li>LED 直豎式尾燈組。</li>
+          <li>旗艦：車頂架、電動天窗。</li>
+          <li>鋁圈：豪華、尊爵為 17 吋五幅式；尊爵+ 為 18 吋雙肋五幅式；旗艦為 18 吋雙肋五幅式雙色切削。</li>
+          <li>PHEV 4WD：馭黑前下護板與後下護板、20 吋十幅式馭黑鋁圈、支援 CCS1 快速充電。</li>
+          <li>車色：360 度賞車頁面標示「靜謐灰」為 PHEV 4WD 專屬車色，PHEV 4WD 沒有搭配「霧岩灰」；其他車色名稱在擷取內容中沒有列出。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>內裝與置物重點</summary>
+        <ul>
+          <li>座椅：豪華為抗磨布質；尊爵、尊爵+ 為豪華皮質；旗艦為高級皮質；PHEV 為 BRIN NAUB® 透氣類麂皮與豪華皮質。</li>
+          <li>旗艦：前座加熱與通風、後座加熱、雙前座 8 向電動、雙 Qi 無線充電、E-Mirror、投射式 HUD、足踢感應式電動尾門。</li>
+          <li>尊爵+ 以上：後座兩組 15W Type-C USB、12.9 吋懸浮式音響主機、行李廂遮物簾。</li>
+          <li>前座中央兩組 Type-C USB：旗艦為 45W，其他等級為 15W。</li>
+          <li>PHEV 4WD：線傳式排檔。</li>
+          <li>介紹頁未註明等級的項目：12.3 吋全彩數位儀表、S-FLOW 智慧型雙區獨立恆溫空調、無線 Apple CarPlay 與 Android Auto、駕駛模式切換鈕、EV/HV 模式切換鈕、MID 中央儀表控制鍵、TSS 設定鍵（DRCC／LTA）、EPB 與 Auto Hold、SOS 緊急求救按鈕、後座出風口。</li>
+          <li>置物與行李廂（同樣未註明等級）：行李廂大容量、雙面多用途行李廂隔板、多功能尾門握把／掛勾（官網註明原車無附掛燈，僅供示意）、前座吸頂式置物盒、前座中央置杯架、副駕駛座前方置物盤與手套箱、副駕駛座後方置物袋、雙面使用中央扶手附置物盤、後座中央扶手附置杯架。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>油電複合動力（SELF-CHARGING HYBRID）</summary>
+        <ul>
+          <li>官網說明的五個特點：自主充電（靠引擎與減速動能回收充電）、智慧駕駛（PCU 依需求分配馬達與引擎輸出）、加速（引擎搭配高扭力馬達）、靜謐（純電行駛安靜，引擎與馬達平順切換）、節能環保。</li>
+          <li>作動情境：啟動或按 EV 鍵時僅馬達行駛；一般行駛時引擎與馬達交互運用，多餘動力為 HYBRID 電池充電；全力加速時引擎與馬達同時輸出；減速時馬達把動能轉為電能儲存；停車時引擎與馬達停止運作、不耗油，空調可再作動一段時間。</li>
+          <li>一級能源效率，豪華標示 24.0 km/L。</li>
+          <li>官網標題寫「第五代」，圖片說明文字卻寫「第四代」，兩處不一致，這裡不採用世代說法。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>插電式油電車（PHEV）</summary>
+        <ul>
+          <li>動力電池採水冷並搭載加熱系統控溫；官網標示 RAV4 PHEV 最大綜效馬力 329 ps。</li>
+          <li>22.7 kWh 電池配置在底盤中央，官網說明可降低重心並優化重量分配；純電最長續航 135 km。</li>
+          <li>純電行駛里程依歐盟 ECE R101（NEDC 行車型態）測得，實際里程會受路況與用車習慣影響。</li>
+          <li>充電網絡：官網稱全台公共充電站超過 1,000 個，Toyota 另與策略夥伴合作，提供近 2,000 個充電站服務（詳見 My Toyota APP「充電漫遊」地圖）。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>TNGA 與性能</summary>
+        <ul>
+          <li>TNGA 五項訴求：高剛性車體（大量採用超高強度鋼與雷射強化焊接）、低重心、高性能懸吊、操控樂趣、駕馭視野。</li>
+          <li>2.5L Dynamic Force 引擎：優化 VVT-iE 電子式可變汽門正時、D-4S 雙噴射供油系統。</li>
+          <li>前獨立麥花臣、後獨立雙 A 臂懸吊。</li>
+          <li>駕駛模式：ECO／NORMAL／SPORT／CUSTOM（介紹頁所列）。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>主動安全說明</summary>
+        <ul>
+          <li>PCS：偵測前方車輛、摩托車、行人與自行車，提供預警、煞車力道輔助、主動煞車輔助、低速誤加速抑制輔助、緊急閃避轉向輔助與交叉路口轉向輔助。</li>
+          <li>LTA：時速 50 公里以上未打方向燈且判斷偏離車道時警示；並提供偏離修正、搭配 DRCC 的車道循跡（維持車道中心）與車輛搖晃警示。</li>
+          <li>DRCC：全速域含 Stop &amp; Go，可設定 30-180 km/h；會預判前前車減速；開啟 Eco-Mode 有節能巡航。</li>
+          <li>RSA：以攝影機辨識道路速限並通知駕駛。</li>
+          <li>VSC、TRC、ACA（加速過彎轉向不足時控制內側輪煞車）、HAC、DSC（誤入檔位時限制動力輸出）。</li>
+          <li>PKSB：偵測前後靜止障礙物，必要時降低引擎出力並主動煞車。</li>
+          <li>FCTA（時速 15 公里以下偵測左右來車）、DMC 駕駛疲勞監測、PVM 環景影像：官網註明尊爵以上配備。</li>
+          <li>TPMS、EBS（緊急煞車時閃爍煞車燈）、AVAS（車速低於 25 km/h 或倒車時發出聲響）、RCTA。</li>
+          <li>煞車輔助：ABS、BAS、BOS、EBD。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>被動安全說明</summary>
+        <ul>
+          <li>官網標題為「7 SRS 氣囊」：雙前座、雙前座椅側、車側簾式、駕駛座膝部。</li>
+          <li>GOA 高剛性車體：熱沖壓工藝，最高採 1,470 MPa 等級超高強度鋼，搭配潰縮式前懸設計吸收撞擊能量。</li>
+          <li>後座 ISO-FIX 卡扣、主動式 WIL 頸椎傷害緩和前座椅、束力限制預縮式安全帶（雙前座與左右後座）。</li>
+        </ul>
+      </details>
+    </div>
+
+    <div class="icol c">
+      <h3>CR-V（Honda Taiwan 官網 2026 CR-V 頁與型錄）</h3>
+
+      <details>
+        <summary>頁面說明與連結</summary>
+        <ul>
+          <li>規格配備以實車為準；表列數值為標準值，未含容許公差。</li>
+          <li>全車系符合第 6 期廢氣排放標準與噪音管制標準（已列入完整對照表）。</li>
+          <li>年耗油量以每年 15,000 公里除以油耗測試值計算。</li>
+          <li>油耗測試值是在實驗室、車上空調不作動的條件下測得，官網說明實際道路油耗一般會低於測試值。</li>
+          <li>型錄封底印製日期為 2025.06；型錄內裝圖為 e:HEV Prestige 版本，實際規格配備以實車為準。</li>
+          <li>型錄規格表與本網站對照表的數值、配備有無逐項核對過，沒有發現不同。</li>
+          <li>能源效率標示：型錄註明適用民國 111 年 1 月 1 日起的能源效率等級標準，並附「節能標章、環保低油耗」圖示（型錄未註明適用哪些等級）。</li>
+          <li>官網頁面另有 360 度賞車（外觀與內裝），本網站未收錄。</li>
+          <li>連結：<a href="https://www.honda-taiwan.com.tw/2026CR-V/file/Honda_CR-V_Catalogue.pdf" target="_blank" rel="noopener">CR-V 型錄 PDF</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>e:HEV 動力與駕馭模式</summary>
+        <ul>
+          <li>型錄與官網的說法：以「電為主、燃油為輔」，不需外接充電；高扭力馬達與引擎 2 速直接驅動協同運作。</li>
+          <li>行駛型態（型錄圖）：EV 純電（電能驅動）、HYBRID 混合（電能驅動）、高速行駛與緩加速／爬坡（引擎驅動）、電力再生。</li>
+          <li>各行駛情境（型錄圖）：起步與市區低速為電動馬達驅動；緩加速／爬坡以引擎直驅（低油耗）；強勁加速為電動馬達驅動；高速行駛以引擎直驅（靜肅性、低油耗）；之後至減速階段回到電動馬達驅動。</li>
+          <li>型錄動力數據：e:HEV 為 2.0L Atkinson Cycle 燃油直噴引擎搭配永磁同步馬達，平均油耗 20.5 km/L、馬達最大馬力 184 ps、最大扭力 34.2 kg-m；汽油版為 1.5L VTEC Turbo 缸內直噴引擎，15.0 km/L、193 ps、24.8 kg-m。</li>
+          <li>四種駕馭模式（型錄註明 e:HEV 專屬）：NORMAL 兼顧油耗與駕馭樂趣；ECON 限制輸出並降低空調系統效能以省油；SPORT 強化輸出反應，因應更運動化的駕馭；INDIVIDUAL 是結合不同設定的自訂模式。</li>
+          <li>電力再生模式調整撥片（4 段回充力道）為 e:HEV 專屬；Shutter Grille 主動式進氣控制系統（前下氣壩）型錄未註明限定車型。</li>
+          <li>官網圖片說明文字另提到「平行軸雙電動馬達 E-CVT」，型錄沒有這個說法，僅供參考。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>外觀與內裝亮點</summary>
+        <ul>
+          <li>外觀（依圖片說明文字）：一體化 LED 頭燈、LED 尾燈、鋼琴烤漆水箱護罩、18 吋高光澤黑鋁圈（聲學共鳴減噪輪圈）、運動化前後保桿、空氣力學底盤。頁面註記部分項目為 e:HEV 車型專屬。</li>
+          <li>數位座艙：10.2 吋 TFT 儀表、HUD 抬頭顯示器、9 吋多媒體主機（Apple CarPlay／Android Auto，有線與無線）、前座無線充電座。</li>
+          <li>駕駛座 8 向電動座椅（附位置記憶）；雙前座通風座椅與 BOSE Centerpoint 音響，頁面與型錄都註明為 e:HEV Prestige 專屬。</li>
+          <li>型錄亮點：全景式電動天窗；NVH 整車隔音工程（含 Acoustic 前擋隔音玻璃），e:HEV 另有專屬隔音強化與前車窗雙層隔音膠合玻璃。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>舒適與空間</summary>
+        <ul>
+          <li>舒適配備：Dual Zone 智慧型雙區恆溫空調、後座出風口（附 USB Type-C ×2）、前門雙層膠合隔音玻璃、ANC 主動式噪音抑制。</li>
+          <li>ARD 振幅反應避震器（型錄註明源自 Acura 技術）：依振幅頻率調整減震力道，行經不平路面時吸收細微震動；過彎時抑制車身側傾，確保貼地性、提升操控。</li>
+          <li>後座與行李廂：後座滑移模式、6:4 後座椅傾倒模式、全傾倒模式。</li>
+          <li>電動尾門：腳踢感應式，離開自動關閉（圖片說明文字所列）。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Honda CONNECT 與數位鑰匙</summary>
+        <ul>
+          <li>型錄與官網訴求：智慧型手機變身數位鑰匙，打開車門、啟動車輛、遙控尾門。</li>
+          <li>數位鑰匙：啟動／關閉車輛、上鎖／解鎖車門與開關電動尾門、關閉車窗、車輛狀態提醒。</li>
+          <li>安全安心：自動碰撞偵測、防盜保全系統、遠端診斷協助、超速警告與地理圍籬。</li>
+          <li>便利舒適：儀表資訊顯示、喜愛點搜尋、遙控引擎與冷氣操作、遙控門鎖與燈光、尋找愛車。</li>
+          <li>溝通連結：社群分享、訊息溝通。</li>
+          <li>型錄註記：Honda CONNECT 先進智慧聯網系統為加值型通訊服務，各項功能與服務有其條件限制，詳情請洽 Honda Cars 經銷商；Honda Taiwan 保留修改或變更服務的權利；數位鑰匙功能依車型有所不同。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Honda SENSING 各功能與作動條件</summary>
+        <ul>
+          <li>CMBS 碰撞緩解煞車（附 FCW 前方碰撞警示）：偵測前方車輛、摩托車、行人與自行車；風險升高時預先加壓煞車，駕駛未反應時自動煞車。作動範圍 5~100 km/h，左轉與對向直行車碰撞預防為 5~30 km/h。</li>
+          <li>ACC 主動式車距調節定速巡航（附 LSF 低速跟車）：ACC 在 30 km/h 以上、LSF 在 0~30 km/h；塞車靜止後，按下 RES/+ 或 SET/- 按鈕，或輕踩油門，即可繼續跟車。</li>
+          <li>LCDN 前車駛離提醒：車輛停止且前車起步駛離時，以警示音與儀表圖示提醒。</li>
+          <li>AHB 遠光燈自動切換：30 km/h 以上，在近燈且自動頭燈開啟時作動。</li>
+          <li>RDM 道路偏移抑制（附 LDW 車道偏移警示）：72~180 km/h；偏離未修正時自動減速並協助導正。</li>
+          <li>LKAS 車道維持輔助：72~180 km/h，提供方向盤轉向輔助力道。</li>
+          <li>型錄註記：Honda SENSING 是藉由車輛儀器判知路況以提供駕駛輔助的功能，並非自動駕駛，無法取代駕駛；系統在部分駕駛情境、路況與天候下可能暫停作動或關閉，駕駛仍需注意路況並保持對車輛的掌控。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>車色（型錄）</summary>
+        <ul>
+          <li>型錄列出 5 種車色：雲朵白、流星灰、風尚灰、水晶黑、熾焰紅。</li>
+          <li>型錄的車色區塊沒有註明各等級可選的顏色，這裡不假設每個等級都有全部 5 色。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>其他安全配備說明</summary>
+        <ul>
+          <li>頁面列出：10 具 SRS 氣囊、ACE 安全車體、BSI 盲點偵測、CTM 倒車預警、MVCS 環景影像（多視角切換）、道路環境虛擬實境顯示、駐車輔助、DAM 駕駛注意力監視、RSR 後座提醒。</li>
+          <li>這幾項在頁面上只有名稱或圖示說明，沒有進一步的作動條件。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>原廠配件（共 29 項，另購）</summary>
+        <ul>
+          <li>頁面分「外觀、內裝、電裝」三個分頁，但擷取到的文字沒有標出各項屬於哪個分頁，所以這裡不分類；價格與適用等級頁面未列。</li>
+          <li>前下空力保桿（汽油版與油電版式樣不同）、後下擾流翼（汽油版後保桿本體為霧面黑，非車身同色）、擾流尾翼、車側下飾板、車側踏板、葉子板飾條、晴雨窗、後視鏡飾條、車門把手內保護飾板、水箱護罩飾條、油箱蓋飾貼、黑化左右後視鏡外蓋組、防盜螺帽。</li>
+          <li>行李廂遮板、TPO 防水踏腳墊、行李廂托盤、金屬質感運動踏板、車內輔助拉環、中扶手置物網、車內門板飾條（四門共八片）、行李廂固定網、摺疊收納箱、行李廂防刮飾條、狗腳印鑰匙殼。</li>
+          <li>兒童安全座椅 KIDFIX i-SIZE（Britax Römer，適用 3~12 歲）。</li>
+          <li>LED 後廂照明燈（單顆）、LED 門檻飾板（後門檻的 CR-V 字樣沒有迎賓燈光效果）、前偵測雷達、迎賓照地投影燈。</li>
+        </ul>
+      </details>
+    </div>
+
+  </div>
+</section>
+
+<ul class="notes" id="notes">
+  <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）與 RAV4 介紹頁（toyota.com.tw/showroom/RAV4/#hybrid）、Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）與 Honda CR-V 型錄 PDF（封底印製日期 2025.06），皆於 2026/09/20 讀取。價格為官網建議售價。</li>
   <li><b>官網未列：</b>表示該官網頁面沒有這一項，不代表車輛沒有此配備。</li>
   <li><b>差異標色：</b>依官網文字逐項比對，不做語意判斷，同一功能在兩家的寫法不同時會被標為差異；官網未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI）已在項目名稱並列。</li>
-  <li><b>油耗：</b>CR-V 官網標示 NEDC 測試值；RAV4 官網頁面未註明測試方式，PHEV 的 131.6 km/L 為官網標示值。兩者數字不宜直接等同比較。</li>
+  <li><b>油耗：</b>兩家官網都註明依歐盟 1999/100/EC 指令測試，年耗油量都以每年 15,000 公里計算；CR-V 頁面另標示 NEDC。RAV4 PHEV 的 131.6 km/L 為官網標示值，官網沒有說明換算方式；純電里程 135 km 依 ECE R101（NEDC 行車型態）測得。</li>
   <li><b>範圍：</b>RAV4 為完整規配頁的 5 個等級，不含 RAV4 ADVENTURE、RAV4 GR SPORT。CR-V 為 4 個等級。</li>
+  <li><b>介紹內容：</b>介紹頁有註明等級的項目已補進對照表；沒有註明等級的項目只列在「官網介紹內容」，不假設各等級是否都有。RAV4 官網的車色、TOYOTA Connect 內容在擷取結果中只有圖片，沒有文字可收錄。</li>
 </ul>
 
 </main>
@@ -233,8 +468,10 @@ var RAW=[
 ['引擎',[
  ['引擎型式',R('A25A-FXS 直列四缸 DOHC 16 汽門',5),['1.5L VTEC Turbo 渦輪增壓缸內直噴','1.5L VTEC Turbo 渦輪增壓缸內直噴','2.0L Atkinson Cycle 燃油直噴','2.0L Atkinson Cycle 燃油直噴']],
  ['氣門正時系統',R('進氣 VVT-iE／排氣 VVT-i',5),R(X,4)],
- ['供油方式',R(X,5),R('Direct Injection 缸內直噴',4)],
+ ['供油方式',R('D-4S 雙噴射供油系統',5),R('Direct Injection 缸內直噴',4)],
+ ['適用燃料',R('E3 酒精汽油',5),R(X,4)],
  ['排氣量 (c.c.)',R('2487',5),['1498','1498','1993','1993']],
+ ['排氣量等級',R('超過 2,400 c.c. 至 3,000 c.c.',5),R(X,4)],
  ['壓縮比',R('13.8 : 1',5),['10.3 ± 0.2','10.3 ± 0.2','13.9 ± 0.26','13.9 ± 0.26']],
  ['缸徑 × 衝程 (mm)',R(X,5),['73 × 89.5','73 × 89.5','81 × 96.7','81 × 96.7']],
  ['引擎最大馬力 (PS / rpm)',['186 / 6,000','186 / 6,000','186 / 6,000','186 / 6,000','189 / 6,000'],['193 (142kW) / 6,000','193 (142kW) / 6,000','150 (110kW) / 6,100','150 (110kW) / 6,100']],
@@ -248,6 +485,7 @@ var RAW=[
  ['電池型式',R('鋰離子電池',5),[N,N,'鋰離子電池','鋰離子電池']],
  ['電池電壓 (V)',['248.2','248.2','248.2','248.2','391'],R(X,4)],
  ['動力電池容量 (kWh)',[N,N,N,N,'22.7'],[N,N,X,X]],
+ ['CCS1 快速充電',[N,N,N,N,Y],[N,N,X,X]],
  ['最大綜效馬力 (ps)',['229','229','229','229','329'],R(X,4)]
 ]],
 ['傳動與底盤',[
@@ -256,6 +494,7 @@ var RAW=[
  ['檔位控制',R(X,5),['6 檔位控制','5 檔位控制','5 檔位控制','5 檔位控制']],
  ['換檔／電力再生撥片',[N,N,N,N,'●方向盤換檔撥片'],[N,'●換檔撥片','●電力再生撥片（4 段回充力道）','●電力再生撥片（4 段回充力道）']],
  ['轉向系統',R('EPS 電動輔助方向盤',5),R('VGR 可變齒比 EPS 電動輔助動力方向機',4)],
+ ['油門設計',R(X,5),R('ETC 電子節流閥線傳控制系統（DBW）',4)],
  ['前懸吊',R('獨立麥花臣式（附防傾平衡桿）',5),R('麥花臣支柱式',4)],
  ['後懸吊',R('獨立雙 A 臂式（附防傾平衡桿）',5),R('獨立多連桿式',4)],
  ['避震器',R(X,5),R('ARD 振幅反應避震器',4)],
@@ -269,9 +508,12 @@ var RAW=[
 ['油耗與能源效率',[
  ['平均油耗 (km/L)',['24.0','24.0','24.0','24.0','131.6'],['15.0','15.0','20.5','20.5']],
  ['年耗油量 (L)',['625','625','625','625','114'],['1,000','1,000','732','732']],
- ['油耗測試方式',R(X,5),R('NEDC（歐盟 1999/100/EC 指令及其後續修正指令）',4)],
+ ['油耗測試方式',R('歐盟 1999/100/EC 指令及其後續修正指令',5),R('歐盟 1999/100/EC 指令及其後續修正指令（頁面標示 NEDC）',4)],
  ['非市區／市區油耗 (km/L)',R(X,5),['17.31 / 12.18','17.31 / 12.18','18.77 / 24.43','18.77 / 24.43']],
  ['能源效率等級',R('1 級',5),['2 級','2 級','1 級','1 級']],
+ ['車輛類別',R('小客車',5),R(X,4)],
+ ['廢氣排放標準',R(X,5),R('第 6 期',4)],
+ ['噪音管制標準',R(X,5),R('●（官網頁面寫環保署，型錄寫環境部）',4)],
  ['純電里程 (km)',[N,N,N,N,'135'],[N,N,X,X]],
  ['年耗電量（度）',[N,N,N,N,'2308'],[N,N,X,X]],
  ['用電效率 (km/kWh)',[N,N,N,N,'6.5'],[N,N,X,X]],
@@ -283,7 +525,7 @@ var RAW=[
  ['日行燈',['●（LED）','●（LED）','●（LED）','●（LED 雙刃光條式）','●（LED 雙刃光條式）'],R('●（LED 前序列式方向燈／晝行燈／定位燈）',4)],
  ['前霧燈',[N,'●（LED）','●（LED）','●（LED）','●（LED）'],[N,N,'●（LED）','●（LED）']],
  ['後霧燈',R('●（LED）',5),R('●（LED）',4)],
- ['尾燈',R('●（LED 直豎式）',5),R('●（LED）',4)],
+ ['尾燈',R('●（LED 直豎式）',5),R('●（LED 後視鏡方向燈／尾燈／煞車燈／後牌照燈）',4)],
  ['頭尾燈自動啟閉',R(Y,5),R(X,4)],
  ['後視鏡',['電動收折（附電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）'],['電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺），亮黑','電動調整（附上鎖自動收摺），亮黑']],
  ['電動尾門',[N,'●（附遙控功能／防夾功能）','●（附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）'],['●（附離開自動關閉、自訂開啟高度功能）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）']],
@@ -309,27 +551,31 @@ var RAW=[
  ['儀表',R('12.3 吋全彩數位式',5),['7 吋 TFT 彩色液晶','7 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶']],
  ['道路環境虛擬實境顯示',R(X,5),[N,N,Y,Y]],
  ['方向盤調整',R('手動四向調整',5),R('4 向可調',4)],
- ['真皮方向盤',[N,Y,Y,Y,'●（附加熱功能）'],[N,Y,Y,Y]],
- ['真皮排檔頭',[N,Y,Y,Y,'－（線傳式排檔）'],[N,Y,Y,Y]],
+ ['方向盤型式',['三幅式軟質','三幅式真皮','三幅式真皮','三幅式真皮','三幅式真皮（附加熱功能）'],[N,'●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）']],
+ ['排檔頭材質',['軟質','真皮','真皮','真皮','－（線傳式排檔）'],[N,'●真皮包覆（含方向盤）','●真皮包覆（含方向盤）','●真皮包覆（含方向盤）']],
  ['方向盤控制鍵',R('音響／MID／DRCC／LTA',5),R(X,4)],
  ['氣氛燈',[N,N,N,'●（前座）','●（前座）'],[N,N,N,'●（LED 環艙氣氛燈）']],
  ['金屬質感踏板',R(X,5),[N,N,Y,Y]],
  ['座艙飾板',R(X,5),['銀黑配色＋蜂巢類金屬','銀黑配色＋蜂巢類金屬','亮黑＋髮絲紋類金屬','亮黑＋髮絲紋類金屬']],
+ ['金屬質感車門把手',R(X,5),R('鉑金鍍鉻',4)],
  ['隔音設計（NVH）',R(X,5),['●（整車隔音，含 Acoustic 前擋隔音玻璃）','●（整車隔音，含 Acoustic 前擋隔音玻璃）','●（整車隔音 e:HEV 專屬強化，前車窗雙層隔音膠合玻璃）','●（整車隔音 e:HEV 專屬強化，前車窗雙層隔音膠合玻璃）']],
  ['車室照明',R('雙前座化妝鏡／行李廂照明；閱讀燈：前座／後座',5),R('LED 前座照明／後座 LED 室內燈（觸控式）／LED 行李廂照明；雙前座遮陽板附化妝鏡照明燈',4)],
  ['杯架',R('前座中央／前座車門／後座中央／後座車門',5),R('前座中央雙置杯架（附置物箱）；後座中央扶手雙置杯架',4)],
  ['置物空間',R('副駕駛座前方置物盤／前座吸頂式置物盒／中控中央置物盤／前座中央扶手置物盒／手套箱／車側門把手置物處',5),R('前座中央置物箱；吸頂式太陽眼鏡盒（附對話鏡）',4)],
  ['電源／USB',['前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5'],R('12V：前座 ×1／後廂 ×1；Type-C：前座 ×2（最大 60W）＋後座出風口 ×2',4)],
+ ['前座中央 Type-C USB 輸出',['2 組 15W','2 組 15W','2 組 15W','2 組 45W','2 組 15W'],R('2 組（最大 60W）',4)],
+ ['後座 Type-C USB',[N,N,'●（2 組 15W）','●（2 組 15W）','●（2 組 15W）'],R('●（2 組，後座空調出風口）',4)],
  ['行李廂遮物簾',[N,N,Y,Y,Y],R(X,4)]
 ]],
 ['影音與連網',[
- ['音響主機',['10.5 吋觸控式','10.5 吋觸控式','12.9 吋觸控式','12.9 吋觸控式','12.9 吋觸控式'],R('9 吋觸控式',4)],
+ ['音響主機',['10.5 吋觸控式','10.5 吋觸控式','12.9 吋觸控式（懸浮式）','12.9 吋觸控式（懸浮式）','12.9 吋觸控式（懸浮式）'],R('9 吋觸控式',4)],
  ['衛星導航系統',[N,N,Y,Y,Y],R(X,4)],
  ['揚聲器',R('6 具',5),['8 具（高傳真揚聲系統）','8 具（高傳真揚聲系統）','8 具（高傳真揚聲系統）','BOSE Centerpoint 12 具（含重低音）']],
  ['ANC 主動式噪音抑制',R(X,5),R(Y,4)],
  ['Apple CarPlay／Android Auto',R('●（無線）／●（無線）',5),R('●（有線／無線）',4)],
  ['主機連結功能',R('USB／藍牙／Wi-Fi',5),R(X,4)],
- ['聯網系統',R('●（TOYOTA Connect 智能聯網）',5),R('●（Honda CONNECT 先進智慧聯網）',4)],
+ ['內建先進智慧聯網功能',R(X,5),R(Y,4)],
+ ['聯網系統',R('●（TOYOTA Connect 智能聯網系統）',5),R('●（Honda CONNECT 先進智慧聯網系統）',4)],
  ['數位鑰匙（Digital Key）',R(X,5),R(Y,4)],
  ['無線充電座',[N,N,Y,'●（2 組）',Y],[N,Y,Y,Y]],
  ['空調系統',R('S-FLOW 智慧型雙區獨立恆溫',5),['Dual Zone 雙區恆溫','i-Dual Zone 智慧型雙區恆溫','i-Dual Zone 智慧型雙區恆溫','i-Dual Zone 智慧型雙區恆溫']],
@@ -338,6 +584,9 @@ var RAW=[
 ['便利與科技',[
  ['Smart Entry 智慧型車門啟閉',R(Y,5),R('●（含 Walk-Away Lock 離開立刻上鎖）',4)],
  ['Push Start 引擎啟閉',R(Y,5),R(Y,4)],
+ ['定速巡航系統',R(Y,5),R(X,4)],
+ ['ASL 自排防暴衝裝置',R(Y,5),R(X,4)],
+ ['雙前座車門中控鎖開關',R(X,5),R(Y,4)],
  ['Reserve Lock 預約上鎖',R(X,5),R(Y,4)],
  ['電動窗',R('四門電動窗（One Touch／防夾）',5),['駕駛座 One Touch 防夾／遙控開窗','駕駛座 One Touch 防夾／遙控開窗','四門 One Touch 防夾／遙控開關窗','四門 One Touch 防夾／遙控開關窗']],
  ['雨刷',['間歇式','間歇式','間歇式（附雨滴感應功能）','間歇式（附雨滴感應功能）','間歇式（附雨滴感應功能）'],R('雨滴感應式前擋雨刷；後擋風玻璃間歇雨刷（附倒車連動）；智慧清潔前擋雨刷',4)],
@@ -366,7 +615,7 @@ var RAW=[
  ['防碰撞輔助（PKSB）',R(Y,5),R(X,4)],
  ['倒車影像',R('●（RVC 倒車影像輔助）',5),R('●（高畫素倒車攝影機，附視角切換）',4)],
  ['環景影像（PVM／MVCS）',[N,'●（附底盤透視）','●（附底盤透視）','●（附底盤透視）','●（附底盤透視）'],[N,N,'●（多視角切換）','●（多視角切換）']],
- ['停車雷達',R('倒車雷達 4 具／停車雷達 8 具（含倒車雷達）',5),['後 4 雷達','後 4 雷達','前 4＋後 4 雷達','前 4＋後 4 雷達']],
+ ['停車雷達',R('倒車雷達 4 具／停車雷達 8 具（含倒車雷達）',5),['後 4 雷達（PSS 駐車雷達，附儀表圖像指示）','後 4 雷達（PSS 駐車雷達，附儀表圖像指示）','前 4＋後 4 雷達（PSS 駐車雷達，附儀表圖像指示）','前 4＋後 4 雷達（PSS 駐車雷達，附儀表圖像指示）']],
  ['ABS／EBD／BA／BOS 煞車輔助',R(Y,5),R(Y,4)],
  ['ECB 電子式煞車控制',R(Y,5),R(X,4)],
  ['緊急煞車警示（EBS／ESS）',R(Y,5),R(Y,4)],
@@ -386,13 +635,18 @@ var RAW=[
  ['側簾式氣囊',R(Y,5),R(Y,4)],
  ['膝部氣囊',R('●（駕駛座）',5),R('●（雙前座）',4)],
  ['第二排側方氣囊',R(X,5),R(Y,4)],
- ['SRS 氣囊總數',R(X,5),R('10 具',4)],
+ ['SRS 氣囊總數',R('7 具',5),R('10 具',4)],
  ['高剛性安全車體（GOA／ACE）',R(Y,5),R(Y,4)],
  ['安全帶',R('全車三點式 ELR；束力限制預縮式（雙前座／左右後座）',5),R('全車五席三點式 ELR；前後 4 座自動預縮式',4)],
  ['安全帶未繫提醒（SBR）',R(X,5),R(Y,4)],
  ['ISOFIX／i-Size 兒童座椅固定',R(Y,5),R(Y,4)],
  ['後門兒童安全鎖',R(X,5),R(Y,4)],
  ['頸椎傷害緩和座椅（WIL）',R('●（雙前座）',5),R(X,4)]
+]],
+['保固',[
+ ['新車保證',R('4 年或 12 萬公里（先到者為準）',5),R(X,4)],
+ ['HYBRID 油電複合動力系統保證',R('5 年或 12 萬公里（先到者為準）',4).concat([X]),R(X,4)],
+ ['HYBRID 電池保證',R('8 年或 16 萬公里（先到者為準；2019 年式起）',4).concat([X]),R(X,4)]
 ]]
 ];
 
@@ -459,7 +713,7 @@ function tableHTML(idxs,opt){
 function $(id){return document.getElementById(id);}
 
 /* ===== 狀態 ===== */
-var Q={r:'r3',c:'c3',diff:false};
+var Q={r:'r1',c:'c1',diff:false};
 var F={sel:{},diff:false,collapsed:{}};
 TRIMS.forEach(function(t){F.sel[t.id]=true;});
 function idxOf(id){for(var i=0;i<TRIMS.length;i++){if(TRIMS[i].id===id)return i;}return -1;}
