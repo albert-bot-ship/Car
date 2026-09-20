@@ -3,154 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0c1119">
 <title>RAV4 × CR-V 規格對照</title>
 <style>
 :root{
+  color-scheme:dark;
   --bg:#0c1119; --panel:#131b29; --panel2:#1a2436; --line:#27334c;
-  --text:#e7ecf6; --mute:#8f9bb5;
-  --red:#e4262b; --blue:#3d8bff; --violet:#8a5cf0; --green:#3ecf8e;
+  --text:#e7ecf6; --mute:#97a3bd;
+  --red:#e4262b; --blue:#3d8bff; --violet:#8a5cf0; --violet-text:#b79cff; --green:#3ecf8e;
   --diff:rgba(138,92,240,.26);
+  --glass:rgba(26,36,54,.72);
+  --navh:3rem;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--navh) + .5rem)}
+[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--text);
-  font:15px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",system-ui,sans-serif}
-.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
-h1,h2{margin:0;line-height:1.25}
-h1{font-size:clamp(24px,5vw,38px);font-weight:800;letter-spacing:-.01em}
-h2{font-size:clamp(19px,3.4vw,24px);font-weight:700}
+  font:.9375rem/1.6 system-ui,-apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei","Heiti TC",sans-serif;
+  font-optical-sizing:auto}
+.wrap{max-width:75rem;margin:0 auto;padding:0 1rem}
+h1,h2,h3{margin:0}
+h1{font-size:clamp(1.5rem,5vw,2.375rem);font-weight:800;letter-spacing:-.02em;line-height:1.15}
+h2{font-size:clamp(1.1875rem,3.4vw,1.5rem);font-weight:700;letter-spacing:-.01em;line-height:1.25}
 p{margin:0}
 button,input,label{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+:focus-visible{outline:.125rem solid var(--blue);outline-offset:.125rem}
+.skip{position:absolute;left:.5rem;top:-4rem;z-index:50;background:var(--panel2);color:var(--text);padding:.5rem .75rem;border-radius:.5rem}
+.skip:focus{top:.5rem}
 
 /* 頁首 */
-.top{padding:28px 0 22px;border-bottom:1px solid var(--line);
+.top{padding:1.75rem 0 1.375rem;border-bottom:1px solid var(--line);
   background:linear-gradient(180deg,#101828 0%,var(--bg) 100%)}
-.head{display:flex;align-items:center;gap:16px}
-.mark{width:58px;height:36px;flex:none}
-.sub{color:var(--mute);font-size:13px;margin-top:6px}
-.sub a{color:var(--mute)}
+.head{display:flex;align-items:center;gap:1rem}
+.mark{width:3.625rem;height:2.25rem;flex:none}
+.sub{color:var(--mute);font-size:.8125rem;margin-top:.375rem}
 
-section{padding:30px 0 6px}
-.lead{color:var(--mute);font-size:14px;margin:6px 0 16px}
+/* 固定導覽（半透明材質） */
+.topnav{position:sticky;top:0;z-index:30;height:var(--navh);
+  background:rgba(12,17,25,.72);
+  -webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.06)}
+.topnav .wrap{display:flex;align-items:stretch;gap:1.5rem;height:100%;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.topnav .wrap::-webkit-scrollbar{display:none}
+.topnav a{display:flex;align-items:center;color:var(--mute);text-decoration:none;font-size:.875rem;
+  border-bottom:.125rem solid transparent;transition:color .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+.topnav a[aria-current]{color:var(--text);border-bottom-color:var(--violet)}
+.topnav a:active{color:var(--text);background:rgba(255,255,255,.06)}
+
+section{padding:1.875rem 0 .375rem;scroll-margin-top:calc(var(--navh) + .5rem)}
+.lead{color:var(--mute);font-size:.875rem;margin:.375rem 0 1rem}
 
 /* 車款選擇 */
-.picker{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
-.grp{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-.grp.r{border-top:3px solid var(--red)}
-.grp.c{border-top:3px solid var(--blue)}
-.grp h3{margin:0 0 8px;font-size:14px;font-weight:700}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{position:relative;display:inline-flex;align-items:baseline;gap:6px;cursor:pointer;
-  padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);
-  font-size:14px;user-select:none}
+.picker{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:1rem}
+.grp{background:var(--panel);border:1px solid var(--line);border-radius:.625rem;padding:.75rem .875rem}
+.grp.r{border-top:.1875rem solid var(--red)}
+.grp.c{border-top:.1875rem solid var(--blue)}
+.grp h3{margin:0 0 .5rem;font-size:.875rem;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{position:relative;display:inline-flex;align-items:baseline;gap:.375rem;cursor:pointer;
+  padding:.375rem .75rem;border:1px solid var(--line);border-radius:.5rem;background:var(--panel2);
+  font-size:.875rem;user-select:none;
+  transition:transform .1s ease-out,background-color .1s ease-out,border-color .1s ease-out;-webkit-tap-highlight-color:transparent}
 .chip input{position:absolute;opacity:0;pointer-events:none}
-.chip small{color:var(--mute);font-size:12px}
+.chip small{color:var(--mute);font-size:.75rem;letter-spacing:.01em}
 .chip.r.on{border-color:var(--red);background:rgba(228,38,43,.16)}
 .chip.c.on{border-color:var(--blue);background:rgba(61,139,255,.16)}
-.chip:has(input:focus-visible){outline:2px solid var(--blue);outline-offset:2px}
+.chip:has(input:focus-visible){outline:.125rem solid var(--blue);outline-offset:.125rem}
+.chip:active{transform:scale(.97)}
 
 /* 重點卡 */
-.kcs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.kc{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.kc.r{border-left:4px solid var(--red)}
-.kc.c{border-left:4px solid var(--blue)}
-.kh{display:flex;align-items:baseline;gap:8px}
-.br{font-weight:800;font-size:13px}
-.kc.r .br,th.r .br{color:#ff6b6f}
-.kc.c .br,th.c .br{color:#7db3ff}
-.kn{font-weight:700;font-size:17px}
-.kp{font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2;margin:4px 0 8px}
-.kp small{font-size:14px;font-weight:500;color:var(--mute)}
-.kc dl{margin:0;display:grid;gap:4px}
-.kc dl div{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-top:1px solid var(--line);padding-top:4px}
+.kcs{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
+.kc{background:var(--panel);border:1px solid var(--line);border-radius:.625rem;padding:.875rem 1rem}
+.kc.r{border-left:.25rem solid var(--red)}
+.kc.c{border-left:.25rem solid var(--blue)}
+.kh{display:flex;align-items:baseline;gap:.5rem}
+.br{font-weight:800;font-size:.8125rem}
+.kc.r .br,th.col.r .br{color:#ff6b6f}
+.kc.c .br,th.col.c .br{color:#7db3ff}
+.kn{font-weight:700;font-size:1.0625rem}
+.kp{font-size:2rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15;margin:.25rem 0 .5rem}
+.kp small{font-size:.875rem;font-weight:500;letter-spacing:0;color:var(--mute)}
+.kc dl{margin:0;display:grid;gap:.25rem}
+.kc dl div{display:flex;justify-content:space-between;gap:.75rem;font-size:.8125rem;border-top:1px solid var(--line);padding-top:.25rem}
 .kc dt{color:var(--mute)}
 .kc dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
-.gap{margin:12px 0 4px;font-size:14px}
-.gap b{color:var(--violet);font-size:16px}
+.gap{margin:.75rem 0 .25rem;font-size:.875rem}
+.gap b{color:var(--violet-text);font-size:1rem}
 
 /* 控制列 */
-.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 0 10px}
-.btn{cursor:pointer;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:5px 12px;font-size:13px}
-.btn:hover{border-color:var(--mute)}
-.sw{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:.625rem .875rem;margin:.875rem 0 .625rem}
+.btn{cursor:pointer;background:var(--panel2);border:1px solid var(--line);border-radius:.5rem;padding:.3125rem .75rem;font-size:.8125rem;
+  transition:transform .1s ease-out,background-color .1s ease-out,border-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.97);background:var(--line)}
+.sw{display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.875rem;-webkit-tap-highlight-color:transparent}
 .sw input{position:absolute;opacity:0}
-.sw i{width:38px;height:22px;border-radius:11px;background:var(--panel2);border:1px solid var(--line);position:relative;flex:none}
-.sw i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--mute)}
+.sw i{width:2.375rem;height:1.375rem;border-radius:.6875rem;background:var(--panel2);border:1px solid var(--line);position:relative;flex:none;
+  transition:background-color .1s ease-out,border-color .1s ease-out}
+.sw i::after{content:"";position:absolute;top:.125rem;left:.125rem;width:1rem;height:1rem;border-radius:.5rem;background:var(--mute);
+  transition:left .1s ease-out,width .1s ease-out,background-color .1s ease-out}
 .sw input:checked + i{background:rgba(138,92,240,.35);border-color:var(--violet)}
-.sw input:checked + i::after{left:18px;background:#fff}
-.sw input:focus-visible + i{outline:2px solid var(--blue);outline-offset:2px}
-.stat{color:var(--mute);font-size:13px;margin-left:auto}
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mute);margin:0 0 10px}
-.legend .sq{display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--diff);border:1px solid var(--violet);vertical-align:-2px;margin-right:4px}
+.sw input:checked + i::after{left:1.125rem;background:#fff}
+.sw:active i::after{width:1.25rem}
+.sw:active input:checked + i::after{left:.875rem}
+.sw input:focus-visible + i{outline:.125rem solid var(--blue);outline-offset:.125rem}
+.stat{color:var(--mute);font-size:.8125rem;margin-left:auto}
+.legend{display:flex;flex-wrap:wrap;gap:.375rem 1rem;font-size:.8125rem;color:var(--mute);margin:0 0 .625rem}
+.legend .sq{display:inline-block;width:.875rem;height:.875rem;border-radius:.1875rem;background:var(--diff);border:1px solid var(--violet);vertical-align:-.125rem;margin-right:.25rem}
 
 /* 表格 */
-.tw{overflow:auto;max-height:78vh;border:1px solid var(--line);border-radius:10px;background:var(--panel);-webkit-overflow-scrolling:touch}
+.tw{overflow:auto;max-height:78vh;border:1px solid var(--line);border-radius:.625rem;background:var(--panel);-webkit-overflow-scrolling:touch}
 .tw.short{max-height:none}
-table{border-collapse:separate;border-spacing:0;width:100%;font-size:13.5px}
-th,td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left;background:var(--panel)}
-td{min-width:150px;line-height:1.5}
-.tw.full td{min-width:170px}
-thead th{position:sticky;top:0;z-index:3;background:var(--panel2);border-bottom:2px solid var(--line);white-space:nowrap}
-th.col{border-top:3px solid transparent}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:.84375rem}
+th,td{padding:.5rem .75rem;border-bottom:1px solid var(--line);vertical-align:top;text-align:left;background:var(--panel)}
+td{min-width:9.375rem;line-height:1.5}
+.tw.full td{min-width:10.625rem}
+thead th{position:sticky;top:0;z-index:3;white-space:nowrap;border-bottom:0;
+  background:var(--glass);-webkit-backdrop-filter:blur(.875rem) saturate(160%);backdrop-filter:blur(.875rem) saturate(160%)}
+thead th::after{content:"";position:absolute;left:0;right:0;top:100%;height:.875rem;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(6,9,14,.55),transparent);opacity:0;transition:opacity .1s ease-out}
+.tw.scrolled thead th::after{opacity:1}
+th.col{border-top:.1875rem solid transparent}
 th.col.r{border-top-color:var(--red)}
 th.col.c{border-top-color:var(--blue)}
-th.col .br{display:block;font-size:12px}
-th.col .tn{display:block;font-size:16px;font-weight:700}
-th.col .pr{display:block;font-size:12px;color:var(--mute);font-weight:400;font-variant-numeric:tabular-nums}
-.lab{position:sticky;left:0;z-index:2;min-width:112px;max-width:150px;font-weight:600;color:#cbd5ea;background:var(--panel);border-right:1px solid var(--line)}
-thead .lab{z-index:4;background:var(--panel2)}
-tr.d .lab{box-shadow:inset 3px 0 0 var(--violet)}
+th.col .br{display:block;font-size:.75rem;letter-spacing:.01em}
+th.col .tn{display:block;font-size:1rem;font-weight:700}
+th.col .pr{display:block;font-size:.75rem;letter-spacing:.01em;color:var(--mute);font-weight:400;font-variant-numeric:tabular-nums}
+.lab{position:sticky;left:0;z-index:2;min-width:7rem;max-width:9.375rem;font-weight:600;color:#cbd5ea;background:var(--panel)}
+.lab::after{content:"";position:absolute;top:0;bottom:0;left:100%;width:.75rem;pointer-events:none;
+  background:linear-gradient(to right,rgba(6,9,14,.5),transparent);opacity:0;transition:opacity .1s ease-out}
+.tw.scrolledx .lab::after{opacity:1}
+thead .lab{z-index:4;background:var(--glass)}
+tr.d .lab{box-shadow:inset .1875rem 0 0 var(--violet)}
 td.hi{background:var(--diff)}
 tr.cat td{padding:0;background:var(--panel2)}
-.ct{position:sticky;left:0;display:inline-flex;align-items:center;gap:10px;padding:9px 12px;
-  background:var(--panel2);border:0;cursor:pointer;font-weight:700;font-size:14px;text-align:left}
+.ct{position:sticky;left:0;display:inline-flex;align-items:center;gap:.625rem;padding:.5625rem .75rem;
+  background:var(--panel2);border:0;cursor:pointer;font-weight:700;font-size:.875rem;text-align:left;
+  transition:background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
+.ct:active{background:var(--line)}
 .ct.static{cursor:default}
-.ct .arr{color:var(--mute);width:12px}
-.ct .cn{color:var(--mute);font-weight:400;font-size:12px}
+.ct .arr{color:var(--mute);width:.75rem}
+.ct .cn{color:var(--mute);font-weight:400;font-size:.75rem;letter-spacing:.01em}
 .yes{color:var(--green);font-weight:700}
-.no{color:#5d6a85}
-.na{color:#657390;font-size:12px}
-.note{margin-left:4px;color:var(--text)}
-.empty{padding:22px;color:var(--mute)}
+.no{color:var(--mute)}
+.na{color:var(--mute);font-size:.75rem;letter-spacing:.01em}
+.note{margin-left:.25rem;color:var(--text)}
+.empty{padding:1.375rem;color:var(--mute)}
 
 /* 官網介紹 */
-.nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:14px}
-.nav a{color:var(--mute);text-decoration:none;border-bottom:1px solid var(--line)}
-.nav a:hover{color:var(--text);border-color:var(--mute)}
-.info{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
-.icol h3{margin:0 0 10px;font-size:15px}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;align-items:start}
+.icol h3{margin:0 0 .625rem;font-size:.9375rem}
 .icol.r h3{color:#ff6b6f}
 .icol.c h3{color:#7db3ff}
-details{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:10px}
-.icol.r details{border-left:3px solid var(--red)}
-.icol.c details{border-left:3px solid var(--blue)}
-summary{cursor:pointer;padding:10px 14px;font-weight:600;list-style:none}
+details{background:var(--panel);border:1px solid var(--line);border-radius:.625rem;margin-bottom:.625rem}
+.icol.r details{border-left:.1875rem solid var(--red)}
+.icol.c details{border-left:.1875rem solid var(--blue)}
+summary{cursor:pointer;padding:.625rem .875rem;font-weight:600;list-style:none;border-radius:.625rem;
+  transition:background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
 summary::-webkit-details-marker{display:none}
-summary::before{content:"▸";display:inline-block;width:18px;color:var(--mute)}
+summary::before{content:"▸";display:inline-block;width:1.125rem;color:var(--mute)}
 details[open] summary::before{content:"▾"}
-details ul{margin:0;padding:0 14px 12px 34px;font-size:13.5px;color:#cbd5ea}
-details li{margin:4px 0}
+summary:active{background:rgba(255,255,255,.05)}
+details ul{margin:0;padding:0 .875rem .75rem 2.125rem;font-size:.84375rem;color:#cbd5ea}
+details li{margin:.25rem 0;line-height:1.55}
 details a{color:#7db3ff;word-break:break-all}
-.src{color:var(--mute);font-size:12px;margin:-4px 0 12px}
 
 /* 說明 */
-.notes{margin:8px 0 40px;padding:16px 18px 16px 34px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--mute);font-size:13px}
-.notes li{margin:5px 0}
+.notes{margin:.5rem 0 2.5rem;padding:1rem 1.125rem 1rem 2.125rem;background:var(--panel);border:1px solid var(--line);border-radius:.625rem;color:var(--mute);font-size:.8125rem}
+.notes li{margin:.3125rem 0;line-height:1.55}
 .notes b{color:var(--text)}
 
-@media (max-width:720px){
+@media (hover:hover){
+  .btn:hover{border-color:var(--mute)}
+  .chip:hover{border-color:var(--mute)}
+  .topnav a:hover{color:var(--text)}
+  summary:hover{background:rgba(255,255,255,.03)}
+}
+
+@media (max-width:45em){
   .picker,.kcs,.info{grid-template-columns:1fr}
-  th,td{padding:7px 9px}
-  table{font-size:13px}
-  td{min-width:132px}
-  .tw.full td{min-width:150px}
-  .lab{min-width:96px;max-width:110px}
+  th,td{padding:.4375rem .5625rem}
+  table{font-size:.8125rem}
+  td{min-width:8.25rem}
+  .tw.full td{min-width:9.375rem}
+  .lab{min-width:6rem;max-width:6.875rem}
   .stat{margin-left:0;width:100%}
+}
+
+/* 無障礙偏好：減少動態 */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important}
+  .btn:active,.chip:active{transform:none;opacity:.7}
+}
+/* 無障礙偏好：減少透明度（改為實色，不用模糊） */
+@media (prefers-reduced-transparency:reduce){
+  .topnav{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+  thead th,thead .lab{background:var(--panel2);-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .topnav{background:var(--bg)}
+  thead th,thead .lab{background:var(--panel2)}
+}
+/* 無障礙偏好：提高對比 */
+@media (prefers-contrast:more){
+  :root{--line:#7d8db3;--mute:#d3dbee;--text:#fff;--diff:rgba(138,92,240,.5)}
+  .topnav{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+  thead th,thead .lab{background:var(--panel2);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:.125rem solid var(--line)}
+  .chip,.btn,.sw i{border-width:.125rem}
+  .lab{border-right:1px solid var(--line)}
+}
+@media (forced-colors:active){
+  .chip.on{outline:.125rem solid Highlight}
+  td.hi{outline:1px solid Highlight;outline-offset:-1px}
+  .sw input:checked + i{outline:.125rem solid Highlight}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#quick">跳到主要內容</a>
 
 <header class="top">
   <div class="wrap head">
@@ -161,11 +231,12 @@ details a{color:#7db3ff;word-break:break-all}
     </svg>
     <div>
       <h1>RAV4 × CR-V 規格對照</h1>
-      <p class="sub">資料取自 Toyota Taiwan、Honda Taiwan 官網規格與介紹頁，2026/09/20 讀取，實車配備以原廠為準</p>
-      <nav class="nav"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a></nav>
+      <p class="sub">資料取自 Toyota Taiwan、Honda Taiwan 官網規格與介紹頁及兩家原廠型錄，2026/09/20 讀取，實車配備以原廠為準</p>
     </div>
   </div>
 </header>
+
+<nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#adv">ADVENTURE 與 GR SPORT</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a></div></nav>
 
 <main class="wrap">
 
@@ -177,10 +248,10 @@ details a{color:#7db3ff;word-break:break-all}
     <div class="grp c"><h3>CR-V</h3><div class="chips" id="pickC"></div></div>
   </div>
   <div class="kcs" id="kpis"></div>
-  <p class="gap" id="gap"></p>
+  <p class="gap" id="gap" aria-live="polite"></p>
   <div class="bar">
     <label class="sw"><input type="checkbox" id="qdiff"><i></i>只顯示差異</label>
-    <span class="stat" id="qstat"></span>
+    <span class="stat" id="qstat" aria-live="polite"></span>
   </div>
   <div class="legend">
     <span><span class="yes">●</span> 有此配備</span>
@@ -188,7 +259,7 @@ details a{color:#7db3ff;word-break:break-all}
     <span><span class="na">官網未列</span> 該官網頁面沒有這一項</span>
     <span><span class="sq"></span>與其他欄不同</span>
   </div>
-  <div class="tw short" id="qtable"></div>
+  <div class="tw short" id="qtable" tabindex="0" role="region" aria-label="快速對照表，可左右捲動"></div>
 </section>
 
 <section id="full">
@@ -201,31 +272,46 @@ details a{color:#7db3ff;word-break:break-all}
   <div class="bar">
     <button type="button" class="btn" data-act="all">全選</button>
     <button type="button" class="btn" data-act="none">全部取消</button>
+    <button type="button" class="btn" data-act="undo" id="undoBtn" hidden>復原勾選</button>
     <button type="button" class="btn" data-act="expand">展開全部分類</button>
     <button type="button" class="btn" data-act="collapse">收合全部分類</button>
     <label class="sw"><input type="checkbox" id="fdiff"><i></i>只顯示差異</label>
-    <span class="stat" id="fstat"></span>
+    <span class="stat" id="fstat" aria-live="polite"></span>
   </div>
-  <div class="tw full" id="ftable"></div>
+  <div class="tw full" id="ftable" tabindex="0" role="region" aria-label="完整對照表，可上下左右捲動"></div>
+</section>
+
+<section id="adv">
+  <h2>RAV4 ADVENTURE 與 GR SPORT</h2>
+  <p class="lead">這兩款不參與上方與 CR-V 的比較，另以 RAV4 旗艦作參考，方便看出兩款比旗艦多了或少了什麼。資料取自 RAV4 型錄規格配備表，價格取自 Toyota 官網車款清單。</p>
+  <div class="bar">
+    <button type="button" class="btn" data-act="bexpand">展開全部分類</button>
+    <button type="button" class="btn" data-act="bcollapse">收合全部分類</button>
+    <label class="sw"><input type="checkbox" id="bdiff"><i></i>只顯示差異</label>
+    <span class="stat" id="bstat" aria-live="polite"></span>
+  </div>
+  <div class="tw full" id="btable" tabindex="0" role="region" aria-label="ADVENTURE 與 GR SPORT 對照表，可上下左右捲動"></div>
 </section>
 
 <section id="intro">
   <h2>官網介紹內容</h2>
-  <p class="lead">兩家官網介紹頁與 Honda CR-V 型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入上方對照表。</p>
+  <p class="lead">兩家官網介紹頁與兩份型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入上方對照表。</p>
   <div class="info">
 
     <div class="icol r">
-      <h3>RAV4（Toyota Taiwan 官網 RAV4 介紹頁）</h3>
+      <h3>RAV4（Toyota Taiwan 官網介紹頁與型錄）</h3>
 
       <details>
         <summary>頁面說明與連結</summary>
         <ul>
-          <li>型錄於 2026/06/15 更新，官網註明 2026 年 6 月起生產的 RAV4，以其規配表為準。</li>
-          <li>適用 E3 酒精汽油；全車系自排車種配備 ASL 自排防暴衝裝置（已列入完整對照表）。</li>
-          <li>官網註明：日本進口是指車輛的主要構成部分，不含 E-Mirror 電子式車內後視鏡。</li>
-          <li>圖片與實車不符以實車為準；各項安全系統作動有條件限制，詳見車主手冊與經銷商說明。</li>
-          <li>HYBRID 保固說明只針對 HYBRID 系統與電池，官網沒有另外說明 PHEV 電池（已列入完整對照表）。</li>
-          <li>官網購車優惠入口列有「20 萬 20 期 0 利率（分期總額）」，並連到 RAV4 與 RAV4 PHEV 的優惠專頁，條件與期限以官網為準。</li>
+          <li>型錄標示「日本進口」、2026 年 6 月，涵蓋 RAV4、RAV4 PHEV、RAV4 ADVENTURE、RAV4 GR SPORT 四個車系；官網頁面註明型錄於 2026/06/15 更新，2026 年 6 月起生產的 RAV4，以其規配表為準。</li>
+          <li>適用 E3 酒精汽油；全車系自排車種配備 ASL 自排防暴衝裝置；排氣量等級超過 2,400 c.c. 至 3,000 c.c.（已列入完整對照表）。</li>
+          <li>官網與型錄都註明：日本進口是指車輛的主要構成部分，不含 E-Mirror 電子式車內後視鏡。</li>
+          <li>圖片與實車不符以實車為準；各項安全配備與 SRS 氣囊的作動有條件限制，詳見車主手冊與經銷商說明。</li>
+          <li>型錄規格表附註：表列數值為標準值、未含容許公差；最大／綜效馬力與扭力為原廠實驗室測試值；年耗油量與年耗電量以每年 15,000 公里計算；平均油耗依歐盟 1999/100/EC 指令的測試程序測得。</li>
+          <li>保固：型錄標示新車 4 年或 12 萬公里（先到者為準）；HYBRID 保固的說明只針對 HYBRID 系統與電池，官網沒有另外說明 PHEV 電池（已列入完整對照表）。</li>
+          <li>型錄規格表與配備表的主要項目（尺寸、動力、油耗、輪胎輪圈、座椅、舒適、科技與安全配備等，約 430 格）已與對照表逐格核對：數值與配備有無都一致，僅有少數文字寫法差異，例如電動尾門是否寫「附」字。PHEV 駕駛模式是唯一內容不同的項目，表內已並列兩個來源。</li>
+          <li>官網購車優惠入口列有「20 萬 20 期 0 利率（分期總額）」，並連到 RAV4 與 RAV4 PHEV 的優惠專頁，條件與期限以官網為準；型錄尾頁的聯名卡回饋等行銷內容未收錄。</li>
           <li>連結：
             <a href="https://hotaicdn.azureedge.net/toyotaweb/CAR_20260615085300724627A3.pdf" target="_blank" rel="noopener">電子型錄 PDF</a>、
             <a href="https://hotaicdn.azureedge.net/toyotaweb/car_manual_2026011413461685EE2765.pdf" target="_blank" rel="noopener">車主手冊（HV，2026.01 起適用）</a>、
@@ -236,27 +322,57 @@ details a{color:#7db3ff;word-break:break-all}
       </details>
 
       <details>
-        <summary>外觀重點（官網註明等級）</summary>
+        <summary>車色（型錄）</summary>
         <ul>
-          <li>LED Bi-Beam 頭燈；旗艦為雙刃光條式日行燈。</li>
-          <li>LED 直豎式尾燈組。</li>
-          <li>旗艦：車頂架、電動天窗。</li>
-          <li>鋁圈：豪華、尊爵為 17 吋五幅式；尊爵+ 為 18 吋雙肋五幅式；旗艦為 18 吋雙肋五幅式雙色切削。</li>
-          <li>PHEV 4WD：馭黑前下護板與後下護板、20 吋十幅式馭黑鋁圈、支援 CCS1 快速充電。</li>
-          <li>車色：360 度賞車頁面標示「靜謐灰」為 PHEV 4WD 專屬車色，PHEV 4WD 沒有搭配「霧岩灰」；其他車色名稱在擷取內容中沒有列出。</li>
+          <li>RAV4（豪華、尊爵、尊爵+、旗艦）：鉑鑽白、尊爵黑、綻曜藍、霧岩灰、月光鈦。</li>
+          <li>RAV4 PHEV：鉑鑽白、尊爵黑、綻曜藍、靜謐灰、月光鈦（靜謐灰為 PHEV 專屬，沒有霧岩灰）。</li>
+          <li>RAV4 ADVENTURE：雪貂白、尊爵黑、霧岩灰、野境綠。</li>
+          <li>RAV4 GR SPORT（馭黑雙色車頂）：鉑鑽白、霧岩灰、晶燦紅。</li>
         </ul>
       </details>
 
       <details>
-        <summary>內裝與置物重點</summary>
+        <summary>外觀重點（官網註明等級）</summary>
         <ul>
-          <li>座椅：豪華為抗磨布質；尊爵、尊爵+ 為豪華皮質；旗艦為高級皮質；PHEV 為 BRIN NAUB® 透氣類麂皮與豪華皮質。</li>
-          <li>旗艦：前座加熱與通風、後座加熱、雙前座 8 向電動、雙 Qi 無線充電、E-Mirror、投射式 HUD、足踢感應式電動尾門。</li>
-          <li>尊爵+ 以上：後座兩組 15W Type-C USB、12.9 吋懸浮式音響主機、行李廂遮物簾。</li>
-          <li>前座中央兩組 Type-C USB：旗艦為 45W，其他等級為 15W。</li>
-          <li>PHEV 4WD：線傳式排檔。</li>
-          <li>介紹頁未註明等級的項目：12.3 吋全彩數位儀表、S-FLOW 智慧型雙區獨立恆溫空調、無線 Apple CarPlay 與 Android Auto、駕駛模式切換鈕、EV/HV 模式切換鈕、MID 中央儀表控制鍵、TSS 設定鍵（DRCC／LTA）、EPB 與 Auto Hold、SOS 緊急求救按鈕、後座出風口。</li>
-          <li>置物與行李廂（同樣未註明等級）：行李廂大容量、雙面多用途行李廂隔板、多功能尾門握把／掛勾（官網註明原車無附掛燈，僅供示意）、前座吸頂式置物盒、前座中央置杯架、副駕駛座前方置物盤與手套箱、副駕駛座後方置物袋、雙面使用中央扶手附置物盤、後座中央扶手附置杯架。</li>
+          <li>LED Bi-Beam 頭燈；雙刃光條式日行燈為旗艦、GR SPORT 4WD、PHEV 4WD 配備。</li>
+          <li>LED 直豎式尾燈組。</li>
+          <li>車頂架：旗艦、GR SPORT 4WD、PHEV 4WD（ADVENTURE 4WD 為越野型橋式車頂架）；電動天窗：旗艦、ADVENTURE 4WD、GR SPORT 4WD、PHEV 4WD。</li>
+          <li>鋁圈：豪華、尊爵為 17 吋五幅式；尊爵+ 為 18 吋雙肋五幅式；旗艦為 18 吋雙肋五幅式雙色切削。</li>
+          <li>PHEV 4WD：馭黑前下護板與後下護板、20 吋十幅式馭黑鋁圈與馭黑輪拱飾板、支援 CCS1 快速充電。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>內裝、座椅與置物重點</summary>
+        <ul>
+          <li>型錄列出六種座椅：抗磨布質（豪華）、豪華皮質（尊爵、尊爵+）、高級皮質（旗艦）、ADVENTURE 豪華皮質專屬設計、GR SPORT BRIN NAUB® 透氣類麂皮與豪華皮質、PHEV BRIN NAUB® 透氣類麂皮與豪華皮質。</li>
+          <li>前座加熱與通風：旗艦與 PHEV 4WD；後座加熱座椅：旗艦。</li>
+          <li>雙前座 8 向電動座椅：旗艦、GR SPORT 4WD、PHEV 4WD；駕駛座 2 組記憶：旗艦、PHEV 4WD。</li>
+          <li>投射式 HUD：旗艦、GR SPORT 4WD、PHEV 4WD；E-Mirror 電子式車內後視鏡：旗艦、ADVENTURE 4WD、GR SPORT 4WD、PHEV 4WD；雙 Qi 無線充電座：旗艦。</li>
+          <li>足踢感應式電動尾門：旗艦、ADVENTURE 4WD、GR SPORT 4WD、PHEV 4WD；行李廂遮物簾：尊爵+ 以上。</li>
+          <li>12.9 吋懸浮式音響主機：尊爵+ 以上；衛星導航為尊爵+ 以上的標準配備。</li>
+          <li>USB：前座中央兩組 Type-C 為 15W，旗艦與 PHEV 4WD 升級為 45W；後座兩組 15W Type-C：尊爵+ 以上。</li>
+          <li>型錄註記：無線充電座並非適用所有廠牌手機，手機須支援 Qi；使用植入式心律調節器等醫療電氣設備的人，使用前應先諮詢醫生。</li>
+          <li>PHEV 4WD：線傳式排檔，並有駕駛模式切換鈕與 EV/HV 模式切換鈕。</li>
+          <li>12.9 吋懸浮式主機的設定畫面包括車內空調設定（S-FLOW 智慧型雙區獨立恆溫）、車輛功能設定與駕駛輔助系統設定，支援藍牙；型錄稱導航設定、駕駛輔助與多重駕駛模式都可依個人偏好自訂。</li>
+          <li>平整化車室空間（旗艦）為型錄第 8 頁的圖示標題；圖中行李廂的物品擺放僅為參考示意，實際放置應符合相關交通法令。</li>
+          <li>介紹頁未註明等級的項目：12.3 吋全彩數位儀表、S-FLOW 智慧型雙區獨立恆溫空調、無線 Apple CarPlay 與 Android Auto、MID 中央儀表控制鍵、TSS 設定鍵（DRCC／LTA）、EPB 與 Auto Hold、SOS 緊急求救按鈕、後座出風口。</li>
+          <li>置物與行李廂（同樣未註明等級）：行李廂大容量、雙面多用途行李廂隔板、多功能尾門握把／掛勾（官網註明原車無附掛燈，僅供示意）、前座吸頂式置物盒、前座中央置杯架、副駕駛座前方置物盤與手套箱、前座與後座側邊置物格、副駕駛座後方置物袋、雙面使用中央扶手附置物盤、後座中央扶手附置杯架。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>TOYOTA Connect 智能聯網系統（型錄）</summary>
+        <ul>
+          <li>透過專屬 App 遠端操作遙控功能、掌握愛車狀態，並有借車模式、行駛報告與緊急求助等服務。</li>
+          <li>十項功能：遠端遙控、緊急求助、借車模式、愛車狀態、行駛報告、充電管理、尋找愛車、加油日誌、愛車總覽、愛車守護。</li>
+          <li>遠端遙控：遠端控車門鎖；查看並遠端關閉車窗或天窗；遠端閃燈或鳴笛協助尋車；遠端啟動空調（運行一段時間後自動關閉）；遠端充電管理（適用 PHEV）。</li>
+          <li>借車模式：可選「家人守護」「出借管理」「代客泊車」，車輛超出設定行駛範圍時發送通知，也可開啟駕駛行為監控。</li>
+          <li>愛車狀態：可查看胎壓數值與車門、車窗、車燈、天窗的開關狀態；熄火後若車門未鎖或車窗未關會推播提醒；觸發警報時傳送通知到手機。</li>
+          <li>行駛報告：每次行駛結束自動產生報告（軌跡、距離、時間、平均油耗、車速），並有月度與年度統計圖表；型錄註明僅供車主參考，不得作為證明資料。</li>
+          <li>電池狀態與充電排程（適用 PHEV）：可查看剩餘電量與可行駛里程，並排定定時定量的充電。</li>
+          <li>緊急求助：嚴重碰撞時，自動碰撞通知會傳送事故資訊與 GPS 座標，緊急聯絡中心主動啟動救援；按下駕駛座上方的 SOS 按鍵，也會把 GPS 座標與車輛狀態傳給緊急聯絡中心。</li>
+          <li>型錄註記：提供 4 年聯網服務，需在 4G 訊號正常地區，並於 App 完成會員註冊與車輛綁定；實際功能依各等級設定而有差異；車輛須處於有網路連線的環境；各車型可取得的資訊與功能不同。</li>
         </ul>
       </details>
 
@@ -265,18 +381,48 @@ details a{color:#7db3ff;word-break:break-all}
         <ul>
           <li>官網說明的五個特點：自主充電（靠引擎與減速動能回收充電）、智慧駕駛（PCU 依需求分配馬達與引擎輸出）、加速（引擎搭配高扭力馬達）、靜謐（純電行駛安靜，引擎與馬達平順切換）、節能環保。</li>
           <li>作動情境：啟動或按 EV 鍵時僅馬達行駛；一般行駛時引擎與馬達交互運用，多餘動力為 HYBRID 電池充電；全力加速時引擎與馬達同時輸出；減速時馬達把動能轉為電能儲存；停車時引擎與馬達停止運作、不耗油，空調可再作動一段時間。</li>
-          <li>一級能源效率，豪華標示 24.0 km/L。</li>
-          <li>官網標題寫「第五代」，圖片說明文字卻寫「第四代」，兩處不一致，這裡不採用世代說法。</li>
+          <li>一級能源效率：型錄標示平均油耗 24.0 km/L，適用豪華、尊爵、尊爵+、旗艦，並附節能標章；ADVENTURE 4WD 與 GR SPORT 4WD 標示 20.3 km/L。</li>
+          <li>型錄標題為「全新第五代 SELF-CHARGING HYBRID」；官網圖片說明文字寫「第四代」，這裡以型錄為準。</li>
+          <li>HYBRID 電池保固：型錄標示 8 年或 16 萬公里。</li>
+          <li>官網全站備註：HYBRID 電池透過 SOC（State Of Charge）管理系統控制充放電狀態，能延長使用壽命；電池電量過低或有需要時，即使停車怠速，引擎仍會啟動，讓系統順利運作。</li>
+          <li>稅費：型錄註明 HEV 不屬《使用牌照稅法》所稱「完全以電能為動力之機動車輛」，也不是《汽車燃料使用費徵收及分配辦法》所稱「電動汽車」，須依規定申領非電能自用或營業小客車牌，並繳納使用牌照稅與汽車燃料使用費。</li>
         </ul>
       </details>
 
       <details>
         <summary>插電式油電車（PHEV）</summary>
         <ul>
-          <li>動力電池採水冷並搭載加熱系統控溫；官網標示 RAV4 PHEV 最大綜效馬力 329 ps。</li>
-          <li>22.7 kWh 電池配置在底盤中央，官網說明可降低重心並優化重量分配；純電最長續航 135 km。</li>
-          <li>純電行駛里程依歐盟 ECE R101（NEDC 行車型態）測得，實際里程會受路況與用車習慣影響。</li>
-          <li>充電網絡：官網稱全台公共充電站超過 1,000 個，Toyota 另與策略夥伴合作，提供近 2,000 個充電站服務（詳見 My Toyota APP「充電漫遊」地圖）。</li>
+          <li>型錄標題為「全新第六代 RAV4 PHEV 插電式油電車」。</li>
+          <li>動力電池採水冷並搭載加熱系統控溫；標示最大綜效馬力 329 ps。</li>
+          <li>22.7 kWh 電池配置在底盤中央，可降低重心並優化重量分配；純電最長續航 135 km。</li>
+          <li>純電里程的測試依據：型錄第 40 頁寫依歐盟 1999/100/EC 程序，規格表附註寫歐盟 ECE R101，兩處都註明是 NEDC 行車型態；實際里程會受路況與用車習慣影響。</li>
+          <li>充電規格與時間（型錄）：直流快充 35 kW、CCS1，10%～80% 常態約 28 分鐘（在 DC 最大功率 35 kW 下，自電量警示亮起後充至 80% 所需時間）；交流慢充 7 kW、SAE J1772，220V/32A 從 10% 充到 100% 約 150 分鐘，也可用 110V/12A 家用插座充電。實際充電時間依充電環境與各地供電狀況而異。</li>
+          <li>公共充電：支援 CCS1 直流快充與 SAE J1772 交流慢充，適用全台公共充電樁；據點充電：Toyota 在全台超過 80 個據點建置充電站；居家充電：隨車附贈原廠充電線，可接 110V 家用插座，使用 220V 家用 AC 充電樁效率更好。</li>
+          <li>充電網絡：全台超過 1,000 個公共充電站，Toyota 另與策略夥伴合作，提供近 2,000 個充電站服務；My Toyota APP「充電漫遊」可查地圖、啟用充電、隨插即充、付款並查詢充電紀錄，合作站點以 APP 顯示為準。</li>
+          <li>E-Four 4WD：即時精準分配前後輪扭力，並搭配新的 ECB 電子控制煞車系統，提升加速穩定性。</li>
+          <li>稅費：型錄註明 PHEV 目前不屬《使用牌照稅法》所稱「完全以電能為動力之機動車輛」，也不是《汽車燃料使用費徵收及分配辦法》所稱「電動汽車」，須依規定申領非電能自用或營業小客車牌，並繳納使用牌照稅與汽車燃料使用費。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>RAV4 ADVENTURE（型錄）</summary>
+        <ul>
+          <li>型錄以「冒險無須妥協」為訴求，車型標示為 ADVENTURE 4WD；官網列價 133 萬。</li>
+          <li>專屬外觀：霧黑水箱罩飾板、霧銀前後下護板、ADVENTURE 專屬銘板、越野型橋式車頂架、18 吋六幅式霧黑鋁圈、霧黑厚覆式輪拱飾板、馭黑外車門把手。</li>
+          <li>內裝：專屬越野塗裝；座椅為豪華皮質專屬設計，前座舒適功能型錄只列加熱。</li>
+          <li>E-Four 4WD：兼顧 SUV 所需的四輪驅動性能與燃油效率，濕地、泥濘或碎石路等易打滑路面時，由傳動系統最佳化分配四輪驅動力；搭配新的 ECB 電子控制煞車，把驅動力移轉到抓地力較好的車輪，強化脫困能力。</li>
+          <li>與旗艦的差異請見上方「RAV4 ADVENTURE 與 GR SPORT」獨立區塊。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>RAV4 GR SPORT（型錄）</summary>
+        <ul>
+          <li>型錄以「引領速度 是唯一態度」為訴求，車型標示為 GR SPORT 4WD；官網列價 139 萬。</li>
+          <li>專屬外觀：蜂巢式馭黑水箱護罩與 GR 專屬銘板、馭黑雙色車頂、馭黑後下護板、馭黑空力運動尾翼、20 吋輕量化雙肋五幅式雙色切削鋁圈與馭黑加寬輪拱飾板。</li>
+          <li>底盤：性能阻尼桿、GR SPORT 運動化懸吊、專屬紅色塗裝卡鉗。</li>
+          <li>內裝：前座頭枕 GR 刺繡、方向盤 GR 銘板、鋁合金油門與煞車踏板、GR SPORT 專屬門檻踏板；座椅為 BRIN NAUB® 透氣類麂皮與豪華皮質。</li>
+          <li>E-Four 4WD：激烈操駕或連續彎道時即時控制前後輪驅動力分配、抑制輪胎打滑；搭配新的 ECB 電子控制煞車，高速過彎或濕滑路面可即時介入煞車控制，穩定車身姿態並提升橫向支撐感。</li>
         </ul>
       </details>
 
@@ -285,21 +431,23 @@ details a{color:#7db3ff;word-break:break-all}
         <ul>
           <li>TNGA 五項訴求：高剛性車體（大量採用超高強度鋼與雷射強化焊接）、低重心、高性能懸吊、操控樂趣、駕馭視野。</li>
           <li>2.5L Dynamic Force 引擎：優化 VVT-iE 電子式可變汽門正時、D-4S 雙噴射供油系統。</li>
-          <li>前獨立麥花臣、後獨立雙 A 臂懸吊。</li>
-          <li>駕駛模式：ECO／NORMAL／SPORT／CUSTOM（介紹頁所列）。</li>
+          <li>前獨立麥花臣、後獨立雙 A 臂懸吊；型錄稱後懸吊結構源自飛機起落架，能有效處理過彎時的負載。</li>
+          <li>多重駕駛模式：ECO／NORMAL／SPORT／CUSTOM／TRAIL／SNOW，其中 TRAIL 與 SNOW 僅限 4WD 車型；另有駕駛模式切換鍵與純電行駛模式設定鍵。</li>
+          <li>AUTO LSD 電子式自動限滑差速控制系統：豪華、尊爵、尊爵+、旗艦；最小迴轉半徑 5.68 m 同樣標示適用這四個等級。</li>
         </ul>
       </details>
 
       <details>
         <summary>主動安全說明</summary>
         <ul>
+          <li>型錄：Toyota Safety Sense 4.0，全車搭載最高 46 項主被動安全防護；註明 46 項為 ADVENTURE 4WD、GR SPORT 4WD、PHEV 4WD 所搭載。</li>
           <li>PCS：偵測前方車輛、摩托車、行人與自行車，提供預警、煞車力道輔助、主動煞車輔助、低速誤加速抑制輔助、緊急閃避轉向輔助與交叉路口轉向輔助。</li>
           <li>LTA：時速 50 公里以上未打方向燈且判斷偏離車道時警示；並提供偏離修正、搭配 DRCC 的車道循跡（維持車道中心）與車輛搖晃警示。</li>
           <li>DRCC：全速域含 Stop &amp; Go，可設定 30-180 km/h；會預判前前車減速；開啟 Eco-Mode 有節能巡航。</li>
           <li>RSA：以攝影機辨識道路速限並通知駕駛。</li>
           <li>VSC、TRC、ACA（加速過彎轉向不足時控制內側輪煞車）、HAC、DSC（誤入檔位時限制動力輸出）。</li>
           <li>PKSB：偵測前後靜止障礙物，必要時降低引擎出力並主動煞車。</li>
-          <li>FCTA（時速 15 公里以下偵測左右來車）、DMC 駕駛疲勞監測、PVM 環景影像：官網註明尊爵以上配備。</li>
+          <li>FCTA（時速 15 公里以下偵測左右來車）、DMC 駕駛疲勞監測、PVM 環景影像：官網與型錄都註明尊爵以上配備。</li>
           <li>TPMS、EBS（緊急煞車時閃爍煞車燈）、AVAS（車速低於 25 km/h 或倒車時發出聲響）、RCTA。</li>
           <li>煞車輔助：ABS、BAS、BOS、EBD。</li>
         </ul>
@@ -308,7 +456,7 @@ details a{color:#7db3ff;word-break:break-all}
       <details>
         <summary>被動安全說明</summary>
         <ul>
-          <li>官網標題為「7 SRS 氣囊」：雙前座、雙前座椅側、車側簾式、駕駛座膝部。</li>
+          <li>型錄標題為「7 SRS 氣囊」：雙前座、雙前座椅側、車側簾式、駕駛座膝部。</li>
           <li>GOA 高剛性車體：熱沖壓工藝，最高採 1,470 MPa 等級超高強度鋼，搭配潰縮式前懸設計吸收撞擊能量。</li>
           <li>後座 ISO-FIX 卡扣、主動式 WIL 頸椎傷害緩和前座椅、束力限制預縮式安全帶（雙前座與左右後座）。</li>
         </ul>
@@ -423,12 +571,14 @@ details a{color:#7db3ff;word-break:break-all}
 </section>
 
 <ul class="notes" id="notes">
-  <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）與 RAV4 介紹頁（toyota.com.tw/showroom/RAV4/#hybrid）、Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）與 Honda CR-V 型錄 PDF（封底印製日期 2025.06），皆於 2026/09/20 讀取。價格為官網建議售價。</li>
+  <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）、RAV4 介紹頁（toyota.com.tw/showroom/RAV4/#hybrid）與 RAV4 電子型錄 PDF（日本進口，2026 年 6 月）；Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）與 Honda CR-V 型錄 PDF（封底印製日期 2025.06），皆於 2026/09/20 讀取。價格為官網建議售價，ADVENTURE 與 GR SPORT 的價格取自 Toyota 官網車款清單。</li>
   <li><b>官網未列：</b>表示該官網頁面沒有這一項，不代表車輛沒有此配備。</li>
   <li><b>差異標色：</b>依官網文字逐項比對，不做語意判斷，同一功能在兩家的寫法不同時會被標為差異；官網未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI）已在項目名稱並列。</li>
-  <li><b>油耗：</b>兩家官網都註明依歐盟 1999/100/EC 指令測試，年耗油量都以每年 15,000 公里計算；CR-V 頁面另標示 NEDC。RAV4 PHEV 的 131.6 km/L 為官網標示值，官網沒有說明換算方式；純電里程 135 km 依 ECE R101（NEDC 行車型態）測得。</li>
-  <li><b>範圍：</b>RAV4 為完整規配頁的 5 個等級，不含 RAV4 ADVENTURE、RAV4 GR SPORT。CR-V 為 4 個等級。</li>
-  <li><b>介紹內容：</b>介紹頁有註明等級的項目已補進對照表；沒有註明等級的項目只列在「官網介紹內容」，不假設各等級是否都有。RAV4 官網的車色、TOYOTA Connect 內容在擷取結果中只有圖片，沒有文字可收錄。</li>
+  <li><b>油耗：</b>兩家官網都註明依歐盟 1999/100/EC 指令測試，年耗油量都以每年 15,000 公里計算；CR-V 頁面另標示 NEDC。RAV4 PHEV 的 131.6 km/L 為官網與型錄標示值，沒有說明換算方式；純電里程 135 km 的測試依據，型錄兩處寫法不同（1999/100/EC 與 ECE R101），都註明 NEDC 行車型態。</li>
+  <li><b>範圍：</b>主表為 RAV4 五個等級加 CR-V 四個等級；RAV4 ADVENTURE 與 GR SPORT 收錄在獨立區塊，不參與與 CR-V 的比較。</li>
+  <li><b>介紹內容：</b>介紹頁有註明等級的項目已補進對照表；沒有註明等級的項目只列在「官網介紹內容」，不假設各等級是否都有。</li>
+  <li><b>車色：</b>RAV4 各車系的車色來自型錄；CR-V 型錄沒有註明各等級可選哪些顏色，表內四款列同一組 5 色，實際各等級可選的顏色以原廠為準。</li>
+  <li><b>PHEV 駕駛模式：</b>官網完整規配頁與型錄的寫法不同（官網有 EV，型錄沒有，但另列 EV/HV 模式切換鈕），表內並列兩個來源，這裡沒有判定哪個正確。</li>
 </ul>
 
 </main>
@@ -452,16 +602,17 @@ var TRIMS=[
 /* 每列：[項目, RAV4 五欄（豪華/尊爵/尊爵+/旗艦/PHEV）, CR-V 四欄（VTi-S/S/e:HEV S/e:HEV Prestige）]；null＝官網未列 */
 var RAW=[
 ['基本資料',[
- ['建議售價（萬元）',['104','117','122','130','149'],['99.9','109.9','122.9','129.9']],
- ['動力型式',['HYBRID 油電','HYBRID 油電','HYBRID 油電','HYBRID 油電','PHEV 插電式油電'],['汽油（渦輪增壓）','汽油（渦輪增壓）','e:HEV 油電','e:HEV 油電']]
+ ['建議售價（萬元）',['104','117','122','130','149'],['99.9','109.9','122.9','129.9'],['133','139']],
+ ['動力型式',['HYBRID 油電','HYBRID 油電','HYBRID 油電','HYBRID 油電','PHEV 插電式油電'],['汽油（渦輪增壓）','汽油（渦輪增壓）','e:HEV 油電','e:HEV 油電']],
+ ['車色',['鉑鑽白／尊爵黑／綻曜藍／霧岩灰／月光鈦','鉑鑽白／尊爵黑／綻曜藍／霧岩灰／月光鈦','鉑鑽白／尊爵黑／綻曜藍／霧岩灰／月光鈦','鉑鑽白／尊爵黑／綻曜藍／霧岩灰／月光鈦','鉑鑽白／尊爵黑／綻曜藍／靜謐灰／月光鈦'],R('雲朵白／流星灰／風尚灰／水晶黑／熾焰紅',4),['雪貂白／尊爵黑／霧岩灰／野境綠','鉑鑽白／霧岩灰／晶燦紅（馭黑雙色車頂）']]
 ]],
 ['車體尺寸',[
- ['全長 (mm)',R('4600',5),R('4690',4)],
- ['全寬 (mm)',R('1855',5),R('1865',4)],
- ['全高 (mm)',['1680','1680','1680','1680','1685'],R('1680',4)],
+ ['全長 (mm)',R('4600',5),R('4690',4),['4620','4645']],
+ ['全寬 (mm)',R('1855',5),R('1865',4),['1880','1880']],
+ ['全高 (mm)',['1680','1680','1680','1680','1685'],R('1680',4),['1730','1680']],
  ['軸距 (mm)',R('2690',5),R('2700',4)],
- ['最小迴轉半徑 (m)',R('5.68',5),R('5.5',4)],
- ['空車重 (kg)',['1600','1635','1635','1635','1995'],['1588','1601','1737','1770']],
+ ['最小迴轉半徑 (m)',R('5.68',5),R('5.5',4),['5.69','5.69']],
+ ['空車重 (kg)',['1600','1635','1635','1635','1995'],['1588','1601','1737','1770'],['1695','1695']],
  ['油箱容量 (L)',R('55',5),R('57',4)],
  ['車體結構',R(X,5),R('G-CON + Inner Frame 技術，高剛性 ACE 鋼骨防護車體',4)]
 ]],
@@ -479,35 +630,38 @@ var RAW=[
 ]],
 ['電動馬達與電池',[
  ['馬達型式',R('永磁同步馬達',5),[N,N,'永磁同步馬達','永磁同步馬達']],
- ['馬達最大馬力',['136 ps','136 ps','136 ps','136 ps','前馬達 205 / 後馬達 55 ps'],[N,N,'184 PS (135kW) / 5,000-8,000 rpm','184 PS (135kW) / 5,000-8,000 rpm']],
- ['馬達最大扭力 (kg-m)',['21.2','21.2','21.2','21.2','前馬達 27.7 / 後馬達 12.5'],[N,N,'34.2 / 0-2,000 rpm','34.2 / 0-2,000 rpm']],
+ ['馬達最大馬力',['136 ps','136 ps','136 ps','136 ps','前馬達 205 / 後馬達 55 ps'],[N,N,'184 PS (135kW) / 5,000-8,000 rpm','184 PS (135kW) / 5,000-8,000 rpm'],['前馬達 136 / 後馬達 54 ps','前馬達 136 / 後馬達 54 ps']],
+ ['馬達最大扭力 (kg-m)',['21.2','21.2','21.2','21.2','前馬達 27.7 / 後馬達 12.5'],[N,N,'34.2 / 0-2,000 rpm','34.2 / 0-2,000 rpm'],['前馬達 21.2 / 後馬達 12.3','前馬達 21.2 / 後馬達 12.3']],
  ['馬達最大輸出電壓 (V)',['600','600','600','600','650'],R(X,4)],
  ['電池型式',R('鋰離子電池',5),[N,N,'鋰離子電池','鋰離子電池']],
  ['電池電壓 (V)',['248.2','248.2','248.2','248.2','391'],R(X,4)],
  ['動力電池容量 (kWh)',[N,N,N,N,'22.7'],[N,N,X,X]],
- ['CCS1 快速充電',[N,N,N,N,Y],[N,N,X,X]],
- ['最大綜效馬力 (ps)',['229','229','229','229','329'],R(X,4)]
+ ['直流（DC）充電規格',[N,N,N,N,'CCS1'],[N,N,X,X]],
+ ['交流（AC）充電規格',[N,N,N,N,'SAE J1772'],[N,N,X,X]],
+ ['最大綜效馬力 (ps)',['229','229','229','229','329'],R(X,4),['239','239']]
 ]],
 ['傳動與底盤',[
- ['傳動系統',['前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','E-Four 4WD 電子式四輪傳動'],R('FF 前輪傳動',4)],
- ['變速系統',R('E-CVT 無段變速',5),['CVT 無段變速（G-Design Shift Logic）','CVT 無段變速（G-Design Shift Logic）','E-CVT 電氣式無段變速','E-CVT 電氣式無段變速']],
+ ['傳動系統',['前輪傳動（附 Auto LSD 電子式自動限滑差速控制系統）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制系統）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制系統）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制系統）','E-Four 4WD 電子式四輪傳動系統'],R('FF 前輪傳動',4),['E-Four 4WD 電子式四輪傳動系統','E-Four 4WD 電子式四輪傳動系統']],
+ ['變速系統',R('E-CVT 無段變速系統',5),['CVT 無段變速（G-Design Shift Logic）','CVT 無段變速（G-Design Shift Logic）','E-CVT 電氣式無段變速','E-CVT 電氣式無段變速']],
  ['檔位控制',R(X,5),['6 檔位控制','5 檔位控制','5 檔位控制','5 檔位控制']],
- ['換檔／電力再生撥片',[N,N,N,N,'●方向盤換檔撥片'],[N,'●換檔撥片','●電力再生撥片（4 段回充力道）','●電力再生撥片（4 段回充力道）']],
+ ['換檔／電力再生撥片',[N,N,N,N,'●方向盤換檔撥片'],[N,'●換檔撥片','●電力再生撥片（4 段回充力道）','●電力再生撥片（4 段回充力道）'],[N,'●方向盤換檔撥片']],
  ['轉向系統',R('EPS 電動輔助方向盤',5),R('VGR 可變齒比 EPS 電動輔助動力方向機',4)],
  ['油門設計',R(X,5),R('ETC 電子節流閥線傳控制系統（DBW）',4)],
  ['前懸吊',R('獨立麥花臣式（附防傾平衡桿）',5),R('麥花臣支柱式',4)],
  ['後懸吊',R('獨立雙 A 臂式（附防傾平衡桿）',5),R('獨立多連桿式',4)],
  ['避震器',R(X,5),R('ARD 振幅反應避震器',4)],
+ ['性能阻尼桿',R(X,5),R(X,4),[X,X],[N,N,Y]],
+ ['運動化懸吊與卡鉗',R(X,5),R(X,4),[X,X],[X,X,'●（GR SPORT 運動化懸吊；專屬紅色塗裝卡鉗）']],
  ['煞車系統',R('四輪碟煞（附 ABS+EBD+BAS+BOS）',5),['X 型雙迴路 EBB 電動式煞車增壓 4 輪碟式','X 型雙迴路 EBB 電動式煞車增壓 4 輪碟式','X 型雙迴路 ESB 電動伺服 4 輪碟式','X 型雙迴路 ESB 電動伺服 4 輪碟式']],
- ['輪胎規格',['235/65R17','235/65R17','235/60R18','235/60R18','235/50R20'],R('235/60R18',4)],
- ['輪圈',['17 吋五幅式鋁圈','17 吋五幅式鋁圈','18 吋雙肋五幅式鋁圈','18 吋雙肋五幅式雙色切削鋁圈','20 吋十幅式馭黑鋁圈'],['18 吋高光澤黑鋁合金鋁圈','18 吋高光澤黑鋁合金鋁圈','18 吋高光澤黑鋁合金鋁圈（聲學共鳴減噪技術）','18 吋高光澤黑鋁合金鋁圈（聲學共鳴減噪技術）']],
- ['駕駛模式',['NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／SNOW／EV／TRAIL／CUSTOM'],['ECON','ECON','ECON／NORMAL／SPORT／INDIVIDUAL','ECON／NORMAL／SPORT／INDIVIDUAL']],
+ ['輪胎規格',['235/65R17','235/65R17','235/60R18','235/60R18','235/50R20'],R('235/60R18',4),['235/60R18','235/50R20']],
+ ['輪圈',['17 吋五幅式鋁圈','17 吋五幅式鋁圈','18 吋雙肋五幅式鋁圈','18 吋雙肋五幅式雙色切削鋁圈','20 吋十幅式馭黑鋁圈'],['18 吋高光澤黑鋁合金鋁圈','18 吋高光澤黑鋁合金鋁圈','18 吋高光澤黑鋁合金鋁圈（聲學共鳴減噪技術）','18 吋高光澤黑鋁合金鋁圈（聲學共鳴減噪技術）'],['18 吋六幅式霧黑鋁圈','20 吋輕量化雙肋五幅式雙色切削鋁圈（附馭黑加寬輪拱飾板）']],
+ ['駕駛模式',['NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','官網完整規配頁：NORMAL／ECO／SPORT／SNOW／EV／TRAIL／CUSTOM；型錄：NORMAL／ECO／SPORT／SNOW／TRAIL／CUSTOM'],['ECON','ECON','ECON／NORMAL／SPORT／INDIVIDUAL','ECON／NORMAL／SPORT／INDIVIDUAL'],['NORMAL／ECO／SPORT／SNOW／TRAIL／CUSTOM','NORMAL／ECO／SPORT／SNOW／TRAIL／CUSTOM']],
  ['EPB 電子駐車煞車',R(Y,5),R(Y,4)],
  ['自動定車（Auto Hold／Brake Hold）',R(Y,5),R(Y,4)]
 ]],
 ['油耗與能源效率',[
- ['平均油耗 (km/L)',['24.0','24.0','24.0','24.0','131.6'],['15.0','15.0','20.5','20.5']],
- ['年耗油量 (L)',['625','625','625','625','114'],['1,000','1,000','732','732']],
+ ['平均油耗 (km/L)',['24.0','24.0','24.0','24.0','131.6'],['15.0','15.0','20.5','20.5'],['20.3','20.3']],
+ ['年耗油量 (L)',['625','625','625','625','114'],['1,000','1,000','732','732'],['739','739']],
  ['油耗測試方式',R('歐盟 1999/100/EC 指令及其後續修正指令',5),R('歐盟 1999/100/EC 指令及其後續修正指令（頁面標示 NEDC）',4)],
  ['非市區／市區油耗 (km/L)',R(X,5),['17.31 / 12.18','17.31 / 12.18','18.77 / 24.43','18.77 / 24.43']],
  ['能源效率等級',R('1 級',5),['2 級','2 級','1 級','1 級']],
@@ -522,7 +676,7 @@ var RAW=[
 ]],
 ['外觀與燈光',[
  ['頭燈',R('LED Bi-Beam 頭燈組（附自動水平調整）',5),R('LED 頭燈（附光感應自動啟閉／自動水平調整）',4)],
- ['日行燈',['●（LED）','●（LED）','●（LED）','●（LED 雙刃光條式）','●（LED 雙刃光條式）'],R('●（LED 前序列式方向燈／晝行燈／定位燈）',4)],
+ ['日行燈',['●（LED）','●（LED）','●（LED）','●（LED 雙刃光條式）','●（LED 雙刃光條式）'],R('●（LED 前序列式方向燈／晝行燈／定位燈）',4),['●（LED）','●（LED 雙刃光條式）']],
  ['前霧燈',[N,'●（LED）','●（LED）','●（LED）','●（LED）'],[N,N,'●（LED）','●（LED）']],
  ['後霧燈',R('●（LED）',5),R('●（LED）',4)],
  ['尾燈',R('●（LED 直豎式）',5),R('●（LED 後視鏡方向燈／尾燈／煞車燈／後牌照燈）',4)],
@@ -530,7 +684,9 @@ var RAW=[
  ['後視鏡',['電動收折（附電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）'],['電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺），亮黑','電動調整（附上鎖自動收摺），亮黑']],
  ['電動尾門',[N,'●（附遙控功能／防夾功能）','●（附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）'],['●（附離開自動關閉、自訂開啟高度功能）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）']],
  ['天窗',[N,N,N,Y,Y],[N,N,N,'●（全景式電動，附防夾控制／電動遮陽簾）']],
- ['車頂行李架',[N,N,N,Y,Y],[N,N,N,'●（髮絲紋鋁合金）']],
+ ['車頂行李架',[N,N,N,Y,Y],[N,N,N,'●（髮絲紋鋁合金）'],['●（越野型橋式）',Y]],
+ ['外觀專屬套件',[N,N,N,N,'PHEV 外觀專屬套件：馭黑前後及車側下護板／馭黑前霧燈罩／馭黑車側後視鏡'],R(X,4),['ADVENTURE 外觀專屬套件：霧黑水箱罩飾板／霧銀前後下護板／霧黑厚覆式輪拱飾板／馭黑外車門把手／ADVENTURE 專屬銘板','GR SPORT 外觀專屬套件：蜂巢式馭黑水箱護罩／馭黑前後及車側下護板／馭黑車側後視鏡／GR 專屬銘板／馭黑空力運動尾翼']],
+ ['車頂顏色',R(X,5),R(X,4),[X,X],[X,X,'●（馭黑雙色車頂）']],
  ['玻璃功能',R('抗 UV（側車窗／後擋風玻璃）',5),R(X,4)],
  ['水箱護罩',R(X,5),['亮黑＆銀翼飾條','亮黑＆銀翼飾條','亮黑 Sport 式樣＆黑翼飾條','亮黑 Sport 式樣＆黑翼飾條']],
  ['車身下緣防護飾板',R(X,5),['霧黑','霧黑','車身同色 Sport 仕樣','車身同色 Sport 仕樣']],
@@ -539,20 +695,21 @@ var RAW=[
  ['後擾流尾翼',R(X,5),['●','●','●（亮黑 Two-tone）','●（亮黑 Two-tone）']]
 ]],
 ['座椅',[
- ['座椅材質（前／後）',['抗磨布質','豪華皮質','豪華皮質','高級皮質','BRIN NAUB® 透氣類麂皮與豪華皮質'],['高質感抗污科技布','豪華皮質','豪華皮質','豪華皮質']],
- ['駕駛座電動調整',[N,'●（8 向，附電動腰靠）','●（8 向，附電動腰靠）','●（8 向，附電動腰靠、2 組記憶）','●（8 向，附電動腰靠、2 組記憶）'],[N,'●（8 向，附位置記憶；4 向電動腰靠）','●（8 向，附位置記憶；4 向電動腰靠）','●（8 向，附位置記憶；4 向電動腰靠）']],
- ['副駕駛座電動調整',[N,N,N,'●（8 向）','●（8 向）'],[N,'●（4 向）','●（4 向）','●（4 向）']],
- ['前座加熱／通風',[N,N,N,'●（加熱／通風）','●（加熱／通風）'],[N,N,N,'●（雙前座通風）']],
+ ['座椅材質（前／後）',['抗磨布質','豪華皮質','豪華皮質','高級皮質','BRIN NAUB® 透氣類麂皮與豪華皮質'],['高質感抗污科技布','豪華皮質','豪華皮質','豪華皮質'],['豪華皮質（ADVENTURE 專屬設計）','BRIN NAUB® 透氣類麂皮與豪華皮質（前座：GR SPORT 專屬設計及頭枕 GR 刺繡字樣；後座：GR SPORT 專屬設計）']],
+ ['駕駛座電動調整',[N,'●（8 向，附電動腰靠）','●（8 向，附電動腰靠）','●（8 向，附電動腰靠、2 組記憶）','●（8 向，附電動腰靠、2 組記憶）'],[N,'●（8 向，附位置記憶；4 向電動腰靠）','●（8 向，附位置記憶；4 向電動腰靠）','●（8 向，附位置記憶；4 向電動腰靠）'],['●（8 向，附電動腰靠）','●（8 向，附電動腰靠）']],
+ ['副駕駛座電動調整',[N,N,N,'●（8 向）','●（8 向）'],[N,'●（4 向）','●（4 向）','●（4 向）'],[N,'●（8 向）']],
+ ['前座加熱／通風',[N,N,N,'●（加熱／通風）','●（加熱／通風）'],[N,N,N,'●（雙前座通風）'],['●（加熱）','●（加熱）']],
  ['後座椅調整',R('6/4 分離椅背傾倒／2 段式椅背傾斜調整',5),R('6/4 分離傾倒',4)],
- ['後座加熱',[N,N,N,Y,N],R(X,4)]
+ ['後座加熱',[N,N,N,Y,N],R(X,4),[N,N]]
 ]],
 ['內裝與空間',[
- ['HUD 抬頭顯示器',[N,N,N,Y,Y],[N,N,N,Y]],
+ ['HUD 抬頭顯示器',[N,N,N,Y,Y],[N,N,N,Y],[N,Y]],
  ['儀表',R('12.3 吋全彩數位式',5),['7 吋 TFT 彩色液晶','7 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶']],
  ['道路環境虛擬實境顯示',R(X,5),[N,N,Y,Y]],
  ['方向盤調整',R('手動四向調整',5),R('4 向可調',4)],
- ['方向盤型式',['三幅式軟質','三幅式真皮','三幅式真皮','三幅式真皮','三幅式真皮（附加熱功能）'],[N,'●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）']],
+ ['方向盤型式',['三幅式軟質','三幅式真皮','三幅式真皮','三幅式真皮','三幅式真皮（附加熱功能）'],[N,'●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）'],['三幅式真皮','三幅式真皮（附加熱功能）']],
  ['排檔頭材質',['軟質','真皮','真皮','真皮','－（線傳式排檔）'],[N,'●真皮包覆（含方向盤）','●真皮包覆（含方向盤）','●真皮包覆（含方向盤）']],
+ ['專屬內裝設計',R(X,5),R(X,4),[X,X],[X,'ADVENTURE 專屬越野塗裝','前座頭枕 GR 刺繡／方向盤 GR 銘板／鋁合金油門與煞車踏板／GR SPORT 專屬門檻踏板']],
  ['方向盤控制鍵',R('音響／MID／DRCC／LTA',5),R(X,4)],
  ['氣氛燈',[N,N,N,'●（前座）','●（前座）'],[N,N,N,'●（LED 環艙氣氛燈）']],
  ['金屬質感踏板',R(X,5),[N,N,Y,Y]],
@@ -563,7 +720,7 @@ var RAW=[
  ['杯架',R('前座中央／前座車門／後座中央／後座車門',5),R('前座中央雙置杯架（附置物箱）；後座中央扶手雙置杯架',4)],
  ['置物空間',R('副駕駛座前方置物盤／前座吸頂式置物盒／中控中央置物盤／前座中央扶手置物盒／手套箱／車側門把手置物處',5),R('前座中央置物箱；吸頂式太陽眼鏡盒（附對話鏡）',4)],
  ['電源／USB',['前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5'],R('12V：前座 ×1／後廂 ×1；Type-C：前座 ×2（最大 60W）＋後座出風口 ×2',4)],
- ['前座中央 Type-C USB 輸出',['2 組 15W','2 組 15W','2 組 15W','2 組 45W','2 組 15W'],R('2 組（最大 60W）',4)],
+ ['前座中央 Type-C USB 輸出',['2 組 15W','2 組 15W','2 組 15W','2 組 45W','2 組 45W'],R('2 組（最大 60W）',4),['2 組 15W','2 組 15W']],
  ['後座 Type-C USB',[N,N,'●（2 組 15W）','●（2 組 15W）','●（2 組 15W）'],R('●（2 組，後座空調出風口）',4)],
  ['行李廂遮物簾',[N,N,Y,Y,Y],R(X,4)]
 ]],
@@ -576,8 +733,9 @@ var RAW=[
  ['主機連結功能',R('USB／藍牙／Wi-Fi',5),R(X,4)],
  ['內建先進智慧聯網功能',R(X,5),R(Y,4)],
  ['聯網系統',R('●（TOYOTA Connect 智能聯網系統）',5),R('●（Honda CONNECT 先進智慧聯網系統）',4)],
+ ['TOYOTA Connect 聯網服務期間',R('4 年（需在 4G 訊號正常地區，並完成 App 會員註冊與車輛綁定）',5),R(X,4)],
  ['數位鑰匙（Digital Key）',R(X,5),R(Y,4)],
- ['無線充電座',[N,N,Y,'●（2 組）',Y],[N,Y,Y,Y]],
+ ['無線充電座',[N,N,Y,'●（2 組）',Y],[N,Y,Y,Y],[Y,Y]],
  ['空調系統',R('S-FLOW 智慧型雙區獨立恆溫',5),['Dual Zone 雙區恆溫','i-Dual Zone 智慧型雙區恆溫','i-Dual Zone 智慧型雙區恆溫','i-Dual Zone 智慧型雙區恆溫']],
  ['後座出風口',R(Y,5),R('●（附 USB Type-C ×2）',4)]
 ]],
@@ -593,7 +751,7 @@ var RAW=[
  ['車內後視鏡',['手動防眩','手動防眩','自動防眩','E-Mirror 電子式','E-Mirror 電子式'],[N,N,N,'自動防眩']],
  ['防盜功能',R('●（附晶片防盜功能）',5),R(X,4)],
  ['車速連動車門上鎖',R(Y,5),R(X,4)],
- ['Easy Access',[N,N,N,Y,Y],R(X,4)],
+ ['Easy Access',[N,N,N,Y,Y],R(X,4),[N,N]],
  ['DVR 行車紀錄器',[N,N,N,'●（前向／後向，附 APP 智慧操控）','●（前向／後向，附 APP 智慧操控）'],R(X,4)],
  ['引擎蓋油壓頂桿',R(X,5),R(Y,4)],
  ['補胎組',R(X,5),R('●（TRK 高效式補胎組）',4)]
@@ -623,7 +781,7 @@ var RAW=[
  ['過彎輔助（ACA／AHA）',R(Y,5),R(Y,4)],
  ['Motion Adaptive 方向盤動態修正輔助',R(X,5),R(Y,4)],
  ['上坡起步輔助（HAC／HSA）',R(Y,5),R(Y,4)],
- ['下坡緩降（DAC／HDC）',[N,N,N,N,Y],R(Y,4)],
+ ['下坡緩降（DAC／HDC）',[N,N,N,N,Y],R(Y,4),[Y,Y]],
  ['檔位誤入動力限制（DSC）',R(Y,5),R(X,4)],
  ['胎壓監控（TPMS）',R(Y,5),R(Y,4)],
  ['車輛接近行人警示音（AVAS）',R(Y,5),[N,N,Y,Y]],
@@ -653,7 +811,10 @@ var RAW=[
 var DATA=RAW.map(function(c){
   return {name:c[0],rows:c[1].map(function(r){
     if(r[1].length!==5||r[2].length!==4){console.error('欄位數不符：'+r[0]);}
-    return {label:r[0],v:r[1].concat(r[2])};
+    var x=r[3]||[r[1][3],r[1][3]];
+    var blk=r[4]||[r[1][3],x[0],x[1]];
+    if(x.length!==2||blk.length!==3){console.error('ADVENTURE／GR SPORT 欄位數不符：'+r[0]);}
+    return {label:r[0],v:r[1].concat(r[2]),x:x,blk:blk};
   })};
 });
 var ROW={};
@@ -678,30 +839,32 @@ function analyze(vals){
   for(k in cnt){if(cnt[k]===max)tops++;}
   return {diff:true,hi:vals.map(function(v){return v!==null&&(tops>1||cnt[v]<max);})};
 }
-function tableHTML(idxs,opt){
+function hasMain(r){return r.v.some(function(v){return v!==null;});}
+function hasBlk(r){return r.blk.some(function(v){return v!==null;});}
+function buildTable(cols,opt){
   var out={html:'',total:0,diffs:0};
-  if(!idxs.length){out.html='<p class="empty">尚未勾選任何等級，請在上方勾選要比較的等級。</p>';return out;}
-  var head='<thead><tr><th class="lab" scope="col">項目</th>'+idxs.map(function(i){
-    var t=TRIMS[i];
-    return '<th class="col '+t.b+'" scope="col"><span class="br">'+t.brand+'</span><span class="tn">'+esc(t.name)+'</span><span class="pr">'+PRICE.v[i]+' 萬</span></th>';
+  if(!cols.length){out.html='<p class="empty">尚未勾選任何等級，請在上方勾選要比較的等級。</p>';return out;}
+  var head='<thead><tr><th class="lab" scope="col">項目</th>'+cols.map(function(c){
+    return '<th class="col '+c.b+'" scope="col"><span class="br">'+c.brand+'</span><span class="tn">'+esc(c.name)+'</span><span class="pr">'+c.price+' 萬</span></th>';
   }).join('')+'</tr></thead>';
   var body='';
   DATA.forEach(function(cat,ci){
-    var rows=cat.rows.map(function(r){return {r:r,a:analyze(idxs.map(function(i){return r.v[i];}))};});
+    var rows=cat.rows.filter(opt.rowFilter).map(function(r){return {r:r,a:analyze(cols.map(function(c){return c.get(r);}))};});
+    if(!rows.length) return;
     var dcount=rows.filter(function(x){return x.a.diff;}).length;
     out.total+=rows.length;out.diffs+=dcount;
     var list=opt.onlyDiff?rows.filter(function(x){return x.a.diff;}):rows;
     if(!list.length) return;
     var closed=opt.collapsed&&opt.collapsed[ci];
     var label=esc(cat.name)+'<span class="cn">差異 '+dcount+'／'+rows.length+' 項</span>';
-    body+='<tbody><tr class="cat"><td colspan="'+(idxs.length+1)+'">'+
+    body+='<tbody><tr class="cat"><td colspan="'+(cols.length+1)+'">'+
       (opt.collapsed
         ?'<button type="button" class="ct" data-cat="'+ci+'" aria-expanded="'+(!closed)+'"><span class="arr">'+(closed?'▸':'▾')+'</span>'+label+'</button>'
         :'<div class="ct static">'+label+'</div>')+'</td></tr>';
     if(!closed){
       list.forEach(function(x){
         body+='<tr'+(x.a.diff?' class="d"':'')+'><th class="lab" scope="row">'+esc(x.r.label)+'</th>'+
-          idxs.map(function(i,k){return '<td'+(x.a.hi[k]?' class="hi"':'')+'>'+fmt(x.r.v[i])+'</td>';}).join('')+'</tr>';
+          cols.map(function(c,k){return '<td'+(x.a.hi[k]?' class="hi"':'')+'>'+fmt(c.get(x.r))+'</td>';}).join('')+'</tr>';
       });
     }
     body+='</tbody>';
@@ -710,11 +873,23 @@ function tableHTML(idxs,opt){
   out.html='<table>'+head+body+'</table>';
   return out;
 }
+function tableHTML(idxs,opt){
+  var cols=idxs.map(function(i){var t=TRIMS[i];return {b:t.b,brand:t.brand,name:t.name,price:PRICE.v[i],get:function(r){return r.v[i];}};});
+  return buildTable(cols,{onlyDiff:opt.onlyDiff,collapsed:opt.collapsed,rowFilter:hasMain});
+}
+var BCOLS=[
+  {b:'r',brand:'RAV4',name:'ADVENTURE 4WD',price:null,k:1},
+  {b:'r',brand:'RAV4',name:'GR SPORT 4WD',price:null,k:2},
+  {b:'r',brand:'RAV4',name:'旗艦（參考）',price:null,k:0}
+];
+BCOLS.forEach(function(c){c.price=PRICE.blk[c.k];c.get=function(r){return r.blk[c.k];};});
 function $(id){return document.getElementById(id);}
 
 /* ===== 狀態 ===== */
 var Q={r:'r1',c:'c1',diff:false};
 var F={sel:{},diff:false,collapsed:{}};
+var B={diff:false,collapsed:{}};
+F.undo=null;
 TRIMS.forEach(function(t){F.sel[t.id]=true;});
 function idxOf(id){for(var i=0;i<TRIMS.length;i++){if(TRIMS[i].id===id)return i;}return -1;}
 
@@ -761,36 +936,81 @@ function renderFull(){
   $('fstat').textContent=idxs.length?('已選 '+idxs.length+' 款，共 '+res.total+' 項，其中 '+res.diffs+' 項有差異'):'';
 }
 
+function renderBlock(){
+  var res=buildTable(BCOLS,{onlyDiff:B.diff,collapsed:B.collapsed,rowFilter:hasBlk});
+  $('btable').innerHTML=res.html;
+  $('bstat').textContent='共 '+res.total+' 項，其中 '+res.diffs+' 項有差異';
+}
+
 /* ===== 事件 ===== */
 document.addEventListener('change',function(e){
   var t=e.target;
   if(t.name==='qr'){Q.r=t.value;syncChips();renderQuick();}
   else if(t.name==='qc'){Q.c=t.value;syncChips();renderQuick();}
-  else if(t.name==='fs'){F.sel[t.value]=t.checked;syncChips();renderFull();}
+  else if(t.name==='fs'){F.sel[t.value]=t.checked;F.undo=null;$('undoBtn').hidden=true;syncChips();renderFull();}
   else if(t.id==='qdiff'){Q.diff=t.checked;renderQuick();}
   else if(t.id==='fdiff'){F.diff=t.checked;renderFull();}
+  else if(t.id==='bdiff'){B.diff=t.checked;renderBlock();}
 });
 document.addEventListener('click',function(e){
   var b=e.target.closest?e.target.closest('button'):null;
   if(!b) return;
   if(b.hasAttribute('data-cat')){
     var ci=b.getAttribute('data-cat');
-    F.collapsed[ci]=!F.collapsed[ci];
-    renderFull();
+    if(b.closest('#btable')){B.collapsed[ci]=!B.collapsed[ci];renderBlock();}
+    else{F.collapsed[ci]=!F.collapsed[ci];renderFull();}
     return;
   }
   var act=b.getAttribute('data-act');
+  if(act==='undo'){
+    if(F.undo){
+      TRIMS.forEach(function(t){F.sel[t.id]=!!F.undo[t.id];});
+      Array.prototype.forEach.call(document.querySelectorAll('input[name="fs"]'),function(i){i.checked=!!F.sel[i.value];});
+      F.undo=null;$('undoBtn').hidden=true;syncChips();renderFull();
+    }
+    return;
+  }
   if(act==='all'||act==='none'){
+    F.undo=Object.assign({},F.sel);$('undoBtn').hidden=false;
     TRIMS.forEach(function(t){F.sel[t.id]=(act==='all');});
     Array.prototype.forEach.call(document.querySelectorAll('input[name="fs"]'),function(i){i.checked=(act==='all');});
     syncChips();renderFull();
   }else if(act==='expand'){F.collapsed={};renderFull();}
   else if(act==='collapse'){DATA.forEach(function(c,i){F.collapsed[i]=true;});renderFull();}
+  else if(act==='bexpand'){B.collapsed={};renderBlock();}
+  else if(act==='bcollapse'){DATA.forEach(function(c,i){B.collapsed[i]=true;});renderBlock();}
 });
 
 buildPickers();
 renderQuick();
 renderFull();
+renderBlock();
+
+/* 捲動邊緣：內容真的被固定表頭或固定欄蓋住時，才顯示淡出 */
+document.addEventListener('scroll',function(e){
+  var t=e.target;
+  if(t&&t.classList&&t.classList.contains('tw')){
+    t.classList.toggle('scrolled',t.scrollTop>2);
+    t.classList.toggle('scrolledx',t.scrollLeft>2);
+  }
+},true);
+/* 觸控裝置：讓 :active 在按下當下就生效 */
+document.addEventListener('touchstart',function(){},{passive:true});
+/* 導覽定位：標示目前所在區塊 */
+(function(){
+  if(!('IntersectionObserver' in window)) return;
+  var links={};
+  Array.prototype.forEach.call(document.querySelectorAll('.topnav a'),function(a){links[a.getAttribute('href').slice(1)]=a;});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current');});
+        var a=links[en.target.id]; if(a) a.setAttribute('aria-current','location');
+      }
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  Object.keys(links).forEach(function(k){var el=document.getElementById(k); if(el) io.observe(el);});
+})();
 </script>
 </body>
 </html>
