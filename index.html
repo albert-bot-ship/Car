@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAV4 × CR-V 規格對照</title>
+<style>
+:root{
+  --bg:#0c1119; --panel:#131b29; --panel2:#1a2436; --line:#27334c;
+  --text:#e7ecf6; --mute:#8f9bb5;
+  --red:#e4262b; --blue:#3d8bff; --violet:#8a5cf0; --green:#3ecf8e;
+  --diff:rgba(138,92,240,.26);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:15px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",system-ui,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+h1,h2{margin:0;line-height:1.25}
+h1{font-size:clamp(24px,5vw,38px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(19px,3.4vw,24px);font-weight:700}
+p{margin:0}
+button,input,label{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* 頁首 */
+.top{padding:28px 0 22px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#101828 0%,var(--bg) 100%)}
+.head{display:flex;align-items:center;gap:16px}
+.mark{width:58px;height:36px;flex:none}
+.sub{color:var(--mute);font-size:13px;margin-top:6px}
+.sub a{color:var(--mute)}
+
+section{padding:30px 0 6px}
+.lead{color:var(--mute);font-size:14px;margin:6px 0 16px}
+
+/* 車款選擇 */
+.picker{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.grp{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.grp.r{border-top:3px solid var(--red)}
+.grp.c{border-top:3px solid var(--blue)}
+.grp h3{margin:0 0 8px;font-size:14px;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;display:inline-flex;align-items:baseline;gap:6px;cursor:pointer;
+  padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);
+  font-size:14px;user-select:none}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip small{color:var(--mute);font-size:12px}
+.chip.r.on{border-color:var(--red);background:rgba(228,38,43,.16)}
+.chip.c.on{border-color:var(--blue);background:rgba(61,139,255,.16)}
+.chip:has(input:focus-visible){outline:2px solid var(--blue);outline-offset:2px}
+
+/* 重點卡 */
+.kcs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.kc{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kc.r{border-left:4px solid var(--red)}
+.kc.c{border-left:4px solid var(--blue)}
+.kh{display:flex;align-items:baseline;gap:8px}
+.br{font-weight:800;font-size:13px}
+.kc.r .br,th.r .br{color:#ff6b6f}
+.kc.c .br,th.c .br{color:#7db3ff}
+.kn{font-weight:700;font-size:17px}
+.kp{font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2;margin:4px 0 8px}
+.kp small{font-size:14px;font-weight:500;color:var(--mute)}
+.kc dl{margin:0;display:grid;gap:4px}
+.kc dl div{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-top:1px solid var(--line);padding-top:4px}
+.kc dt{color:var(--mute)}
+.kc dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.gap{margin:12px 0 4px;font-size:14px}
+.gap b{color:var(--violet);font-size:16px}
+
+/* 控制列 */
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:14px 0 10px}
+.btn{cursor:pointer;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:5px 12px;font-size:13px}
+.btn:hover{border-color:var(--mute)}
+.sw{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px}
+.sw input{position:absolute;opacity:0}
+.sw i{width:38px;height:22px;border-radius:11px;background:var(--panel2);border:1px solid var(--line);position:relative;flex:none}
+.sw i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--mute)}
+.sw input:checked + i{background:rgba(138,92,240,.35);border-color:var(--violet)}
+.sw input:checked + i::after{left:18px;background:#fff}
+.sw input:focus-visible + i{outline:2px solid var(--blue);outline-offset:2px}
+.stat{color:var(--mute);font-size:13px;margin-left:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mute);margin:0 0 10px}
+.legend .sq{display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--diff);border:1px solid var(--violet);vertical-align:-2px;margin-right:4px}
+
+/* 表格 */
+.tw{overflow:auto;max-height:78vh;border:1px solid var(--line);border-radius:10px;background:var(--panel);-webkit-overflow-scrolling:touch}
+.tw.short{max-height:none}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13.5px}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left;background:var(--panel)}
+td{min-width:150px;line-height:1.5}
+.tw.full td{min-width:170px}
+thead th{position:sticky;top:0;z-index:3;background:var(--panel2);border-bottom:2px solid var(--line);white-space:nowrap}
+th.col{border-top:3px solid transparent}
+th.col.r{border-top-color:var(--red)}
+th.col.c{border-top-color:var(--blue)}
+th.col .br{display:block;font-size:12px}
+th.col .tn{display:block;font-size:16px;font-weight:700}
+th.col .pr{display:block;font-size:12px;color:var(--mute);font-weight:400;font-variant-numeric:tabular-nums}
+.lab{position:sticky;left:0;z-index:2;min-width:112px;max-width:150px;font-weight:600;color:#cbd5ea;background:var(--panel);border-right:1px solid var(--line)}
+thead .lab{z-index:4;background:var(--panel2)}
+tr.d .lab{box-shadow:inset 3px 0 0 var(--violet)}
+td.hi{background:var(--diff)}
+tr.cat td{padding:0;background:var(--panel2)}
+.ct{position:sticky;left:0;display:inline-flex;align-items:center;gap:10px;padding:9px 12px;
+  background:var(--panel2);border:0;cursor:pointer;font-weight:700;font-size:14px;text-align:left}
+.ct.static{cursor:default}
+.ct .arr{color:var(--mute);width:12px}
+.ct .cn{color:var(--mute);font-weight:400;font-size:12px}
+.yes{color:var(--green);font-weight:700}
+.no{color:#5d6a85}
+.na{color:#657390;font-size:12px}
+.note{margin-left:4px;color:var(--text)}
+.empty{padding:22px;color:var(--mute)}
+
+/* 說明 */
+.notes{margin:8px 0 40px;padding:16px 18px 16px 34px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--mute);font-size:13px}
+.notes li{margin:5px 0}
+.notes b{color:var(--text)}
+
+@media (max-width:720px){
+  .picker,.kcs{grid-template-columns:1fr}
+  th,td{padding:7px 9px}
+  table{font-size:13px}
+  td{min-width:132px}
+  .tw.full td{min-width:150px}
+  .lab{min-width:96px;max-width:110px}
+  .stat{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap head">
+    <svg class="mark" viewBox="0 0 66 40" aria-hidden="true">
+      <polygon points="0,40 14,0 26,0 12,40" fill="#3d8bff"/>
+      <polygon points="20,40 34,0 46,0 32,40" fill="#8a5cf0"/>
+      <polygon points="40,40 54,0 66,0 52,40" fill="#e4262b"/>
+    </svg>
+    <div>
+      <h1>RAV4 × CR-V 規格對照</h1>
+      <p class="sub">資料取自 Toyota Taiwan、Honda Taiwan 官網規格頁，2026/09/20 讀取，實車配備以原廠為準</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="quick">
+  <h2>快速對照</h2>
+  <p class="lead">RAV4 與 CR-V 各選一款，並排比較。</p>
+  <div class="picker">
+    <div class="grp r"><h3>RAV4</h3><div class="chips" id="pickR"></div></div>
+    <div class="grp c"><h3>CR-V</h3><div class="chips" id="pickC"></div></div>
+  </div>
+  <div class="kcs" id="kpis"></div>
+  <p class="gap" id="gap"></p>
+  <div class="bar">
+    <label class="sw"><input type="checkbox" id="qdiff"><i></i>只顯示差異</label>
+    <span class="stat" id="qstat"></span>
+  </div>
+  <div class="legend">
+    <span><span class="yes">●</span> 有此配備</span>
+    <span><span class="no">－</span> 無此配備</span>
+    <span><span class="na">官網未列</span> 該官網頁面沒有這一項</span>
+    <span><span class="sq"></span>與其他欄不同</span>
+  </div>
+  <div class="tw short" id="qtable"></div>
+</section>
+
+<section id="full">
+  <h2>完整對照表</h2>
+  <p class="lead">勾選要比的等級，最多可同時比 9 款。</p>
+  <div class="picker">
+    <div class="grp r"><h3>RAV4</h3><div class="chips" id="fullR"></div></div>
+    <div class="grp c"><h3>CR-V</h3><div class="chips" id="fullC"></div></div>
+  </div>
+  <div class="bar">
+    <button type="button" class="btn" data-act="all">全選</button>
+    <button type="button" class="btn" data-act="none">全部取消</button>
+    <button type="button" class="btn" data-act="expand">展開全部分類</button>
+    <button type="button" class="btn" data-act="collapse">收合全部分類</button>
+    <label class="sw"><input type="checkbox" id="fdiff"><i></i>只顯示差異</label>
+    <span class="stat" id="fstat"></span>
+  </div>
+  <div class="tw full" id="ftable"></div>
+</section>
+
+<ul class="notes">
+  <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）、Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）。價格為官網建議售價。</li>
+  <li><b>官網未列：</b>表示該官網頁面沒有這一項，不代表車輛沒有此配備。</li>
+  <li><b>差異標色：</b>依官網文字逐項比對，不做語意判斷，同一功能在兩家的寫法不同時會被標為差異；官網未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI）已在項目名稱並列。</li>
+  <li><b>油耗：</b>CR-V 官網標示 NEDC 測試值；RAV4 官網頁面未註明測試方式，PHEV 的 131.6 km/L 為官網標示值。兩者數字不宜直接等同比較。</li>
+  <li><b>範圍：</b>RAV4 為完整規配頁的 5 個等級，不含 RAV4 ADVENTURE、RAV4 GR SPORT。CR-V 為 4 個等級。</li>
+</ul>
+
+</main>
+
+<script>
+/* ===== 資料 ===== */
+var Y='●', N='－', X=null;
+function R(v,n){return Array(n).fill(v);}
+var TRIMS=[
+ {id:'r1',b:'r',brand:'RAV4',name:'豪華'},
+ {id:'r2',b:'r',brand:'RAV4',name:'尊爵'},
+ {id:'r3',b:'r',brand:'RAV4',name:'尊爵+'},
+ {id:'r4',b:'r',brand:'RAV4',name:'旗艦'},
+ {id:'r5',b:'r',brand:'RAV4',name:'PHEV'},
+ {id:'c1',b:'c',brand:'CR-V',name:'VTi-S'},
+ {id:'c2',b:'c',brand:'CR-V',name:'S'},
+ {id:'c3',b:'c',brand:'CR-V',name:'e:HEV S'},
+ {id:'c4',b:'c',brand:'CR-V',name:'e:HEV Prestige'}
+];
+
+/* 每列：[項目, RAV4 五欄（豪華/尊爵/尊爵+/旗艦/PHEV）, CR-V 四欄（VTi-S/S/e:HEV S/e:HEV Prestige）]；null＝官網未列 */
+var RAW=[
+['基本資料',[
+ ['建議售價（萬元）',['104','117','122','130','149'],['99.9','109.9','122.9','129.9']],
+ ['動力型式',['HYBRID 油電','HYBRID 油電','HYBRID 油電','HYBRID 油電','PHEV 插電式油電'],['汽油（渦輪增壓）','汽油（渦輪增壓）','e:HEV 油電','e:HEV 油電']]
+]],
+['車體尺寸',[
+ ['全長 (mm)',R('4600',5),R('4690',4)],
+ ['全寬 (mm)',R('1855',5),R('1865',4)],
+ ['全高 (mm)',['1680','1680','1680','1680','1685'],R('1680',4)],
+ ['軸距 (mm)',R('2690',5),R('2700',4)],
+ ['最小迴轉半徑 (m)',R('5.68',5),R('5.5',4)],
+ ['空車重 (kg)',['1600','1635','1635','1635','1995'],['1588','1601','1737','1770']],
+ ['油箱容量 (L)',R('55',5),R('57',4)],
+ ['車體結構',R(X,5),R('G-CON + Inner Frame 技術，高剛性 ACE 鋼骨防護車體',4)]
+]],
+['引擎',[
+ ['引擎型式',R('A25A-FXS 直列四缸 DOHC 16 汽門',5),['1.5L VTEC Turbo 渦輪增壓缸內直噴','1.5L VTEC Turbo 渦輪增壓缸內直噴','2.0L Atkinson Cycle 燃油直噴','2.0L Atkinson Cycle 燃油直噴']],
+ ['氣門正時系統',R('進氣 VVT-iE／排氣 VVT-i',5),R(X,4)],
+ ['供油方式',R(X,5),R('Direct Injection 缸內直噴',4)],
+ ['排氣量 (c.c.)',R('2487',5),['1498','1498','1993','1993']],
+ ['壓縮比',R('13.8 : 1',5),['10.3 ± 0.2','10.3 ± 0.2','13.9 ± 0.26','13.9 ± 0.26']],
+ ['缸徑 × 衝程 (mm)',R(X,5),['73 × 89.5','73 × 89.5','81 × 96.7','81 × 96.7']],
+ ['引擎最大馬力 (PS / rpm)',['186 / 6,000','186 / 6,000','186 / 6,000','186 / 6,000','189 / 6,000'],['193 (142kW) / 6,000','193 (142kW) / 6,000','150 (110kW) / 6,100','150 (110kW) / 6,100']],
+ ['引擎最大扭力 (kg-m / rpm)',['22.5 / 3,600~5,200','22.5 / 3,600~5,200','22.5 / 3,600~5,200','22.5 / 3,600~5,200','23.3 / 4,200~5,200'],['24.8 / 1,800~5,000','24.8 / 1,800~5,000','18.7 / 4,500','18.7 / 4,500']]
+]],
+['電動馬達與電池',[
+ ['馬達型式',R('永磁同步馬達',5),[N,N,'永磁同步馬達','永磁同步馬達']],
+ ['馬達最大馬力',['136 ps','136 ps','136 ps','136 ps','前馬達 205 / 後馬達 55 ps'],[N,N,'184 PS (135kW) / 5,000-8,000 rpm','184 PS (135kW) / 5,000-8,000 rpm']],
+ ['馬達最大扭力 (kg-m)',['21.2','21.2','21.2','21.2','前馬達 27.7 / 後馬達 12.5'],[N,N,'34.2 / 0-2,000 rpm','34.2 / 0-2,000 rpm']],
+ ['馬達最大輸出電壓 (V)',['600','600','600','600','650'],R(X,4)],
+ ['電池型式',R('鋰離子電池',5),[N,N,'鋰離子電池','鋰離子電池']],
+ ['電池電壓 (V)',['248.2','248.2','248.2','248.2','391'],R(X,4)],
+ ['動力電池容量 (kWh)',[N,N,N,N,'22.7'],[N,N,X,X]],
+ ['最大綜效馬力 (ps)',['229','229','229','229','329'],R(X,4)]
+]],
+['傳動與底盤',[
+ ['傳動系統',['前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','前輪傳動（附 Auto LSD 電子式自動限滑差速控制）','E-Four 4WD 電子式四輪傳動'],R('FF 前輪傳動',4)],
+ ['變速系統',R('E-CVT 無段變速',5),['CVT 無段變速（G-Design Shift Logic）','CVT 無段變速（G-Design Shift Logic）','E-CVT 電氣式無段變速','E-CVT 電氣式無段變速']],
+ ['檔位控制',R(X,5),['6 檔位控制','5 檔位控制','5 檔位控制','5 檔位控制']],
+ ['換檔／電力再生撥片',[N,N,N,N,'●方向盤換檔撥片'],[N,'●換檔撥片','●電力再生撥片（4 段回充力道）','●電力再生撥片（4 段回充力道）']],
+ ['轉向系統',R('EPS 電動輔助方向盤',5),R('VGR 可變齒比 EPS 電動輔助動力方向機',4)],
+ ['前懸吊',R('獨立麥花臣式（附防傾平衡桿）',5),R('麥花臣支柱式',4)],
+ ['後懸吊',R('獨立雙 A 臂式（附防傾平衡桿）',5),R('獨立多連桿式',4)],
+ ['避震器',R(X,5),R('ARD 振幅反應避震器',4)],
+ ['煞車系統',R('四輪碟煞（附 ABS+EBD+BAS+BOS）',5),['X 型雙迴路 EBB 電動式煞車增壓 4 輪碟式','X 型雙迴路 EBB 電動式煞車增壓 4 輪碟式','X 型雙迴路 ESB 電動伺服 4 輪碟式','X 型雙迴路 ESB 電動伺服 4 輪碟式']],
+ ['輪胎規格',['235/65R17','235/65R17','235/60R18','235/60R18','235/50R20'],R('235/60R18',4)],
+ ['輪圈',['17 吋五幅式鋁圈','17 吋五幅式鋁圈','18 吋雙肋五幅式鋁圈','18 吋雙肋五幅式雙色切削鋁圈','20 吋十幅式馭黑鋁圈'],['18 吋高光澤黑鋁合金鋁圈','18 吋高光澤黑鋁合金鋁圈','18 吋高光澤黑鋁合金鋁圈（聲學共鳴減噪技術）','18 吋高光澤黑鋁合金鋁圈（聲學共鳴減噪技術）']],
+ ['駕駛模式',['NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／CUSTOM','NORMAL／ECO／SPORT／SNOW／EV／TRAIL／CUSTOM'],['ECON','ECON','ECON／NORMAL／SPORT／INDIVIDUAL','ECON／NORMAL／SPORT／INDIVIDUAL']],
+ ['EPB 電子駐車煞車',R(Y,5),R(Y,4)],
+ ['自動定車（Auto Hold／Brake Hold）',R(Y,5),R(Y,4)]
+]],
+['油耗與能源效率',[
+ ['平均油耗 (km/L)',['24.0','24.0','24.0','24.0','131.6'],['15.0','15.0','20.5','20.5']],
+ ['年耗油量 (L)',['625','625','625','625','114'],['1,000','1,000','732','732']],
+ ['油耗測試方式',R(X,5),R('NEDC（歐盟 1999/100/EC 指令及其後續修正指令）',4)],
+ ['非市區／市區油耗 (km/L)',R(X,5),['17.31 / 12.18','17.31 / 12.18','18.77 / 24.43','18.77 / 24.43']],
+ ['能源效率等級',R('1 級',5),['2 級','2 級','1 級','1 級']],
+ ['純電里程 (km)',[N,N,N,N,'135'],[N,N,X,X]],
+ ['年耗電量（度）',[N,N,N,N,'2308'],[N,N,X,X]],
+ ['用電效率 (km/kWh)',[N,N,N,N,'6.5'],[N,N,X,X]],
+ ['Idle Stop 怠速節能',R(X,5),[Y,Y,N,N]],
+ ['Shutter Grille 主動式進氣控制',R(X,5),R(Y,4)]
+]],
+['外觀與燈光',[
+ ['頭燈',R('LED Bi-Beam 頭燈組（附自動水平調整）',5),R('LED 頭燈（附光感應自動啟閉／自動水平調整）',4)],
+ ['日行燈',['●（LED）','●（LED）','●（LED）','●（LED 雙刃光條式）','●（LED 雙刃光條式）'],R('●（LED 前序列式方向燈／晝行燈／定位燈）',4)],
+ ['前霧燈',[N,'●（LED）','●（LED）','●（LED）','●（LED）'],[N,N,'●（LED）','●（LED）']],
+ ['後霧燈',R('●（LED）',5),R('●（LED）',4)],
+ ['尾燈',R('●（LED 直豎式）',5),R('●（LED）',4)],
+ ['頭尾燈自動啟閉',R(Y,5),R(X,4)],
+ ['後視鏡',['電動收折（附電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）'],['電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺），亮黑','電動調整（附上鎖自動收摺），亮黑']],
+ ['電動尾門',[N,'●（附遙控功能／防夾功能）','●（附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）'],['●（附離開自動關閉、自訂開啟高度功能）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）']],
+ ['天窗',[N,N,N,Y,Y],[N,N,N,'●（全景式電動，附防夾控制／電動遮陽簾）']],
+ ['車頂行李架',[N,N,N,Y,Y],[N,N,N,'●（髮絲紋鋁合金）']],
+ ['玻璃功能',R('抗 UV（側車窗／後擋風玻璃）',5),R(X,4)],
+ ['水箱護罩',R(X,5),['亮黑＆銀翼飾條','亮黑＆銀翼飾條','亮黑 Sport 式樣＆黑翼飾條','亮黑 Sport 式樣＆黑翼飾條']],
+ ['車身下緣防護飾板',R(X,5),['霧黑','霧黑','車身同色 Sport 仕樣','車身同色 Sport 仕樣']],
+ ['鍍鉻窗框',R(X,5),['●','●','●＋亮黑飾板','●＋亮黑飾板']],
+ ['鯊魚鰭天線',R(X,5),['●','●','●（亮黑）','●（亮黑）']],
+ ['後擾流尾翼',R(X,5),['●','●','●（亮黑 Two-tone）','●（亮黑 Two-tone）']]
+]],
+['座椅',[
+ ['座椅材質（前／後）',['抗磨布質','豪華皮質','豪華皮質','高級皮質','BRIN NAUB® 透氣類麂皮與豪華皮質'],['高質感抗污科技布','豪華皮質','豪華皮質','豪華皮質']],
+ ['駕駛座電動調整',[N,'●（8 向，附電動腰靠）','●（8 向，附電動腰靠）','●（8 向，附電動腰靠、2 組記憶）','●（8 向，附電動腰靠、2 組記憶）'],[N,'●（8 向，附位置記憶；4 向電動腰靠）','●（8 向，附位置記憶；4 向電動腰靠）','●（8 向，附位置記憶；4 向電動腰靠）']],
+ ['副駕駛座電動調整',[N,N,N,'●（8 向）','●（8 向）'],[N,'●（4 向）','●（4 向）','●（4 向）']],
+ ['前座加熱／通風',[N,N,N,'●（加熱／通風）','●（加熱／通風）'],[N,N,N,'●（雙前座通風）']],
+ ['後座椅調整',R('6/4 分離椅背傾倒／2 段式椅背傾斜調整',5),R('6/4 分離傾倒',4)],
+ ['後座加熱',[N,N,N,Y,N],R(X,4)]
+]],
+['內裝與空間',[
+ ['HUD 抬頭顯示器',[N,N,N,Y,Y],[N,N,N,Y]],
+ ['儀表',R('12.3 吋全彩數位式',5),['7 吋 TFT 彩色液晶','7 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶']],
+ ['道路環境虛擬實境顯示',R(X,5),[N,N,Y,Y]],
+ ['方向盤調整',R('手動四向調整',5),R('4 向可調',4)],
+ ['真皮方向盤',[N,Y,Y,Y,'●（附加熱功能）'],[N,Y,Y,Y]],
+ ['真皮排檔頭',[N,Y,Y,Y,'－（線傳式排檔）'],[N,Y,Y,Y]],
+ ['方向盤控制鍵',R('音響／MID／DRCC／LTA',5),R(X,4)],
+ ['氣氛燈',[N,N,N,'●（前座）','●（前座）'],[N,N,N,'●（LED 環艙氣氛燈）']],
+ ['金屬質感踏板',R(X,5),[N,N,Y,Y]],
+ ['座艙飾板',R(X,5),['銀黑配色＋蜂巢類金屬','銀黑配色＋蜂巢類金屬','亮黑＋髮絲紋類金屬','亮黑＋髮絲紋類金屬']],
+ ['隔音設計（NVH）',R(X,5),['●（整車隔音，含 Acoustic 前擋隔音玻璃）','●（整車隔音，含 Acoustic 前擋隔音玻璃）','●（整車隔音 e:HEV 專屬強化，前車窗雙層隔音膠合玻璃）','●（整車隔音 e:HEV 專屬強化，前車窗雙層隔音膠合玻璃）']],
+ ['車室照明',R('雙前座化妝鏡／行李廂照明；閱讀燈：前座／後座',5),R('LED 前座照明／後座 LED 室內燈（觸控式）／LED 行李廂照明；雙前座遮陽板附化妝鏡照明燈',4)],
+ ['杯架',R('前座中央／前座車門／後座中央／後座車門',5),R('前座中央雙置杯架（附置物箱）；後座中央扶手雙置杯架',4)],
+ ['置物空間',R('副駕駛座前方置物盤／前座吸頂式置物盒／中控中央置物盤／前座中央扶手置物盒／手套箱／車側門把手置物處',5),R('前座中央置物箱；吸頂式太陽眼鏡盒（附對話鏡）',4)],
+ ['電源／USB',['前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5'],R('12V：前座 ×1／後廂 ×1；Type-C：前座 ×2（最大 60W）＋後座出風口 ×2',4)],
+ ['行李廂遮物簾',[N,N,Y,Y,Y],R(X,4)]
+]],
+['影音與連網',[
+ ['音響主機',['10.5 吋觸控式','10.5 吋觸控式','12.9 吋觸控式','12.9 吋觸控式','12.9 吋觸控式'],R('9 吋觸控式',4)],
+ ['衛星導航系統',[N,N,Y,Y,Y],R(X,4)],
+ ['揚聲器',R('6 具',5),['8 具（高傳真揚聲系統）','8 具（高傳真揚聲系統）','8 具（高傳真揚聲系統）','BOSE Centerpoint 12 具（含重低音）']],
+ ['ANC 主動式噪音抑制',R(X,5),R(Y,4)],
+ ['Apple CarPlay／Android Auto',R('●（無線）／●（無線）',5),R('●（有線／無線）',4)],
+ ['主機連結功能',R('USB／藍牙／Wi-Fi',5),R(X,4)],
+ ['聯網系統',R('●（TOYOTA Connect 智能聯網）',5),R('●（Honda CONNECT 先進智慧聯網）',4)],
+ ['數位鑰匙（Digital Key）',R(X,5),R(Y,4)],
+ ['無線充電座',[N,N,Y,'●（2 組）',Y],[N,Y,Y,Y]],
+ ['空調系統',R('S-FLOW 智慧型雙區獨立恆溫',5),['Dual Zone 雙區恆溫','i-Dual Zone 智慧型雙區恆溫','i-Dual Zone 智慧型雙區恆溫','i-Dual Zone 智慧型雙區恆溫']],
+ ['後座出風口',R(Y,5),R('●（附 USB Type-C ×2）',4)]
+]],
+['便利與科技',[
+ ['Smart Entry 智慧型車門啟閉',R(Y,5),R('●（含 Walk-Away Lock 離開立刻上鎖）',4)],
+ ['Push Start 引擎啟閉',R(Y,5),R(Y,4)],
+ ['Reserve Lock 預約上鎖',R(X,5),R(Y,4)],
+ ['電動窗',R('四門電動窗（One Touch／防夾）',5),['駕駛座 One Touch 防夾／遙控開窗','駕駛座 One Touch 防夾／遙控開窗','四門 One Touch 防夾／遙控開關窗','四門 One Touch 防夾／遙控開關窗']],
+ ['雨刷',['間歇式','間歇式','間歇式（附雨滴感應功能）','間歇式（附雨滴感應功能）','間歇式（附雨滴感應功能）'],R('雨滴感應式前擋雨刷；後擋風玻璃間歇雨刷（附倒車連動）；智慧清潔前擋雨刷',4)],
+ ['車內後視鏡',['手動防眩','手動防眩','自動防眩','E-Mirror 電子式','E-Mirror 電子式'],[N,N,N,'自動防眩']],
+ ['防盜功能',R('●（附晶片防盜功能）',5),R(X,4)],
+ ['車速連動車門上鎖',R(Y,5),R(X,4)],
+ ['Easy Access',[N,N,N,Y,Y],R(X,4)],
+ ['DVR 行車紀錄器',[N,N,N,'●（前向／後向，附 APP 智慧操控）','●（前向／後向，附 APP 智慧操控）'],R(X,4)],
+ ['引擎蓋油壓頂桿',R(X,5),R(Y,4)],
+ ['補胎組',R(X,5),R('●（TRK 高效式補胎組）',4)]
+]],
+['主動安全與駕駛輔助',[
+ ['原廠智慧駕駛輔助套件',R('●（TSS 4.0 智動駕駛輔助系統）',5),R('●（Honda SENSING 智慧安全主動防護系統）',4)],
+ ['主動式定速巡航',R('●（DRCC 全速域／Stop&Go／Eco 節能巡航）',5),R('●（ACC，附 LSF 低速自動跟車）',4)],
+ ['預警式碰撞防護',R('●（PCS：預警警示／煞車力道輔助／主動煞車輔助／緊急閃避轉向輔助／交叉路口轉向輔助／低速誤加速抑制輔助）',5),R('●（CMBS 碰撞緩解煞車，附 FCW 前方碰撞警示）',4)],
+ ['車道輔助',R('●（LTA：車道循跡輔助／車道偏離警示／車道偏離修正輔助／障礙物預判輔助／車輛搖晃警示）',5),R('●（RDM 道路偏移抑制附 LDW 車道偏移警示；LKAS 車道維持輔助）',4)],
+ ['遠光燈自動切換（AHB）',R(Y,5),R(Y,4)],
+ ['前車駛離提醒（LCDN）',R(X,5),R(Y,4)],
+ ['前方橫向來車警示（FCTA）',[N,Y,Y,Y,Y],R(X,4)],
+ ['駕駛疲勞／注意力監測',[N,'●（DMC 駕駛疲勞監測）','●（DMC 駕駛疲勞監測）','●（DMC 駕駛疲勞監測）','●（DMC 駕駛疲勞監測）'],R('●（DAM 駕駛注意力監視）',4)],
+ ['速限辨識（RSA）',R(Y,5),R(X,4)],
+ ['安全離座警示（SEA）',R(Y,5),R(X,4)],
+ ['後座提醒（RSR）',R(X,5),R(Y,4)],
+ ['盲點偵測警示（BSM／BSI）',R(Y,5),R(Y,4)],
+ ['倒車車側警示（RCTA／CTM）',R(Y,5),R(Y,4)],
+ ['防碰撞輔助（PKSB）',R(Y,5),R(X,4)],
+ ['倒車影像',R('●（RVC 倒車影像輔助）',5),R('●（高畫素倒車攝影機，附視角切換）',4)],
+ ['環景影像（PVM／MVCS）',[N,'●（附底盤透視）','●（附底盤透視）','●（附底盤透視）','●（附底盤透視）'],[N,N,'●（多視角切換）','●（多視角切換）']],
+ ['停車雷達',R('倒車雷達 4 具／停車雷達 8 具（含倒車雷達）',5),['後 4 雷達','後 4 雷達','前 4＋後 4 雷達','前 4＋後 4 雷達']],
+ ['ABS／EBD／BA／BOS 煞車輔助',R(Y,5),R(Y,4)],
+ ['ECB 電子式煞車控制',R(Y,5),R(X,4)],
+ ['緊急煞車警示（EBS／ESS）',R(Y,5),R(Y,4)],
+ ['車身穩定控制（VSC＋TRC／VSA）',R(Y,5),R(Y,4)],
+ ['過彎輔助（ACA／AHA）',R(Y,5),R(Y,4)],
+ ['Motion Adaptive 方向盤動態修正輔助',R(X,5),R(Y,4)],
+ ['上坡起步輔助（HAC／HSA）',R(Y,5),R(Y,4)],
+ ['下坡緩降（DAC／HDC）',[N,N,N,N,Y],R(Y,4)],
+ ['檔位誤入動力限制（DSC）',R(Y,5),R(X,4)],
+ ['胎壓監控（TPMS）',R(Y,5),R(Y,4)],
+ ['車輛接近行人警示音（AVAS）',R(Y,5),[N,N,Y,Y]],
+ ['智慧型方向燈（CTS）',R(X,5),R(Y,4)]
+]],
+['被動安全',[
+ ['雙前座前方氣囊',R(Y,5),R(Y,4)],
+ ['前座椅側方氣囊',R(Y,5),R(Y,4)],
+ ['側簾式氣囊',R(Y,5),R(Y,4)],
+ ['膝部氣囊',R('●（駕駛座）',5),R('●（雙前座）',4)],
+ ['第二排側方氣囊',R(X,5),R(Y,4)],
+ ['SRS 氣囊總數',R(X,5),R('10 具',4)],
+ ['高剛性安全車體（GOA／ACE）',R(Y,5),R(Y,4)],
+ ['安全帶',R('全車三點式 ELR；束力限制預縮式（雙前座／左右後座）',5),R('全車五席三點式 ELR；前後 4 座自動預縮式',4)],
+ ['安全帶未繫提醒（SBR）',R(X,5),R(Y,4)],
+ ['ISOFIX／i-Size 兒童座椅固定',R(Y,5),R(Y,4)],
+ ['後門兒童安全鎖',R(X,5),R(Y,4)],
+ ['頸椎傷害緩和座椅（WIL）',R('●（雙前座）',5),R(X,4)]
+]]
+];
+
+var DATA=RAW.map(function(c){
+  return {name:c[0],rows:c[1].map(function(r){
+    if(r[1].length!==5||r[2].length!==4){console.error('欄位數不符：'+r[0]);}
+    return {label:r[0],v:r[1].concat(r[2])};
+  })};
+});
+var ROW={};
+DATA.forEach(function(c){c.rows.forEach(function(r){ROW[r.label]=r;});});
+var PRICE=ROW['建議售價（萬元）'];
+
+/* ===== 工具 ===== */
+function esc(s){return String(s).replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m];});}
+function fmt(v){
+  if(v===null) return '<span class="na">官網未列</span>';
+  var s=String(v), rest=s.length>1?'<span class="note">'+esc(s.slice(1))+'</span>':'';
+  if(s.charAt(0)==='●') return '<span class="yes" role="img" aria-label="有">●</span>'+rest;
+  if(s.charAt(0)==='－') return '<span class="no" role="img" aria-label="無">－</span>'+rest;
+  return esc(s);
+}
+function analyze(vals){
+  var cnt={},listed=0,kinds=0;
+  vals.forEach(function(v){if(v!==null){listed++;if(!cnt[v]){cnt[v]=0;kinds++;}cnt[v]++;}});
+  if(kinds<2) return {diff:false,hi:vals.map(function(){return false;})};
+  var max=0,tops=0,k;
+  for(k in cnt){if(cnt[k]>max)max=cnt[k];}
+  for(k in cnt){if(cnt[k]===max)tops++;}
+  return {diff:true,hi:vals.map(function(v){return v!==null&&(tops>1||cnt[v]<max);})};
+}
+function tableHTML(idxs,opt){
+  var out={html:'',total:0,diffs:0};
+  if(!idxs.length){out.html='<p class="empty">尚未勾選任何等級，請在上方勾選要比較的等級。</p>';return out;}
+  var head='<thead><tr><th class="lab" scope="col">項目</th>'+idxs.map(function(i){
+    var t=TRIMS[i];
+    return '<th class="col '+t.b+'" scope="col"><span class="br">'+t.brand+'</span><span class="tn">'+esc(t.name)+'</span><span class="pr">'+PRICE.v[i]+' 萬</span></th>';
+  }).join('')+'</tr></thead>';
+  var body='';
+  DATA.forEach(function(cat,ci){
+    var rows=cat.rows.map(function(r){return {r:r,a:analyze(idxs.map(function(i){return r.v[i];}))};});
+    var dcount=rows.filter(function(x){return x.a.diff;}).length;
+    out.total+=rows.length;out.diffs+=dcount;
+    var list=opt.onlyDiff?rows.filter(function(x){return x.a.diff;}):rows;
+    if(!list.length) return;
+    var closed=opt.collapsed&&opt.collapsed[ci];
+    var label=esc(cat.name)+'<span class="cn">差異 '+dcount+'／'+rows.length+' 項</span>';
+    body+='<tbody><tr class="cat"><td colspan="'+(idxs.length+1)+'">'+
+      (opt.collapsed
+        ?'<button type="button" class="ct" data-cat="'+ci+'" aria-expanded="'+(!closed)+'"><span class="arr">'+(closed?'▸':'▾')+'</span>'+label+'</button>'
+        :'<div class="ct static">'+label+'</div>')+'</td></tr>';
+    if(!closed){
+      list.forEach(function(x){
+        body+='<tr'+(x.a.diff?' class="d"':'')+'><th class="lab" scope="row">'+esc(x.r.label)+'</th>'+
+          idxs.map(function(i,k){return '<td'+(x.a.hi[k]?' class="hi"':'')+'>'+fmt(x.r.v[i])+'</td>';}).join('')+'</tr>';
+      });
+    }
+    body+='</tbody>';
+  });
+  if(!body){out.html='<p class="empty">所選等級的所有項目內容都相同。</p>';return out;}
+  out.html='<table>'+head+body+'</table>';
+  return out;
+}
+function $(id){return document.getElementById(id);}
+
+/* ===== 狀態 ===== */
+var Q={r:'r3',c:'c3',diff:false};
+var F={sel:{},diff:false,collapsed:{}};
+TRIMS.forEach(function(t){F.sel[t.id]=true;});
+function idxOf(id){for(var i=0;i<TRIMS.length;i++){if(TRIMS[i].id===id)return i;}return -1;}
+
+/* ===== 建立選擇晶片 ===== */
+function chip(t,type,name,checked){
+  var i=idxOf(t.id);
+  return '<label class="chip '+t.b+(checked?' on':'')+'"><input type="'+type+'" name="'+name+'" value="'+t.id+'"'+(checked?' checked':'')+'><span>'+esc(t.name)+'</span><small>'+PRICE.v[i]+' 萬</small></label>';
+}
+function buildPickers(){
+  var R_=TRIMS.filter(function(t){return t.b==='r';}),C_=TRIMS.filter(function(t){return t.b==='c';});
+  $('pickR').innerHTML=R_.map(function(t){return chip(t,'radio','qr',t.id===Q.r);}).join('');
+  $('pickC').innerHTML=C_.map(function(t){return chip(t,'radio','qc',t.id===Q.c);}).join('');
+  $('fullR').innerHTML=R_.map(function(t){return chip(t,'checkbox','fs',F.sel[t.id]);}).join('');
+  $('fullC').innerHTML=C_.map(function(t){return chip(t,'checkbox','fs',F.sel[t.id]);}).join('');
+}
+function syncChips(){
+  Array.prototype.forEach.call(document.querySelectorAll('.chip input'),function(inp){
+    inp.parentNode.classList.toggle('on',inp.checked);
+  });
+}
+
+/* ===== 繪製 ===== */
+var KPI=['動力型式','平均油耗 (km/L)','能源效率等級','空車重 (kg)'];
+function card(i){
+  var t=TRIMS[i];
+  return '<div class="kc '+t.b+'"><div class="kh"><span class="br">'+t.brand+'</span><span class="kn">'+esc(t.name)+'</span></div>'+
+    '<div class="kp">'+PRICE.v[i]+'<small> 萬</small></div><dl>'+
+    KPI.map(function(k){return '<div><dt>'+k+'</dt><dd>'+fmt(ROW[k].v[i])+'</dd></div>';}).join('')+'</dl></div>';
+}
+function renderQuick(){
+  var ri=idxOf(Q.r),ci=idxOf(Q.c);
+  $('kpis').innerHTML=card(ri)+card(ci);
+  var pr=parseFloat(PRICE.v[ri]),pc=parseFloat(PRICE.v[ci]),d=Math.abs(pr-pc).toFixed(1);
+  $('gap').innerHTML=pr===pc?'兩款售價相同。':'售價差 <b>'+d+' 萬</b>（'+(pr>pc?'RAV4 '+esc(TRIMS[ri].name)+' 較高':'CR-V '+esc(TRIMS[ci].name)+' 較高')+'）';
+  var res=tableHTML([ri,ci],{onlyDiff:Q.diff,collapsed:null});
+  $('qtable').innerHTML=res.html;
+  $('qstat').textContent='共 '+res.total+' 項，其中 '+res.diffs+' 項有差異';
+}
+function renderFull(){
+  var idxs=[];
+  TRIMS.forEach(function(t,i){if(F.sel[t.id])idxs.push(i);});
+  var res=tableHTML(idxs,{onlyDiff:F.diff,collapsed:F.collapsed});
+  $('ftable').innerHTML=res.html;
+  $('fstat').textContent=idxs.length?('已選 '+idxs.length+' 款，共 '+res.total+' 項，其中 '+res.diffs+' 項有差異'):'';
+}
+
+/* ===== 事件 ===== */
+document.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.name==='qr'){Q.r=t.value;syncChips();renderQuick();}
+  else if(t.name==='qc'){Q.c=t.value;syncChips();renderQuick();}
+  else if(t.name==='fs'){F.sel[t.value]=t.checked;syncChips();renderFull();}
+  else if(t.id==='qdiff'){Q.diff=t.checked;renderQuick();}
+  else if(t.id==='fdiff'){F.diff=t.checked;renderFull();}
+});
+document.addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('button'):null;
+  if(!b) return;
+  if(b.hasAttribute('data-cat')){
+    var ci=b.getAttribute('data-cat');
+    F.collapsed[ci]=!F.collapsed[ci];
+    renderFull();
+    return;
+  }
+  var act=b.getAttribute('data-act');
+  if(act==='all'||act==='none'){
+    TRIMS.forEach(function(t){F.sel[t.id]=(act==='all');});
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="fs"]'),function(i){i.checked=(act==='all');});
+    syncChips();renderFull();
+  }else if(act==='expand'){F.collapsed={};renderFull();}
+  else if(act==='collapse'){DATA.forEach(function(c,i){F.collapsed[i]=true;});renderFull();}
+});
+
+buildPickers();
+renderQuick();
+renderFull();
+</script>
+</body>
+</html>
