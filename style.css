@@ -238,10 +238,10 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .m-top{display:block}
   .m-only-li{display:list-item}
   .wrap{padding-left:max(1rem,env(safe-area-inset-left));padding-right:max(1rem,env(safe-area-inset-right))}
-  #intro,#notesWrap,#m-compare,#m-adv{display:none}
-  body[data-tab="intro"] #intro,body[data-tab="notes"] #notesWrap,body[data-tab="compare"] #m-compare,body[data-tab="adv"] #m-adv{display:block}
+  #intro,#notesWrap,#charts,#m-compare,#m-adv{display:none}
+  body[data-tab="intro"] #intro,body[data-tab="charts"] #charts,body[data-tab="notes"] #notesWrap,body[data-tab="compare"] #m-compare,body[data-tab="adv"] #m-adv{display:block}
   body[data-tab="compare"] .m-bar,body[data-tab="adv"] .m-bar{display:flex}
-  #intro{padding-top:1rem}
+  #intro,#charts{padding-top:1rem}
   .m-notes-h{margin:1.25rem 0 .75rem}
   main.wrap{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom))}
   summary{display:flex;align-items:center;min-height:2.75rem}
@@ -389,10 +389,48 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .m-tabrow .theme-btn:active{background:var(--panel2)}
 }
 
+/* ===== 圖表頁 ===== */
+.chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.875rem;align-items:start}
+.chart-card{background:var(--panel);border:1px solid var(--line);border-radius:.625rem;padding:.875rem 1rem 1rem;min-width:0}
+.chart-card h3{margin:0 0 .25rem;font-size:1rem}
+.chart-note{color:var(--mute);font-size:.8125rem;margin:0 0 .75rem;line-height:1.5}
+.lg{display:inline-block;width:.75rem;height:.75rem;border-radius:.1875rem;margin-right:.375rem;vertical-align:-.0625rem}
+.lg.r{background:var(--red)}.lg.c{background:var(--blue)}.lg.m{background:var(--amber)}
+.bars{display:grid;gap:.4375rem}
+.bar-row{display:grid;grid-template-columns:9.5rem minmax(0,1fr) 4.25rem;align-items:center;gap:.625rem}
+.bar-lab{font-size:.8125rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bb{font-weight:800;font-size:.75rem}
+.bb.r{color:var(--red-text)}.bb.c{color:var(--blue-text)}.bb.m{color:var(--amber-text)}
+.bar-track{height:1.125rem;background:var(--panel2);border-radius:.25rem;overflow:hidden}
+.bar-fill{height:100%;border-radius:.25rem}
+.bar-fill.r{background:var(--red)}.bar-fill.c{background:var(--blue)}.bar-fill.m{background:var(--amber)}
+.bar-val{font-size:.8125rem;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sc-wrap{overflow:hidden}
+.sc-wrap svg{display:block}
+.sc-grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+.sc-axis{stroke:var(--mute);stroke-width:1}
+.sc-t{fill:var(--mute);font-size:11px}
+.sc-hint{fill:var(--mute);font-size:11px}
+.sc-lead{stroke:var(--mute);stroke-width:1}
+.sc-lab{fill:var(--text);font-size:12px;font-weight:600;paint-order:stroke;stroke:var(--panel);stroke-width:3px;stroke-linejoin:round}
+.dot.r{fill:var(--red)}.dot.c{fill:var(--blue)}.dot.m{fill:var(--amber)}
+.dot.hollow{fill:var(--panel);stroke-width:2}
+.dot.hollow.r{stroke:var(--red)}.dot.hollow.c{stroke:var(--blue)}.dot.hollow.m{stroke:var(--amber)}
+.chart-foot{margin:.625rem 0 0;padding-left:1.125rem;color:var(--mute);font-size:.8125rem;line-height:1.55}
+.chart-foot:empty{display:none}
+.chart-card details{margin:.75rem 0 0}
+@media (max-width:64em){.chart-grid{grid-template-columns:1fr}}
+@media (max-width:40em){
+  .bar-row{grid-template-columns:minmax(0,1fr) auto;gap:.125rem .5rem}
+  .bar-track{grid-column:1/-1}
+  .bar-val{grid-column:2;grid-row:1}
+  .bar-lab{grid-column:1;grid-row:1}
+}
+
 /* ===== 電腦版分頁：導覽列每個項目一頁，一次只顯示一頁 ===== */
 @media (min-width:40.0625em){
   html[data-view] main.wrap>section,html[data-view] #notesWrap{display:none}
-  html[data-view="quick"] #quick,html[data-view="full"] #full,html[data-view="adv"] #adv,
+  html[data-view="quick"] #quick,html[data-view="full"] #full,html[data-view="charts"] #charts,html[data-view="adv"] #adv,
   html[data-view="intro"] #intro,html[data-view="notes"] #notesWrap{display:block}
   #notesWrap h2{margin:1.875rem 0 .5rem}
   main.wrap{min-height:60vh}
@@ -428,11 +466,8 @@ html.m-lock,html.m-lock body{overflow:hidden}
 }
 
 
-/* 自動換主題時的漸變（只在日出、日落切換的那一刻套用） */
-@media (prefers-reduced-motion:no-preference){
-  html.theme-fade,html.theme-fade *,html.theme-fade *::before,html.theme-fade *::after{
-    transition:background-color .8s ease,color .8s ease,border-color .8s ease,fill .8s ease,stroke .8s ease!important}
-}
+/* 換主題時的淡入淡出：瀏覽器把換色前後的畫面當成兩張圖交叉淡化（View Transitions） */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.45s;animation-timing-function:ease}
 
 /* 無障礙偏好：減少動態 */
 @media (prefers-reduced-motion:reduce){
