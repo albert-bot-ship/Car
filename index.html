@@ -3,25 +3,123 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0c1119">
+<meta name="color-scheme" content="light" id="mColorScheme">
+<meta name="theme-color" content="#f2f4f8" id="mThemeColor">
 <meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="RAV4×CR-V">
+<meta name="apple-mobile-web-app-status-bar-style" content="default" id="mStatusBar">
+<meta name="apple-mobile-web-app-title" content="三大日系SUV規格對照">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACMklEQVR42u3csU1DQRREUYwcOjESgV2BCamDjggICOjIdRDiCpwgUQMNILTir9g3+8+JESB09WadsNntDzfwk1t/AsSBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA8SBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA3GAOBAH4kAciINatim/6OPzdfk3eX87tnzZy9PH8p/1en5o+bLL/d3yn3X6/HI5MCvORoGz4XIgDmaNw6YM2RSXA3EgDtYVhwfHqAeHy4E4mC8OmzJwU1wOxMFkcdiUsZviciAOZorDpgzfFJcDcSCOP2xKF42b0sW/bUrROLo8OBp1eXA06vLgcDkQB+LwITbuQ6zLgTiYIw6bUmdTXA7EQXocNqXUprgciIPoOGxKtU1xORAH4mDCODw4Cj44XA7EQWgcNqXmprgciIPEOGxK2U1xORAHcXHYlMqb4nIgDsTBJHF4cBR/cLgciIOgOGxK/U1xORAHKXHYlIhNcTkQBxFx2JSUTXE5EAcricO/Jp4zDv+a2OVAHIjDh9gVfoh1ORAHxeOwKXGb4nIgDsrGYVMSN8XlQBzUjMOmhG6Ky4E4EAdJcXhw5D44XA7EQbU4bEr0prgc/Gaz2x/8FXA5EAfiQByIA3EgDsSBOBAHiANxIA7EgTgQB+JAHIgDcYA4EAfiQByIA3EgDsSBOBAH4gBxIA7EgTgQB+JAHIgDcSAOEAfiQByIA3FQyDce5vTVm2TwDAAAAABJRU5ErkJggg==">
+<script>
+/* 依日出日落自動切換：日出到日落＝淺色，其餘時間＝深色 */
+(function(){
+  var LAT=24.15, LON=120.67, TZ=8;            // 台中；TZ＝台灣時區（小時）
+  var RAD=Math.PI/180;
+  function n360(x){x%=360;return x<0?x+360:x;}
+  function n24(x){x%=24;return x<0?x+24:x;}
+  // 日出／日落（UT 小時），演算法：Almanac for Computers（天頂角 90.833°）
+  function sunUT(y,m,d,rise){
+    var N1=Math.floor(275*m/9),N2=Math.floor((m+9)/12),N3=1+Math.floor((y-4*Math.floor(y/4)+2)/3);
+    var N=N1-N2*N3+d-30,lh=LON/15,t=N+((rise?6:18)-lh)/24;
+    var M=0.9856*t-3.289;
+    var L=n360(M+1.916*Math.sin(M*RAD)+0.020*Math.sin(2*M*RAD)+282.634);
+    var RA=n360(Math.atan(0.91764*Math.tan(L*RAD))/RAD);
+    RA=(RA+(Math.floor(L/90)*90-Math.floor(RA/90)*90))/15;
+    var sd=0.39782*Math.sin(L*RAD),cd=Math.cos(Math.asin(sd));
+    var ch=(Math.cos(90.833*RAD)-sd*Math.sin(LAT*RAD))/(cd*Math.cos(LAT*RAD));
+    if(ch>1||ch<-1) return null;
+    var H=(rise?360-Math.acos(ch)/RAD:Math.acos(ch)/RAD)/15;
+    return n24(H+RA-0.06571*t-6.622-lh);
+  }
+  // 指定「台灣當地日期」的日出日落（毫秒，絕對時間）
+  function dayTimes(y,m,d){
+    var base=Date.UTC(y,m-1,d)-TZ*3600000,res=[];
+    [true,false].forEach(function(rise){
+      var ut=sunUT(y,m,d,rise);
+      if(ut===null){res.push(null);return;}
+      var ts=Date.UTC(y,m-1,d)+ut*3600000;
+      while(ts<base) ts+=86400000;
+      while(ts>=base+86400000) ts-=86400000;
+      res.push(ts);
+    });
+    return {rise:res[0],set:res[1]};
+  }
+  function localYMD(ms){var x=new Date(ms+TZ*3600000);return [x.getUTCFullYear(),x.getUTCMonth()+1,x.getUTCDate()];}
+  // 目前深或淺，以及下一次切換的時間
+  function decide(now){
+    var a=localYMD(now),T=dayTimes(a[0],a[1],a[2]);
+    if(T.rise===null||T.set===null){var h=new Date(now+TZ*3600000).getUTCHours();return {theme:(h>=6&&h<18)?'light':'dark',next:now+3600000};}
+    if(now<T.rise) return {theme:'dark',next:T.rise};
+    if(now<T.set) return {theme:'light',next:T.set};
+    var b=localYMD(now+86400000),U=dayTimes(b[0],b[1],b[2]);
+    return {theme:'dark',next:U.rise===null?now+3600000:U.rise};
+  }
+  var META={
+    light:{cs:'light',tc:'#f2f4f8',sb:'default'},
+    dark:{cs:'dark',tc:'#0c1119',sb:'black-translucent'}
+  };
+  var cur=null,timer=0,root=document.documentElement;
+  function setMeta(id,val){var e=document.getElementById(id);if(e) e.setAttribute('content',val);}
+  function apply(theme,animate){
+    if(theme===cur) return;
+    var first=(cur===null);cur=theme;
+    if(animate&&!first){
+      root.classList.add('theme-fade');
+      setTimeout(function(){root.classList.remove('theme-fade');},1000);
+    }
+    root.setAttribute('data-theme',theme);
+    var m=META[theme];
+    setMeta('mColorScheme',m.cs);setMeta('mThemeColor',m.tc);setMeta('mStatusBar',m.sb);
+  }
+  function tick(animate){
+    clearTimeout(timer);
+    var now=Date.now(),d=decide(now);
+    apply(d.theme,animate);
+    timer=setTimeout(function(){tick(true);},Math.min(Math.max(d.next-now+1500,1000),2147483000));
+  }
+  tick(false);
+  // 手機切到背景時計時器可能被暫停：回到頁面時重新判斷
+  document.addEventListener('visibilitychange',function(){if(!document.hidden) tick(true);});
+  window.addEventListener('pageshow',function(){tick(false);});
+  window.__themeDebug={decide:decide,dayTimes:dayTimes,localYMD:localYMD};
+})();
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 40'%3E%3Crect width='66' height='40' fill='%230c1119'/%3E%3Cpolygon points='0,40 14,0 26,0 12,40' fill='%233d8bff'/%3E%3Cpolygon points='20,40 34,0 46,0 32,40' fill='%238a5cf0'/%3E%3Cpolygon points='40,40 54,0 66,0 52,40' fill='%23e4262b'/%3E%3C/svg%3E">
-<title>RAV4 × CR-V 規格對照</title>
+<title>三大日系SUV規格對照</title>
 <style>
 :root{
+  color-scheme:light;
+  --bg:#f2f4f8; --panel:#ffffff; --panel2:#eef1f6; --line:#d3d9e4;
+  --text:#151a23; --mute:#586377; --label:#2f3a4d;
+  --red:#d92b30; --blue:#2b73e8; --amber:#e08a00; --violet:#7b4fe0; --violet-text:#6a3dd1; --green:#157a4d;
+  --red-text:#c4161c; --blue-text:#1b57c2; --amber-text:#9a5200;
+  --red-bg:rgba(217,43,48,.10); --blue-bg:rgba(43,115,232,.10); --amber-bg:rgba(224,138,0,.13);
+  --violet-bg:rgba(123,79,224,.22); --violet-bg2:rgba(123,79,224,.14); --knob:#7b4fe0;
+  --diff:rgba(123,79,224,.13);
+  --glass:rgba(255,255,255,.78);
+  --nav-bg:rgba(245,247,250,.78); --bar-bg:rgba(245,247,250,.84); --sheet-bg:rgba(250,251,253,.94);
+  --head-top:#ffffff;
+  --hair:rgba(15,23,42,.08); --hair2:rgba(15,23,42,.10); --hair3:rgba(15,23,42,.12);
+  --shade:rgba(15,23,42,.16); --shade2:rgba(15,23,42,.14);
+  --press:rgba(15,23,42,.06); --hover:rgba(15,23,42,.04); --grab:rgba(15,23,42,.28);
+  --navh:3rem;
+}
+:root[data-theme="dark"]{
   color-scheme:dark;
   --bg:#0c1119; --panel:#131b29; --panel2:#1a2436; --line:#27334c;
-  --text:#e7ecf6; --mute:#97a3bd;
-  --red:#e4262b; --blue:#3d8bff; --violet:#8a5cf0; --violet-text:#b79cff; --green:#3ecf8e;
+  --text:#e7ecf6; --mute:#97a3bd; --label:#cbd5ea;
+  --red:#e4262b; --blue:#3d8bff; --amber:#f5a524; --violet:#8a5cf0; --violet-text:#b79cff; --green:#3ecf8e;
+  --red-text:#ff6b6f; --blue-text:#7db3ff; --amber-text:#ffc766;
+  --red-bg:rgba(228,38,43,.16); --blue-bg:rgba(61,139,255,.16); --amber-bg:rgba(245,165,36,.16);
+  --violet-bg:rgba(138,92,240,.35); --violet-bg2:rgba(138,92,240,.2); --knob:#fff;
   --diff:rgba(138,92,240,.26);
   --glass:rgba(26,36,54,.72);
-  --navh:3rem;
+  --nav-bg:rgba(12,17,25,.72); --bar-bg:rgba(12,17,25,.78); --sheet-bg:rgba(26,36,54,.9);
+  --head-top:#101828;
+  --hair:rgba(255,255,255,.06); --hair2:rgba(255,255,255,.08); --hair3:rgba(255,255,255,.1);
+  --shade:rgba(6,9,14,.55); --shade2:rgba(6,9,14,.5);
+  --press:rgba(255,255,255,.06); --hover:rgba(255,255,255,.03); --grab:rgba(255,255,255,.3);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--navh) + .5rem)}
@@ -41,28 +139,28 @@ button,input,label{font:inherit;color:inherit}
 
 /* 頁首 */
 .top{padding:1.75rem 0 1.375rem;border-bottom:1px solid var(--line);
-  background:linear-gradient(180deg,#101828 0%,var(--bg) 100%)}
+  background:linear-gradient(180deg,var(--head-top) 0%,var(--bg) 100%)}
 .head{display:flex;align-items:center;gap:1rem}
 .mark{width:3.625rem;height:2.25rem;flex:none}
 .sub{color:var(--mute);font-size:.8125rem;margin-top:.375rem}
 
 /* 固定導覽（半透明材質） */
 .topnav{position:sticky;top:0;z-index:30;height:var(--navh);
-  background:rgba(12,17,25,.72);
+  background:var(--nav-bg);
   -webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
-  border-bottom:1px solid rgba(255,255,255,.06)}
+  border-bottom:1px solid var(--hair)}
 .topnav .wrap{display:flex;align-items:stretch;gap:1.5rem;height:100%;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 .topnav .wrap::-webkit-scrollbar{display:none}
 .topnav a{display:flex;align-items:center;color:var(--mute);text-decoration:none;font-size:.875rem;
   border-bottom:.125rem solid transparent;transition:color .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
 .topnav a[aria-current]{color:var(--text);border-bottom-color:var(--violet)}
-.topnav a:active{color:var(--text);background:rgba(255,255,255,.06)}
+.topnav a:active{color:var(--text);background:var(--press)}
 
 section{padding:1.875rem 0 .375rem;scroll-margin-top:calc(var(--navh) + .5rem)}
 .lead{color:var(--mute);font-size:.875rem;margin:.375rem 0 1rem}
 
 /* 車款選擇 */
-.picker{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:1rem}
+.picker{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem;margin-bottom:1rem}
 .grp{background:var(--panel);border:1px solid var(--line);border-radius:.625rem;padding:.75rem .875rem}
 .grp.r{border-top:.1875rem solid var(--red)}
 .grp.c{border-top:.1875rem solid var(--blue)}
@@ -74,20 +172,20 @@ section{padding:1.875rem 0 .375rem;scroll-margin-top:calc(var(--navh) + .5rem)}
   transition:transform .1s ease-out,background-color .1s ease-out,border-color .1s ease-out;-webkit-tap-highlight-color:transparent}
 .chip input{position:absolute;opacity:0;pointer-events:none}
 .chip small{color:var(--mute);font-size:.75rem;letter-spacing:.01em}
-.chip.r.on{border-color:var(--red);background:rgba(228,38,43,.16)}
-.chip.c.on{border-color:var(--blue);background:rgba(61,139,255,.16)}
+.chip.r.on{border-color:var(--red);background:var(--red-bg)}
+.chip.c.on{border-color:var(--blue);background:var(--blue-bg)}
 .chip:has(input:focus-visible){outline:.125rem solid var(--blue);outline-offset:.125rem}
 .chip:active{transform:scale(.97)}
 
 /* 重點卡 */
-.kcs{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
+.kcs{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem}
 .kc{background:var(--panel);border:1px solid var(--line);border-radius:.625rem;padding:.875rem 1rem}
 .kc.r{border-left:.25rem solid var(--red)}
 .kc.c{border-left:.25rem solid var(--blue)}
 .kh{display:flex;align-items:baseline;gap:.5rem}
 .br{font-weight:800;font-size:.8125rem}
-.kc.r .br,th.col.r .br{color:#ff6b6f}
-.kc.c .br,th.col.c .br{color:#7db3ff}
+.kc.r .br,th.col.r .br{color:var(--red-text)}
+.kc.c .br,th.col.c .br{color:var(--blue-text)}
 .kn{font-weight:700;font-size:1.0625rem}
 .kp{font-size:2rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15;margin:.25rem 0 .5rem}
 .kp small{font-size:.875rem;font-weight:500;letter-spacing:0;color:var(--mute)}
@@ -109,8 +207,8 @@ section{padding:1.875rem 0 .375rem;scroll-margin-top:calc(var(--navh) + .5rem)}
   transition:background-color .1s ease-out,border-color .1s ease-out}
 .sw i::after{content:"";position:absolute;top:.125rem;left:.125rem;width:1rem;height:1rem;border-radius:.5rem;background:var(--mute);
   transition:left .1s ease-out,width .1s ease-out,background-color .1s ease-out}
-.sw input:checked + i{background:rgba(138,92,240,.35);border-color:var(--violet)}
-.sw input:checked + i::after{left:1.125rem;background:#fff}
+.sw input:checked + i{background:var(--violet-bg);border-color:var(--violet)}
+.sw input:checked + i::after{left:1.125rem;background:var(--knob)}
 .sw:active i::after{width:1.25rem}
 .sw:active input:checked + i::after{left:.875rem}
 .sw input:focus-visible + i{outline:.125rem solid var(--blue);outline-offset:.125rem}
@@ -128,7 +226,7 @@ td{min-width:9.375rem;line-height:1.5}
 thead th{position:sticky;top:0;z-index:3;white-space:nowrap;border-bottom:0;
   background:var(--glass);-webkit-backdrop-filter:blur(.875rem) saturate(160%);backdrop-filter:blur(.875rem) saturate(160%)}
 thead th::after{content:"";position:absolute;left:0;right:0;top:100%;height:.875rem;pointer-events:none;
-  background:linear-gradient(to bottom,rgba(6,9,14,.55),transparent);opacity:0;transition:opacity .1s ease-out}
+  background:linear-gradient(to bottom,var(--shade),transparent);opacity:0;transition:opacity .1s ease-out}
 .tw.scrolled thead th::after{opacity:1}
 th.col{border-top:.1875rem solid transparent}
 th.col.r{border-top-color:var(--red)}
@@ -136,9 +234,9 @@ th.col.c{border-top-color:var(--blue)}
 th.col .br{display:block;font-size:.75rem;letter-spacing:.01em}
 th.col .tn{display:block;font-size:1rem;font-weight:700}
 th.col .pr{display:block;font-size:.75rem;letter-spacing:.01em;color:var(--mute);font-weight:400;font-variant-numeric:tabular-nums}
-.lab{position:sticky;left:0;z-index:2;min-width:7rem;max-width:9.375rem;font-weight:600;color:#cbd5ea;background:var(--panel)}
+.lab{position:sticky;left:0;z-index:2;min-width:7rem;max-width:9.375rem;font-weight:600;color:var(--label);background:var(--panel)}
 .lab::after{content:"";position:absolute;top:0;bottom:0;left:100%;width:.75rem;pointer-events:none;
-  background:linear-gradient(to right,rgba(6,9,14,.5),transparent);opacity:0;transition:opacity .1s ease-out}
+  background:linear-gradient(to right,var(--shade2),transparent);opacity:0;transition:opacity .1s ease-out}
 .tw.scrolledx .lab::after{opacity:1}
 thead .lab{z-index:4;background:var(--glass)}
 tr.d .lab{box-shadow:inset .1875rem 0 0 var(--violet)}
@@ -158,10 +256,10 @@ tr.cat td{padding:0;background:var(--panel2)}
 .empty{padding:1.375rem;color:var(--mute)}
 
 /* 官網介紹 */
-.info{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;align-items:start}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem;align-items:start}
 .icol h3{margin:0 0 .625rem;font-size:.9375rem}
-.icol.r h3{color:#ff6b6f}
-.icol.c h3{color:#7db3ff}
+.icol.r h3{color:var(--red-text)}
+.icol.c h3{color:var(--blue-text)}
 details{background:var(--panel);border:1px solid var(--line);border-radius:.625rem;margin-bottom:.625rem}
 .icol.r details{border-left:.1875rem solid var(--red)}
 .icol.c details{border-left:.1875rem solid var(--blue)}
@@ -170,26 +268,38 @@ summary{cursor:pointer;padding:.625rem .875rem;font-weight:600;list-style:none;b
 summary::-webkit-details-marker{display:none}
 summary::before{content:"▸";display:inline-block;width:1.125rem;color:var(--mute)}
 details[open] summary::before{content:"▾"}
-summary:active{background:rgba(255,255,255,.05)}
-details ul{margin:0;padding:0 .875rem .75rem 2.125rem;font-size:.84375rem;color:#cbd5ea}
+summary:active{background:var(--press)}
+details ul{margin:0;padding:0 .875rem .75rem 2.125rem;font-size:.84375rem;color:var(--label)}
 details li{margin:.25rem 0;line-height:1.55}
-details a{color:#7db3ff;word-break:break-all}
+details a{color:var(--blue-text);word-break:break-all}
 
+
+/* CX-5 品牌色 */
+.grp.m{border-top:.1875rem solid var(--amber)}
+.chip.m.on{border-color:var(--amber);background:var(--amber-bg)}
+.kc.m{border-left:.25rem solid var(--amber)}
+.kc.m .br,th.col.m .br{color:var(--amber-text)}
+th.col.m{border-top-color:var(--amber)}
+.icol.m h3{color:var(--amber-text)}
+.icol.m details{border-left:.1875rem solid var(--amber)}
+.icol details ul ul{margin:.25rem 0 .25rem;padding-left:1.125rem}
+/* 淺色主題：手機選單勾選圖示改用深紫色 */
+:root:not([data-theme="dark"]) .m-opt.on .o-ck{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236a3dd1' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E")}
 
 /* ===== 手機版（640 px 以下：iPhone 直向） ===== */
 .m-top,.m-bar,#mobile,.m-only,.m-only-li{display:none}
 .m-sheet-root{position:fixed;inset:0;z-index:60}
 .m-scrim{position:absolute;inset:0;background:#000;opacity:0;touch-action:none}
 .m-sheet{position:absolute;left:0;right:0;bottom:0;max-height:min(88dvh,52rem);display:flex;flex-direction:column;
-  background:rgba(26,36,54,.9);
+  background:var(--sheet-bg);
   -webkit-backdrop-filter:blur(calc(var(--p,0) * 1.5rem)) saturate(180%);backdrop-filter:blur(calc(var(--p,0) * 1.5rem)) saturate(180%);
-  border-radius:1.25rem 1.25rem 0 0;border-top:1px solid rgba(255,255,255,.1);
+  border-radius:1.25rem 1.25rem 0 0;border-top:1px solid var(--hair3);
   padding-bottom:env(safe-area-inset-bottom);will-change:transform;transform:translate3d(0,100%,0)}
 .m-sheet-head{flex:none;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
-.m-grab{display:block;width:2.25rem;height:.3125rem;border-radius:.1875rem;background:rgba(255,255,255,.3);margin:.5rem auto .125rem}
+.m-grab{display:block;width:2.25rem;height:.3125rem;border-radius:.1875rem;background:var(--grab);margin:.5rem auto .125rem}
 .m-sheet-bar{display:flex;align-items:center;justify-content:space-between;padding:.125rem max(1rem,env(safe-area-inset-right)) .25rem max(1rem,env(safe-area-inset-left))}
 .m-sheet-bar h2{font-size:1.0625rem;font-weight:700;letter-spacing:-.01em}
-.m-close{min-height:2.75rem;min-width:3.5rem;padding:0 .5rem;border:0;background:transparent;color:#7db3ff;font-size:1rem;font-weight:600;border-radius:.625rem}
+.m-close{min-height:2.75rem;min-width:3.5rem;padding:0 .5rem;border:0;background:transparent;color:var(--blue-text);font-size:1rem;font-weight:600;border-radius:.625rem}
 .m-sheet-body{overflow:auto;overscroll-behavior:contain;touch-action:pan-y;padding:0 max(.75rem,env(safe-area-inset-right)) .75rem max(.75rem,env(safe-area-inset-left));-webkit-overflow-scrolling:touch}
 .m-sheet.fit .m-sheet-body{touch-action:none}
 .m-grp-t{font-size:.8125rem;font-weight:700;color:var(--mute);letter-spacing:.01em;padding:.5rem .25rem .25rem}
@@ -203,7 +313,7 @@ details a{color:#7db3ff;word-break:break-all}
 .m-opt .o-s{font-size:.75rem;color:var(--mute);letter-spacing:.01em}
 .m-opt .o-p{color:var(--mute);font-size:.875rem;font-variant-numeric:tabular-nums}
 .m-opt .o-ck{flex:none;width:1.25rem;height:1.25rem}
-.m-opt.on{border-color:var(--violet);background:rgba(138,92,240,.2)}
+.m-opt.on{border-color:var(--violet);background:var(--violet-bg2)}
 .m-opt.on .o-ck{background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b79cff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5 5L20 6.5'/%3E%3C/svg%3E")}
 html.m-lock,html.m-lock body{overflow:hidden}
 
@@ -227,8 +337,8 @@ html.m-lock,html.m-lock body{overflow:hidden}
 
   /* 頂部固定列：半透明材質，避開動態島 */
   .m-top{position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top);
-    background:rgba(12,17,25,.78);-webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
-    border-bottom:1px solid rgba(255,255,255,.06)}
+    background:var(--bar-bg);-webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
+    border-bottom:1px solid var(--hair)}
   .m-tabs{display:flex;gap:.5rem;padding:.375rem max(.5rem,env(safe-area-inset-right)) .375rem max(.5rem,env(safe-area-inset-left))}
   .m-tab{flex:1;min-width:0;min-height:2.75rem;border:0;border-radius:.625rem;background:transparent;color:var(--mute);font-size:.9375rem;font-weight:600;letter-spacing:.01em;
     transition:background-color .1s ease-out,color .1s ease-out,transform .1s ease-out;-webkit-tap-highlight-color:transparent}
@@ -243,8 +353,8 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .m-pcell.c{border-top-color:var(--blue)}
   .m-pcell:active{transform:scale(.97);background:var(--panel2)}
   .p-b{font-size:.6875rem;font-weight:800;letter-spacing:.01em}
-  .m-pcell.r .p-b{color:#ff6b6f}
-  .m-pcell.c .p-b{color:#7db3ff}
+  .m-pcell.r .p-b{color:var(--red-text)}
+  .m-pcell.c .p-b{color:var(--blue-text)}
   .p-n{font-size:1rem;font-weight:700;line-height:1.25;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .p-p{font-size:.75rem;color:var(--mute);font-variant-numeric:tabular-nums}
 
@@ -257,8 +367,8 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .m-kc.r{border-top-color:var(--red)}
   .m-kc.c{border-top-color:var(--blue)}
   .k-b{font-size:.75rem;font-weight:800}
-  .m-kc.r .k-b{color:#ff6b6f}
-  .m-kc.c .k-b{color:#7db3ff}
+  .m-kc.r .k-b{color:var(--red-text)}
+  .m-kc.c .k-b{color:var(--blue-text)}
   .k-n{font-size:1rem;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
   .k-p{font-size:1.75rem;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15;margin:.125rem 0 .375rem}
   .k-p small{font-size:.8125rem;font-weight:500;letter-spacing:0;color:var(--mute)}
@@ -291,7 +401,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .m-cat[aria-expanded="false"] .m-chev{transform:rotate(-45deg)}
   .m-row{padding:.625rem .875rem .75rem;border-bottom:1px solid var(--line)}
   .m-row:last-child{border-bottom:0}
-  .m-lab{font-size:.8125rem;font-weight:600;color:#cbd5ea;margin-bottom:.375rem;letter-spacing:.01em;line-height:1.4}
+  .m-lab{font-size:.8125rem;font-weight:600;color:var(--label);margin-bottom:.375rem;letter-spacing:.01em;line-height:1.4}
   .m-row.d .m-lab::before{content:"";display:inline-block;width:.375rem;height:.375rem;border-radius:50%;background:var(--violet);margin-right:.375rem;vertical-align:.0625rem}
   .m-vals{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
   .m-val{min-width:0;background:var(--panel2);border-left:.1875rem solid var(--line);border-radius:.5rem;padding:.4375rem .625rem;font-size:.9375rem;line-height:1.4;overflow-wrap:anywhere}
@@ -302,8 +412,8 @@ html.m-lock,html.m-lock body{overflow:hidden}
   /* 底部固定操作列：拇指區，避開 Home 指示條 */
   .m-bar{position:fixed;left:0;right:0;bottom:0;z-index:40;gap:.5rem;align-items:stretch;
     padding:.5rem max(.75rem,env(safe-area-inset-right)) calc(.5rem + env(safe-area-inset-bottom)) max(.75rem,env(safe-area-inset-left));
-    background:rgba(12,17,25,.78);-webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
-    border-top:1px solid rgba(255,255,255,.08)}
+    background:var(--bar-bg);-webkit-backdrop-filter:blur(1.25rem) saturate(180%);backdrop-filter:blur(1.25rem) saturate(180%);
+    border-top:1px solid var(--hair2)}
   .m-side{flex:1;min-width:0;min-height:2.75rem;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;
     padding:.25rem .625rem;border:1px solid var(--line);border-radius:.75rem;background:var(--panel2);
     transition:transform .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
@@ -316,9 +426,18 @@ html.m-lock,html.m-lock body{overflow:hidden}
     transition:transform .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
   .m-diff{flex:none;min-width:4.25rem;min-height:2.75rem;padding:0 .625rem;border:1px solid var(--line);border-radius:.75rem;background:var(--panel2);font-size:.8125rem;font-weight:600;line-height:1.25;
     transition:transform .1s ease-out,background-color .1s ease-out,border-color .1s ease-out;-webkit-tap-highlight-color:transparent}
-  .m-diff[aria-pressed="true"]{background:rgba(138,92,240,.35);border-color:var(--violet)}
+  .m-diff[aria-pressed="true"]{background:var(--violet-bg);border-color:var(--violet)}
   .m-side:active,.m-swap:active,.m-diff:active,.m-opt:active,.m-close:active{transform:scale(.97);background:var(--line)}
   .m-opt,.m-close{-webkit-tap-highlight-color:transparent;transition:transform .1s ease-out,background-color .1s ease-out}
+}
+
+@media (max-width:40em){
+  .m-pcell.m{border-top-color:var(--amber)}
+  .m-pcell.m .p-b,.m-kc.m .k-b{color:var(--amber-text)}
+  .m-kc.m{border-top-color:var(--amber)}
+  .m-val.m{border-left-color:var(--amber)}
+  .m-opt.m .o-bar{background:var(--amber)}
+  .m-side.m .dot{background:var(--amber)}
 }
 @media (prefers-reduced-motion:reduce){
   .m-tab:active,.m-pcell:active,.m-chip:active,.m-side:active,.m-swap:active,.m-diff:active,.m-opt:active,.m-close:active{transform:none;opacity:.7}
@@ -347,9 +466,12 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .btn:hover{border-color:var(--mute)}
   .chip:hover{border-color:var(--mute)}
   .topnav a:hover{color:var(--text)}
-  summary:hover{background:rgba(255,255,255,.03)}
+  summary:hover{background:var(--hover)}
 }
 
+@media (max-width:64em){
+  .info{grid-template-columns:1fr}
+}
 @media (max-width:45em){
   .picker,.kcs,.info{grid-template-columns:1fr}
   th,td{padding:.4375rem .5625rem}
@@ -358,6 +480,13 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .tw.full td{min-width:9.375rem}
   .lab{min-width:6rem;max-width:6.875rem}
   .stat{margin-left:0;width:100%}
+}
+
+
+/* 自動換主題時的漸變（只在日出、日落切換的那一刻套用） */
+@media (prefers-reduced-motion:no-preference){
+  html.theme-fade,html.theme-fade *,html.theme-fade *::before,html.theme-fade *::after{
+    transition:background-color .8s ease,color .8s ease,border-color .8s ease,fill .8s ease,stroke .8s ease!important}
 }
 
 /* 無障礙偏好：減少動態 */
@@ -376,7 +505,8 @@ html.m-lock,html.m-lock body{overflow:hidden}
 }
 /* 無障礙偏好：提高對比 */
 @media (prefers-contrast:more){
-  :root{--line:#7d8db3;--mute:#d3dbee;--text:#fff;--diff:rgba(138,92,240,.5)}
+  :root{--line:#5b6577;--mute:#2f3a4d;--text:#000;--diff:rgba(123,79,224,.28)}
+  :root[data-theme="dark"]{--line:#7d8db3;--mute:#d3dbee;--text:#fff;--diff:rgba(138,92,240,.5)}
   .topnav{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
   thead th,thead .lab{background:var(--panel2);-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:.125rem solid var(--line)}
   .chip,.btn,.sw i{border-width:.125rem}
@@ -400,8 +530,8 @@ html.m-lock,html.m-lock body{overflow:hidden}
       <polygon points="40,40 54,0 66,0 52,40" fill="#e4262b"/>
     </svg>
     <div>
-      <h1>RAV4 × CR-V 規格對照</h1>
-      <p class="sub">資料取自 Toyota Taiwan、Honda Taiwan 官網規格與介紹頁及兩家原廠型錄，2026/09/20 讀取，實車配備以原廠為準</p>
+      <h1>三大日系SUV規格對照</h1>
+      <p class="sub">資料取自 Toyota Taiwan、Honda Taiwan 官網規格與介紹頁，以及 Toyota、Honda、Mazda 三家原廠型錄（RAV4、CR-V 於 2026/09/20 讀取；CX-5 為 2026 年 7 月版型錄），實車配備以原廠為準</p>
     </div>
   </div>
 </header>
@@ -427,10 +557,11 @@ html.m-lock,html.m-lock body{overflow:hidden}
 
 <section id="quick">
   <h2>快速對照</h2>
-  <p class="lead">RAV4 與 CR-V 各選一款，並排比較。</p>
+  <p class="lead">RAV4、CR-V、CX-5 各選一款，並排比較。</p>
   <div class="picker">
     <div class="grp r"><h3>RAV4</h3><div class="chips" id="pickR"></div></div>
     <div class="grp c"><h3>CR-V</h3><div class="chips" id="pickC"></div></div>
+    <div class="grp m"><h3>CX-5</h3><div class="chips" id="pickM"></div></div>
   </div>
   <div class="kcs" id="kpis"></div>
   <p class="gap" id="gap" aria-live="polite"></p>
@@ -441,7 +572,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
   <div class="legend">
     <span><span class="yes">●</span> 有此配備</span>
     <span><span class="no">－</span> 無此配備</span>
-    <span><span class="na">官網未列</span> 該官網頁面沒有這一項</span>
+    <span><span class="na">未列</span> 該資料來源（官網頁面或型錄）沒有這一項</span>
     <span><span class="sq"></span>與其他欄不同</span>
   </div>
   <div class="tw short" id="qtable" tabindex="0" role="region" aria-label="快速對照表，可左右捲動"></div>
@@ -449,10 +580,11 @@ html.m-lock,html.m-lock body{overflow:hidden}
 
 <section id="full">
   <h2>完整對照表</h2>
-  <p class="lead">勾選要比的等級，最多可同時比 9 款。</p>
+  <p class="lead">勾選要比的等級，最多可同時比 13 款。</p>
   <div class="picker">
     <div class="grp r"><h3>RAV4</h3><div class="chips" id="fullR"></div></div>
     <div class="grp c"><h3>CR-V</h3><div class="chips" id="fullC"></div></div>
+    <div class="grp m"><h3>CX-5</h3><div class="chips" id="fullM"></div></div>
   </div>
   <div class="bar">
     <button type="button" class="btn" data-act="all">全選</button>
@@ -468,7 +600,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
 
 <section id="adv">
   <h2>RAV4 ADVENTURE 與 GR SPORT</h2>
-  <p class="lead">這兩款不參與上方與 CR-V 的比較，另以 RAV4 旗艦作參考，方便看出兩款比旗艦多了或少了什麼。資料取自 RAV4 型錄規格配備表，價格取自 Toyota 官網車款清單。</p>
+  <p class="lead">這兩款不參與上方與 CR-V、CX-5 的比較，另以 RAV4 旗艦作參考，方便看出兩款比旗艦多了或少了什麼。資料取自 RAV4 型錄規格配備表，價格取自 Toyota 官網車款清單。</p>
   <div class="bar">
     <button type="button" class="btn" data-act="bexpand">展開全部分類</button>
     <button type="button" class="btn" data-act="bcollapse">收合全部分類</button>
@@ -480,7 +612,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
 
 <section id="intro" role="tabpanel" aria-labelledby="tab-intro">
   <h2>官網介紹內容</h2>
-  <p class="lead">兩家官網介紹頁與兩份型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入上方對照表。</p>
+  <p class="lead">Toyota、Honda 官網介紹頁與三份型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入上方對照表。</p>
   <div class="info">
 
     <div class="icol r">
@@ -752,6 +884,135 @@ html.m-lock,html.m-lock body{overflow:hidden}
       </details>
     </div>
 
+    <div class="icol m">
+      <h3>CX-5（Mazda Taiwan 產品型錄，2026 年 7 月版）</h3>
+
+      <details>
+        <summary>頁面說明與連結</summary>
+        <ul>
+          <li>來源是台灣馬自達的 CX-5 產品型錄 PDF（檔名 2026_mazda-cx-5_brochure_1.pdf，頁內編號 01～55），封底標示「2026 年 7 月版」；規配表註明適用 2027 年式車型。這份型錄由使用者提供，本網站沒有另外讀取 Mazda 官網頁面，也沒有附型錄連結；型錄封底列有 www.mazda.com.tw 與客服 0800-280123。</li>
+          <li>型錄附註：圖示及文字說明僅供選購參考，以實際販售車型及規格配備為準；表列數值為標準值、未含容許公差；規配表 ● 為標準配備、○ 為選購配備；台灣馬自達保留規格配備變更或停用的權利。</li>
+          <li>車型全名為 25S AWD Elite、25S AWD Exclusive、25S AWD Premium、25S AWD Premium Plus，表內簡寫為 Elite、Exclusive、Premium、Premium Plus；價格取自型錄第 6 頁，不含車色加價。</li>
+          <li>油耗（型錄第 52 頁）：Elite 欄寫「認證測試中」；Exclusive、Premium、Premium Plus 三欄是合併儲存格，共用 13.4 km/L、年耗油量 1,119 L、能源效率等級 2 級（已列入完整對照表）。依歐盟 1999/100/EC 指令測試，年耗油量以年行駛 15,000 公里除以油耗測試值計算。型錄沒有提供 Elite 的數值，本網站不以其他等級的數值代替。</li>
+          <li>型錄文字的小出入：第 43 頁輪圈寫「壅黑」，第 7 頁寫「鈦黑」，表內採「鈦黑」；第 46 頁圖說寫「Apply CarPlay」，應為 Apple CarPlay。</li>
+          <li>表內 CX-5 欄位取自型錄第 6～7 頁、第 39～52 頁的車型規格、規格配備表與介紹頁中有註明等級的項目；型錄沒有列出的項目顯示為「未列」。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>車色與座艙色系（型錄）</summary>
+        <ul>
+          <li>5 種車色：晶艷魂動紅（加價 1.5 萬）、湛海藍、鋼鐵灰（加價 1 萬）、雪幻白（加價 1 萬）、天際灰。</li>
+          <li>型錄沒有註明各等級可選哪些車色；第 6 頁的示意圖以雪幻白（Elite）、鋼鐵灰（Exclusive）、晶艷魂動紅（Premium／Premium Plus）呈現。表內四款列同一組 5 色，實際可選顏色以原廠為準。</li>
+          <li>座艙色系：Elite、Exclusive、Premium 為夜幕黑；Premium Plus 為夜幕黑或荒漠棕。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>動力、驅動與底盤</summary>
+        <ul>
+          <li>SKYACTIV-G 2.5L（2,488 c.c.）汽油直列式 4 汽缸，壓縮比 13.0:1，最大馬力 188 ps／6,000 rpm，最大扭力 26.2 kg-m／4,000 rpm，油箱 58 L；SKYACTIV-DRIVE 6 速手自排。</li>
+          <li>i-ACTIV AWD 智慧型四輪驅動（全車系）：採預判式控制邏輯，以每秒超過 200 次的頻率感知室外溫度、轉向角度、煞車操作、雨刷作動狀態與四輪轉速，預先調整前後輪動力分配。</li>
+          <li>Mi-Drive（Mazda Intelligent Drive Select）三種模式：NORMAL 日常模式；SPORT 運動模式（延遲換檔時機、動力響應更敏捷）；OFF-ROAD 越野模式（優化動力與循跡分配）。</li>
+          <li>SKYACTIV-VEHICLE DYNAMICS 車輛動態管理系統與 G-VECTORING CONTROL PLUS G 力引導控制技術＋為全車系配備。</li>
+          <li>前懸吊獨立麥花臣式、後懸吊獨立多連桿式（SKYACTIV-CHASSIS）；轉向為齒條及小齒輪式（附動力輔助）；煞車為前通風碟式、後實心碟式。</li>
+          <li>型錄規格表只列 SKYACTIV-G 汽油引擎，沒有寫進氣型式（自然進氣或渦輪增壓），所以表內的動力型式只寫「汽油」。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>外觀、燈光與輪圈</summary>
+        <ul>
+          <li>LED 頭燈（附自動水平調整）全車系標配，整合日間行車燈、方向燈與位置燈；LED 尾燈、LED 日行燈、光感應自動啟閉頭燈、雨滴感應式雨刷、降噪前擋風玻璃、抗 UV 淺色玻璃、鋼琴烤漆車門飾板、後擾流尾翼、爍黑車外後視鏡、懸浮式魂動之翼也都是全車系標配。</li>
+          <li>LED 識別光條（前後）：Exclusive 起；與水箱護罩「魂動之翼」鍍鉻飾條相接，方向燈或雙黃警示燈啟動時，燈組會同步閃爍。</li>
+          <li>輪圈：Elite 為鎢灰 17 吋鋁合金輪圈（225/65 R17）；Exclusive 起為鈦黑 19 吋鋁合金輪圈（225/55 R19）。</li>
+          <li>雙模式大型全景天窗僅 Premium Plus 配備；車頂架、鋼琴烤漆車身環車護板為 Exclusive 起。</li>
+          <li>電動啟閉尾門：Exclusive 起；Premium 起為 Hands-free 感應式，可用智慧鑰匙、車內開關或腳踢感應啟閉。</li>
+          <li>原廠風格套件 SIGNATURE STYLE（規配表標示 ○ 選購，Exclusive 起）：黑銀雙色前下擾流板、黑銀雙色運動側裙、高效空力擾流尾翼、高光澤黑下擾流板；型錄沒有列出套件價格。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>座椅、內裝與空間</summary>
+        <ul>
+          <li>座椅：Elite 為夜幕黑高機能織布；Exclusive、Premium 為夜幕黑透氣真皮；Premium Plus 為夜幕黑或荒漠棕透氣真皮。</li>
+          <li>前座：Exclusive 起有駕駛座 10 向電動（含電動腰靠與位置記憶）、副駕駛座 6 向電動、雙前座三段式導流通風；Premium 起再加雙前座與雙後座三段式加熱，並有真皮方向盤加熱與方向盤換檔快撥片。</li>
+          <li>Driver Personalization System 駕駛面部辨識個人化系統（Premium 起）：自動駕駛姿勢導引（輸入身高後，由監測攝影機偵測眼部位置，依 MAZDA 人體工學比例調整座椅，並同步設定 Windshield HUD 角度）；自動設定復原（入座並闔上車門時，以臉部辨識復原座椅、後視鏡與車載系統設定）；迎賓模式（熄火或準備上下車時座椅自動滑移）。Exclusive 的駕駛座記憶則在解鎖並開啟車門時，回復座椅、車門後視鏡角度與抬頭顯示器。</li>
+          <li>後座：4/2/4 分離式後座椅背（全車系），另有後座椅背角度調整與單鍵快速傾倒裝置；後座 Type-C USB 為 Exclusive 起（Elite 只有前座 Type-C）。</li>
+          <li>兒童座椅：型錄第 15 頁註明最大可安裝前後長 79 cm × 寬 48 cm × 高 60 cm 的成長型兒童安全座椅；i-SIZE 兒童安全座椅固定裝置為全車系標配。</li>
+          <li>多彩環艙氣氛燈（前車門飾板，可切換 7 種色彩）、雙前座照地燈、手套箱 LED 照明：Exclusive 起；雙開啟式大型中央扶手、拉簾式行李箱隱私遮板為全車系標配。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>儀表、螢幕與音響</summary>
+        <ul>
+          <li>10.25 吋全數位多功能儀錶（全車系），結合 Driver Personalization System，有三種顯示：簡潔模式、ADAS 先進安全顯示模式、Driver Information System（DIS）駕駛資訊模式。</li>
+          <li>中央資訊顯示幕：Elite、Exclusive 為 12.9 吋，Premium、Premium Plus 為 15.6 吋。</li>
+          <li>Windshield HUD 大型前擋投影式全彩抬頭顯示器：Exclusive 起，投射車速、導航指引與駕駛輔助資訊，並可最佳化顯示 ADAS 資訊。</li>
+          <li>音響：Elite 為 Mazda Harmonic Acoustics 環場聲學音響搭配 8 具高傳真揚聲器；Exclusive 起為 BOSE 環繞音響搭配 12 具高傳真揚聲器，結合 Bass Sync 低音同步技術、進化版 AUDIOPILOT 3 噪音補償系統與 Perceptual Sound Rendering 感知聲音渲染技術。</li>
+          <li>Apple CarPlay 與 Android Auto 皆為無線；無線充電裝置為全車系標配；方向盤整合音響、通訊、駕駛輔助與行車資訊控制，支援滑動與輕觸操作。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>i-ACTIVSENSE 作動條件（一）：SBS 智慧防撞輔助</summary>
+        <ul>
+          <li>型錄第 26～28 頁；各項功能都有作動條件限制，車主仍需以實際路況及交通法規搭配使用，詳見車主手冊。</li>
+          <li>前行偵測防撞輔助：偵測前車、行人、自行車與機車；車速約 4 km/h 以上（偵測物為前車／機車／自行車）、約 4～80 km/h（偵測物為行人）；DSC 未作動。</li>
+          <li>前方橫向車流防撞輔助（Premium 起）：路口視線受限時偵測左右接近車輛；本車約 4～80 km/h 直行、DSC／TCS 未作動、垂直方向有車輛接近、接近車輛約 4～80 km/h 定速行駛。</li>
+          <li>後方橫向車流防撞輔助：倒車車速約 15 km/h 或以下，垂直方向有車輛接近。</li>
+          <li>低速前後偵測防撞輔助：車速約 15 km/h 或以下。</li>
+          <li>轉向來車防撞輔助（TAP）：車速約 4～40 km/h，且方向燈閃爍。</li>
+          <li>十字路口交通輔助（Premium 起）：車速約 4～30 km/h，DSC 未運作。</li>
+          <li>正面來車碰撞緩解輔助：車速約 30 km/h 以上、DSC 未運作、與對向來車行駛在同一車道、系統偵測到兩側車道分界線、車道上沒有多餘空間讓對向來車迴避。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>i-ACTIVSENSE 作動條件（二）：頭燈、環景、盲點與橫向車流</summary>
+        <ul>
+          <li>進階型智慧頭燈附行人標記功能 ALH（Premium 起；Elite、Exclusive 為 HBC 遠近光燈自動調節系統）：防眩遠光模式約 30 km/h 以上啟動，偵測目標為號誌時約 60 km/h 以上、偵測到會造成眩光的路標，偵測目標為車輛時約 30 km/h 以上、偵測到前車及對向來車；行人標記功能 20～80 km/h；廣角近光模式車速低於 40 km/h，或車輛靜止且方向燈閃爍；主動轉向模式 30 km/h 以上；高速模式超過 105 km/h。</li>
+          <li>360° 環景輔助系統（Premium 起）：俯視視角（含前方廣角）、側方視角（後視鏡展開或收折）、後方視角（含後方廣角）、透視視角（含車底透視、3D 攝影機視角、前方／後方透視視角）。型錄註記：鏡頭影像與感測器偵測範圍有局限，夜間或光線昏暗時畫質可能降低，勿過度依賴螢幕影像；車速超過約 15 km/h 時，系統設定螢幕畫面會自動關閉；無法與部分裝飾性或發光式車牌同時安裝。</li>
+          <li>盲點警示輔助系統 BSM：低速轉向警示為車速低於約 30 km/h 且變速器不在 R 檔；離車警示為車輛靜止，且電源開啟，或電源關閉後 3 分鐘內。</li>
+          <li>前方橫向車流警示 FCTA（Premium 起）：車速低於約 15 km/h，變速器在 D 或 N 檔；後方橫向車流警示 RCTA：車速低於約 15 km/h。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>i-ACTIVSENSE 作動條件（三）：車道、疲勞偵測與巡航</summary>
+        <ul>
+          <li>車道偏移警示 LDWS：車速約 50 km/h 以上，系統偵測到白色（黃色）車道標線。</li>
+          <li>緊急車道偏移防止輔助系統 ELK：車道偏移防止輔助（LAS）約 50 km/h 以上（依駕駛者疲勞狀態，最低可於 40 km/h 以上啟動）並偵測到車道標線；車道盲點避讓輔助約 40 km/h 以上，在筆直或些微彎曲的道路上行駛，可偵測車道標線或道路外側（草地、碎石）；道路偏移防止輔助在偵測目標為路邊或護欄時約 35 km/h 以上、其他目標約 50 km/h 以上；對向車道超車避讓輔助約 40 km/h 以上，在筆直或些微彎曲的道路上行駛。</li>
+          <li>駕駛疲勞警示系統 DAA：駕駛時間超過 60 分鐘後啟動，偵測到白色（黃色）車道標線，車速約 65～140 km/h 超過 20 分鐘。</li>
+          <li>駕駛面部偵測攝影機 DM（Premium 起）：睡意偵測為車輛已行駛約 20 分鐘以上、車速約 5 km/h 以上；不專心駕駛偵測為車速約 20 km/h 以上。</li>
+          <li>巡航模式車道維持輔助系統 CTS：未踩煞車、車速約 0～180 km/h、陡坡緩降控制未在操作、SBS 與 TCS 未關閉；偵測不到兩側標線時，依前車行駛路線提供輔助。</li>
+          <li>全速域主動車距控制巡航系統 MRCC：未踩煞車、車速約 0～180 km/h、陡坡緩降控制未在操作、駕駛人偵測（DM）運作正常；前車停止後 3 秒內再起步，本車自動起步隨行。</li>
+          <li>型錄第 38 頁註記：各系統會因偵測目標（例如特殊外型車輛、被遮蔽的車輛或行人）、天候（雨、雪、霧）與道路狀況（多彎道、連續坡道、視線不良路段、車道線模糊等）而可能無法正常運作。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>車體與被動安全</summary>
+        <ul>
+          <li>SKYACTIV-VEHICLE ARCHITECTURE 車體：全車 21% 採用 980 MPa 以上超高強度鋼材，高剛性鋼材佔 63%；型錄稱首度採用最高 2,000 MPa 超高強度鋼材於前後防護結構，側面防護採最高 1,500 MPa。</li>
+          <li>全車系 9 具 SRS 氣囊：雙前座前方、雙前座側方、後座側方、左右車側簾式、駕駛座膝部；另有副駕駛座乘員感知器、前後座三點式安全帶（雙前座與後座兩側附自動緊縮裝置）。</li>
+          <li>其他全車系標配：二次碰撞迴避系統、TCS、DSC、ABS、ESS、HLA、HDC、TPMS、EPB 附 Auto Hold、晶片防盜、防盜警報、車速感應式車門自動上鎖、前後四眼式輔助雷達、後方行人警示輔助功能、定速巡航、車速調節速限器（ASL）。</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>延長保固方案（型錄第 54～55 頁）</summary>
+        <ul>
+          <li>新車保固之外，另提供最長 4 年不限里程的延長保固（第四至第七年）。第一階段「全域安心型」為第四至第五年，第二階段「核心守護型」為第六至第七年；購買時間為新車領牌日至新車保固到期前。</li>
+          <li>型錄第 55 頁的價格表（單位：新台幣）中，CX-5 與 ALL-NEW CX-5 兩列都是 25,500（第一階段）／25,500（第二階段）。</li>
+          <li>保固項目表列出引擎、電控、進排氣、冷卻、燃油、變速箱、傳動、轉向、煞車、車身電子、主被動安全、輕油電、空調、音響、懸吊系統；兩階段都涵蓋，唯獨第二階段的懸吊系統欄位為「－」。這張表是各車型共用的，其中的「輕油電系統」在 CX-5 規格頁沒有提到，本網站不把它列為 CX-5 配備。</li>
+          <li>申購資格：新車保固期內的車主；車輛用途不得為營業車、短期租賃車或政府機關用車（長期租賃小客車不在此限）；購買第二階段方案，需已購買第一階段方案，且車輛仍在新車 3 年 10 萬公里保固內。</li>
+          <li>型錄沒有寫新車保固是否「先到者為準」，表內只照型錄寫成「3 年 10 萬公里」。</li>
+        </ul>
+      </details>
+    </div>
+
   </div>
 </section>
 
@@ -761,13 +1022,19 @@ html.m-lock,html.m-lock body{overflow:hidden}
   <li class="m-only-li"><b>手機版：</b>螢幕寬度 640 px 以下（例如 iPhone 直向）會自動切換為卡片式手機版；橫向或平板仍使用電腦版面。</li>
   <li class="m-only-li"><b>加入主畫面：</b>用 Safari 開啟後，點下方的分享鈕，選「加入主畫面」，之後會以全螢幕 App 樣式開啟；頂部與底部會依動態島與 Home 指示條自動留白。iPhone 是否採用內嵌圖示由系統決定，若沒有顯示，會改用頁面截圖當圖示。</li>
   <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）、RAV4 介紹頁（toyota.com.tw/showroom/RAV4/#hybrid）與 RAV4 電子型錄 PDF（日本進口，2026 年 6 月）；Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）與 Honda CR-V 型錄 PDF（封底印製日期 2025.06），皆於 2026/09/20 讀取。價格為官網建議售價，ADVENTURE 與 GR SPORT 的價格取自 Toyota 官網車款清單。</li>
-  <li><b>官網未列：</b>表示該官網頁面沒有這一項，不代表車輛沒有此配備。</li>
-  <li><b>差異標色：</b>依官網文字逐項比對，不做語意判斷，同一功能在兩家的寫法不同時會被標為差異；官網未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI）已在項目名稱並列。</li>
-  <li><b>油耗：</b>兩家官網都註明依歐盟 1999/100/EC 指令測試，年耗油量都以每年 15,000 公里計算；CR-V 頁面另標示 NEDC。RAV4 PHEV 的 131.6 km/L 為官網與型錄標示值，沒有說明換算方式；純電里程 135 km 的測試依據，型錄兩處寫法不同（1999/100/EC 與 ECE R101），都註明 NEDC 行車型態。</li>
-  <li><b>範圍：</b>主表為 RAV4 五個等級加 CR-V 四個等級；RAV4 ADVENTURE 與 GR SPORT 收錄在獨立區塊，不參與與 CR-V 的比較。</li>
+  <li><b>CX-5 資料來源：</b>台灣馬自達 CX-5 產品型錄 PDF（頁內標示 2026 年 7 月版，規配表適用 2027 年式車型），是使用者提供的檔案，沒有另外讀取 Mazda 官網頁面。價格取自型錄第 6 頁，不含車色加價（晶艷魂動紅 +1.5 萬、鋼鐵灰與雪幻白各 +1 萬）。RAV4、CR-V 與 CX-5 的資料時間點不同，比較時請留意。</li>
+  <li><b>未列：</b>表示該資料來源（官網頁面或型錄）沒有這一項，不代表車輛沒有此配備。CX-5 只依型錄，所以型錄沒寫的項目（例如衛星導航、內建聯網服務、行車紀錄器、前後霧燈、杯架與置物空間）都顯示「未列」。</li>
+  <li><b>差異標色：</b>依官網與型錄的文字逐項比對，不做語意判斷，同一功能在不同品牌的寫法不同時會被標為差異；未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI、Idle Stop／i-STOP、Smart Entry／Smart Keyless、PKSB／低速前後偵測）已在項目名稱並列。</li>
+  <li><b>油耗：</b>兩家官網都註明依歐盟 1999/100/EC 指令測試，年耗油量都以每年 15,000 公里計算；CR-V 頁面另標示 NEDC。RAV4 PHEV 的 131.6 km/L 為官網與型錄標示值，沒有說明換算方式；純電里程 135 km 的測試依據，型錄兩處寫法不同（1999/100/EC 與 ECE R101），都註明 NEDC 行車型態。CX-5 型錄同樣依歐盟 1999/100/EC 指令測試、年耗油量以每年 15,000 公里計算；Elite 標示「認證測試中」，其餘三款為 13.4 km/L，型錄沒有提供 Elite 的數值。</li>
+  <li><b>範圍：</b>主表為 RAV4 五個等級、CR-V 四個等級加 CX-5 四個等級（Elite、Exclusive、Premium、Premium Plus，型錄全名為 25S AWD…）；RAV4 ADVENTURE 與 GR SPORT 收錄在獨立區塊，不參與與 CR-V、CX-5 的比較。</li>
   <li><b>介紹內容：</b>介紹頁有註明等級的項目已補進對照表；沒有註明等級的項目只列在「官網介紹內容」，不假設各等級是否都有。</li>
-  <li><b>車色：</b>RAV4 各車系的車色來自型錄；CR-V 型錄沒有註明各等級可選哪些顏色，表內四款列同一組 5 色，實際各等級可選的顏色以原廠為準。</li>
+  <li><b>車色：</b>RAV4 各車系的車色來自型錄；CR-V 型錄沒有註明各等級可選哪些顏色，表內四款列同一組 5 色，實際各等級可選的顏色以原廠為準。CX-5 型錄同樣沒有註明各等級可選的顏色，表內也是四款列同一組 5 色，並註明加價金額。</li>
   <li><b>PHEV 駕駛模式：</b>官網完整規配頁與型錄的寫法不同（官網有 EV，型錄沒有，但另列 EV/HV 模式切換鈕），表內並列兩個來源，這裡沒有判定哪個正確。</li>
+
+  <li><b>縮寫相同但功能不同：</b>Mazda 的「車速調節速限器（ASL）」與 Toyota 的「ASL 自排防暴衝裝置」縮寫相同，功能不同，表內分成兩列，沒有合併。</li>
+  <li><b>CX-5 型錄的內部不一致：</b>規配表標示全車系標配 MRCC 全速域主動車距控制巡航，作動條件卻寫「駕駛人偵測（DM）運作正常」；而 DM 駕駛面部偵測攝影機在規配表只有 Premium 起配備。Elite、Exclusive 如何滿足這項條件，型錄沒有說明，表內照型錄原樣呈現。</li>
+  <li><b>CX-5 型錄沒有寫的細節：</b>進氣型式（自然進氣或渦輪增壓）、新車保固是否「先到者為準」、原廠風格套件價格，型錄都沒有列，表內不補寫。</li>
+  <li><b>淺色與深色：</b>頁面依日出日落自動切換，日出到日落之間為淺色，其餘時間為深色；日出日落以台中的座標計算，不需要定位權限。在 iPhone 加入主畫面後，狀態列的深淺是開啟 App 時決定的，跨過日落後需重新開啟才會跟著換。</li>
 </ul>
 </div>
 
@@ -806,10 +1073,14 @@ var TRIMS=[
  {id:'c1',b:'c',brand:'CR-V',name:'VTi-S'},
  {id:'c2',b:'c',brand:'CR-V',name:'S'},
  {id:'c3',b:'c',brand:'CR-V',name:'e:HEV S'},
- {id:'c4',b:'c',brand:'CR-V',name:'e:HEV Prestige'}
+ {id:'c4',b:'c',brand:'CR-V',name:'e:HEV Prestige'},
+ {id:'m1',b:'m',brand:'CX-5',name:'Elite'},
+ {id:'m2',b:'m',brand:'CX-5',name:'Exclusive'},
+ {id:'m3',b:'m',brand:'CX-5',name:'Premium'},
+ {id:'m4',b:'m',brand:'CX-5',name:'Premium Plus'}
 ];
 
-/* 每列：[項目, RAV4 五欄（豪華/尊爵/尊爵+/旗艦/PHEV）, CR-V 四欄（VTi-S/S/e:HEV S/e:HEV Prestige）]；null＝官網未列 */
+/* 每列：[項目, RAV4 五欄（豪華/尊爵/尊爵+/旗艦/PHEV）, CR-V 四欄（VTi-S/S/e:HEV S/e:HEV Prestige）]；CX-5 四欄另放在下方的 MZ（依項目名稱對應）；null＝該資料來源未列 */
 var RAW=[
 ['基本資料',[
  ['建議售價（萬元）',['104','117','122','130','149'],['99.9','109.9','122.9','129.9'],['133','139']],
@@ -855,6 +1126,7 @@ var RAW=[
  ['變速系統',R('E-CVT 無段變速系統',5),['G-Design Shift Logic CVT 無段變速系統','G-Design Shift Logic CVT 無段變速系統','ECVT 電氣式無段變速','ECVT 電氣式無段變速']],
  ['檔位控制',R(X,5),['6 檔位控制','5 檔位控制','5 檔位控制','5 檔位控制']],
  ['換檔／電力再生撥片',[N,N,N,N,'●方向盤換檔撥片'],[N,'●換檔撥片','●電力再生撥片（4 段回充力道）','●電力再生撥片（4 段回充力道）'],[N,'●方向盤換檔撥片']],
+ ['動態管理系統',R(X,5),R(X,4)],
  ['轉向系統',R('EPS 電動輔助方向盤',5),R('VGR 可變齒比 EPS 電動輔助動力方向機',4)],
  ['油門設計',R(X,5),R('ETC 電子節流閥線傳控制系統（DBW）',4)],
  ['前懸吊',R('獨立麥花臣式（附防傾平衡桿）',5),R('麥花臣支柱式',4)],
@@ -881,7 +1153,7 @@ var RAW=[
  ['純電里程 (km)',[N,N,N,N,'135'],[N,N,X,X]],
  ['年耗電量（度）',[N,N,N,N,'2308'],[N,N,X,X]],
  ['用電效率 (km/kWh)',[N,N,N,N,'6.5'],[N,N,X,X]],
- ['Idle Stop 怠速節能',R(X,5),[Y,Y,N,N]],
+ ['Idle Stop／i-STOP 怠速節能',R(X,5),[Y,Y,N,N]],
  ['Shutter Grille 主動式進氣控制',R(X,5),R(Y,4)]
 ]],
 ['外觀與燈光',[
@@ -890,12 +1162,14 @@ var RAW=[
  ['前霧燈',[N,'●（LED）','●（LED）','●（LED）','●（LED）'],[N,N,'●（LED）','●（LED）']],
  ['後霧燈',R('●（LED）',5),R('●（LED）',4)],
  ['尾燈',R('●（LED 直豎式）',5),R('●（LED 後視鏡方向燈／尾燈／煞車燈／後牌照燈）',4)],
+ ['前後 LED 識別光條',R(X,5),R(X,4)],
  ['頭尾燈自動啟閉',R(Y,5),R(X,4)],
  ['後視鏡',['電動收折（附電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）','電動收折（附停車收折／電熱除霧／迎賓燈）'],['電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺）','電動調整（附上鎖自動收摺），亮黑','電動調整（附上鎖自動收摺），亮黑']],
  ['電動尾門',[N,'●（附遙控功能／防夾功能）','●（附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）','●（足踢感應式，附遙控功能／防夾功能）'],['●（附離開自動關閉、自訂開啟高度功能）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）','●（腳踢感應式啟閉）']],
  ['天窗',[N,N,N,Y,Y],[N,N,N,'●（全景式電動，附防夾控制／電動遮陽簾）']],
  ['車頂行李架',[N,N,N,Y,Y],[N,N,N,'●（髮絲紋鋁合金）'],['●（越野型橋式）',Y]],
  ['外觀專屬套件',[N,N,N,N,'PHEV 外觀專屬套件：馭黑前後及車側下護板／馭黑前霧燈罩／馭黑車側後視鏡'],R(X,4),['ADVENTURE 外觀專屬套件：霧黑水箱罩飾板／霧銀前後下護板／霧黑厚覆式輪拱飾板／馭黑外車門把手／ADVENTURE 專屬銘板','GR SPORT 外觀專屬套件：蜂巢式馭黑水箱護罩／馭黑前後及車側下護板／馭黑車側後視鏡／GR 專屬銘板／馭黑空力運動尾翼']],
+ ['鋼琴烤漆車門飾板',R(X,5),R(X,4)],
  ['車頂顏色',R(X,5),R(X,4),[X,X],[X,X,'●（馭黑雙色車頂）']],
  ['玻璃功能',R('抗 UV（側車窗／後擋風玻璃）',5),R(X,4)],
  ['水箱護罩',R(X,5),['亮黑＆銀翼飾條','亮黑＆銀翼飾條','亮黑 Sport 式樣＆黑翼飾條','亮黑 Sport 式樣＆黑翼飾條']],
@@ -916,6 +1190,7 @@ var RAW=[
  ['HUD 抬頭顯示器',[N,N,N,Y,Y],[N,N,N,Y],[N,Y]],
  ['儀表',R('12.3 吋全彩數位式',5),['7 吋 TFT 彩色液晶','7 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶','10.2 吋 TFT 彩色液晶']],
  ['道路環境虛擬實境顯示',R(X,5),[N,N,Y,Y]],
+ ['Driver Personalization System 駕駛面部辨識個人化',R(X,5),R(X,4)],
  ['方向盤調整',R('手動四向調整',5),R('4 向可調',4)],
  ['方向盤型式',['三幅式軟質','三幅式真皮','三幅式真皮','三幅式真皮','三幅式真皮（附加熱功能）'],[N,'●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）','●真皮包覆 3 幅式（含排檔頭）'],['三幅式真皮','三幅式真皮（附加熱功能）']],
  ['排檔頭材質',['軟質','真皮','真皮','真皮','－（線傳式排檔）'],[N,'●真皮包覆（含方向盤）','●真皮包覆（含方向盤）','●真皮包覆（含方向盤）']],
@@ -927,6 +1202,8 @@ var RAW=[
  ['金屬質感車門把手',R(X,5),R('鉑金鍍鉻',4)],
  ['隔音設計（NVH）',R(X,5),['●（整車隔音，含 Acoustic 前擋隔音玻璃）','●（整車隔音，含 Acoustic 前擋隔音玻璃）','●（整車隔音 e:HEV 專屬強化，前車窗雙層隔音膠合玻璃）','●（整車隔音 e:HEV 專屬強化，前車窗雙層隔音膠合玻璃）']],
  ['車室照明',R('雙前座化妝鏡／行李廂照明；閱讀燈：前座／後座',5),R('LED 前座照明／後座 LED 室內燈（觸控式）／LED 行李廂照明；雙前座遮陽板附化妝鏡照明燈',4)],
+ ['雙前座照地燈／手套箱 LED 照明',R(X,5),R(X,4)],
+ ['雙開啟式大型中央扶手',R(X,5),R(X,4)],
  ['杯架',R('前座中央／前座車門／後座中央／後座車門',5),R('前座中央雙置杯架（附置物箱）；後座中央扶手雙置杯架',4)],
  ['置物空間',R('副駕駛座前方置物盤／前座吸頂式置物盒／中控中央置物盤／前座中央扶手置物盒／手套箱／車側門把手置物處',5),R('前座中央置物箱；吸頂式太陽眼鏡盒（附對話鏡）',4)],
  ['電源／USB',['前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×3','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5','前座 12V／行李廂 12V／Type-C USB ×5'],R('12V：前座 ×1／後廂 ×1；Type-C：前座 ×2（最大 60W）＋後座出風口 ×2',4)],
@@ -950,7 +1227,7 @@ var RAW=[
  ['後座出風口',R(Y,5),R('●（附 USB Type-C ×2）',4)]
 ]],
 ['便利與科技',[
- ['Smart Entry 智慧型車門啟閉',R(Y,5),R('●（含 Walk-Away Lock 離開立刻上鎖）',4)],
+ ['Smart Entry／Smart Keyless 智慧型車門啟閉',R(Y,5),R('●（含 Walk-Away Lock 離開立刻上鎖）',4)],
  ['Push Start 引擎啟閉',R(Y,5),R(Y,4)],
  ['定速巡航系統',R(Y,5),R(X,4)],
  ['ASL 自排防暴衝裝置',R(Y,5),R(X,4)],
@@ -969,9 +1246,11 @@ var RAW=[
 ['主動安全與駕駛輔助',[
  ['原廠智慧駕駛輔助套件',R('●（TSS 4.0 智動駕駛輔助系統）',5),R('●（Honda SENSING 智慧安全主動防護系統）',4)],
  ['主動式定速巡航',R('●（DRCC 全速域／Stop&Go／Eco 節能巡航）',5),R('●（ACC，附 LSF 低速自動跟車）',4)],
+ ['車速調節速限器（ASL）',R(X,5),R(X,4)],
  ['預警式碰撞防護',R('●（PCS：預警警示／煞車力道輔助／主動煞車輔助／緊急閃避轉向輔助／交叉路口轉向輔助／低速誤加速抑制輔助）',5),R('●（CMBS 碰撞緩解煞車，附 FCW 前方碰撞警示）',4)],
  ['車道輔助',R('●（LTA：車道循跡輔助／車道偏離警示／車道偏離修正輔助／障礙物預判輔助／車輛搖晃警示）',5),R('●（RDM 道路偏移抑制附 LDW 車道偏移警示；LKAS 車道維持輔助）',4)],
- ['遠光燈自動切換（AHB）',R(Y,5),R(Y,4)],
+ ['智慧頭燈功能（HBC／ALH）',R(X,5),R(X,4)],
+ ['遠光燈自動切換（AHB／HBC）',R(Y,5),R(Y,4)],
  ['前車駛離提醒（LCDN）',R(X,5),R(Y,4)],
  ['前方橫向來車警示（FCTA）',[N,Y,Y,Y,Y],R(X,4)],
  ['駕駛疲勞／注意力監測',[N,'●（DMC 駕駛疲勞監測）','●（DMC 駕駛疲勞監測）','●（DMC 駕駛疲勞監測）','●（DMC 駕駛疲勞監測）'],R('●（DAM 駕駛注意力監視）',4)],
@@ -980,17 +1259,19 @@ var RAW=[
  ['後座提醒（RSR）',R(X,5),R(Y,4)],
  ['盲點偵測警示（BSM／BSI）',R(Y,5),R(Y,4)],
  ['倒車車側警示（RCTA／CTM）',R(Y,5),R(Y,4)],
- ['防碰撞輔助（PKSB）',R(Y,5),R(X,4)],
+ ['防碰撞輔助（PKSB／低速前後偵測）',R(Y,5),R(X,4)],
  ['倒車影像',R('●（RVC 倒車影像輔助）',5),R('●（高畫素倒車攝影機，附視角切換）',4)],
  ['環景影像（PVM／MVCS）',[N,'●（附底盤透視）','●（附底盤透視）','●（附底盤透視）','●（附底盤透視）'],[N,N,'●（多視角切換）','●（多視角切換）']],
  ['停車雷達',R('倒車雷達 4 具／停車雷達 8 具（含倒車雷達）',5),['後 4 雷達（PSS 駐車雷達，附儀表圖像指示）','後 4 雷達（PSS 駐車雷達，附儀表圖像指示）','前 4＋後 4 雷達（PSS 駐車雷達，附儀表圖像指示）','前 4＋後 4 雷達（PSS 駐車雷達，附儀表圖像指示）']],
+ ['二次碰撞迴避系統',R(X,5),R(X,4)],
+ ['後方行人警示輔助功能',R(X,5),R(X,4)],
  ['ABS／EBD／BA／BOS 煞車輔助',R(Y,5),R(Y,4)],
  ['ECB 電子式煞車控制',R(Y,5),R(X,4)],
  ['緊急煞車警示（EBS／ESS）',R(Y,5),R(Y,4)],
- ['車身穩定控制（VSC＋TRC／VSA）',R(Y,5),R(Y,4)],
+ ['車身穩定控制（VSC＋TRC／VSA／DSC＋TCS）',R(Y,5),R(Y,4)],
  ['過彎輔助（ACA／AHA）',R(Y,5),R(Y,4)],
  ['Motion Adaptive 方向盤動態修正輔助',R(X,5),R(Y,4)],
- ['上坡起步輔助（HAC／HSA）',R(Y,5),R(Y,4)],
+ ['上坡起步輔助（HAC／HSA／HLA）',R(Y,5),R(Y,4)],
  ['下坡緩降（DAC／HDC）',[N,N,N,N,Y],R(Y,4),[Y,Y]],
  ['檔位誤入動力限制（DSC）',R(Y,5),R(X,4)],
  ['胎壓監控（TPMS）',R(Y,5),R(Y,4)],
@@ -1004,7 +1285,8 @@ var RAW=[
  ['膝部氣囊',R('●（駕駛座）',5),R('●（雙前座）',4)],
  ['第二排側方氣囊',R(X,5),R(Y,4)],
  ['SRS 氣囊總數',R('7 具',5),R('10 具',4)],
- ['高剛性安全車體（GOA／ACE）',R(Y,5),R(Y,4)],
+ ['副駕駛座乘員感知器',R(X,5),R(X,4)],
+ ['高剛性安全車體（GOA／ACE／SKYACTIV）',R(Y,5),R(Y,4)],
  ['安全帶',R('全車三點式 ELR；束力限制預縮式（雙前座／左右後座）',5),R('全車五席三點式 ELR；前後 4 座自動預縮式',4)],
  ['安全帶未繫警示／提醒（SBR）',R(Y,5),R(Y,4)],
  ['ISOFIX／i-Size 兒童座椅固定',R(Y,5),R(Y,4)],
@@ -1013,20 +1295,160 @@ var RAW=[
 ]],
 ['保固',[
  ['新車保證',R('4 年或 12 萬公里（先到者為準）',5),R(X,4)],
+ ['延長保固方案',R(X,5),R(X,4)],
  ['HYBRID 油電複合動力系統保證',R('5 年或 12 萬公里（先到者為準）',4).concat([X]),R(X,4)],
  ['HYBRID 電池保證',R('8 年或 16 萬公里（先到者為準；2019 年式起）',4).concat([X]),R(X,4)]
 ]]
 ];
 
+
+/* CX-5（Mazda Taiwan 型錄，2026 年 7 月版；4 欄依序為 Elite／Exclusive／Premium／Premium Plus）。
+   依項目名稱對應；沒有出現在這裡的項目，型錄沒有列，一律顯示「未列」。 */
+var MZ={
+ /* 基本資料 */
+ '建議售價（萬元）':['94.9','108.9','114.9','116.9'],
+ '動力型式':R('汽油（SKYACTIV-G 直列 4 缸）',4),
+ '車色':R('晶艷魂動紅（加價 1.5 萬）／湛海藍／鋼鐵灰（加價 1 萬）／天際灰／雪幻白（加價 1 萬）',4),
+ /* 車體尺寸 */
+ '全長 (mm)':R('4690',4),
+ '全寬 (mm)':R('1860',4),
+ '全高 (mm)':R('1690',4),
+ '軸距 (mm)':R('2815',4),
+ '最小迴轉半徑 (m)':R('5.6',4),
+ '空車重 (kg)':['1684','1703','1721','1746'],
+ '油箱容量 (L)':R('58',4),
+ '車體結構':R('SKYACTIV-VEHICLE ARCHITECTURE；全車 21% 採用 980 MPa 以上超高強度鋼、高剛性鋼材佔 63%；前後防護結構最高 2,000 MPa、側面防護最高 1,500 MPa',4),
+ /* 引擎 */
+ '引擎型式':R('SKYACTIV-G 汽油直列式 4 汽缸',4),
+ '排氣量 (c.c.)':R('2488',4),
+ '排氣量等級':R('超過 2,400 c.c. 至 3,000 c.c.',4),
+ '壓縮比':R('13.0 : 1',4),
+ '引擎最大馬力 (PS / rpm)':R('188 / 6,000',4),
+ '引擎最大扭力 (kg-m / rpm)':R('26.2 / 4,000',4),
+ /* 傳動與底盤 */
+ '傳動系統':R('i-ACTIV AWD 智慧型四輪驅動',4),
+ '變速系統':R('SKYACTIV-DRIVE 6 速手自排系統',4),
+ '換檔／電力再生撥片':[N,N,'●方向盤換檔快撥片','●方向盤換檔快撥片'],
+ '動態管理系統':R('SKYACTIV-VEHICLE DYNAMICS 車輛動態管理系統／G-VECTORING CONTROL PLUS G 力引導控制技術＋',4),
+ '轉向系統':R('齒條及小齒輪式（附動力輔助）',4),
+ '前懸吊':R('獨立麥花臣式（SKYACTIV-CHASSIS）',4),
+ '後懸吊':R('獨立多連桿式（SKYACTIV-CHASSIS）',4),
+ '煞車系統':R('前通風碟式／後實心碟式',4),
+ '輪胎規格':['225/65R17','225/55R19','225/55R19','225/55R19'],
+ '輪圈':['鎢灰 17 吋鋁合金輪圈','鈦黑 19 吋鋁合金輪圈','鈦黑 19 吋鋁合金輪圈','鈦黑 19 吋鋁合金輪圈'],
+ '駕駛模式':R('Mi-Drive：NORMAL／SPORT／OFF-ROAD',4),
+ 'EPB 電子駐車煞車':R(Y,4),
+ '自動定車（Auto Hold／Brake Hold）':R(Y,4),
+ /* 油耗與能源效率（Elite 型錄標示「認證測試中」；其餘三款為合併儲存格，共用同一數值） */
+ '平均油耗 (km/L)':['認證測試中','13.4','13.4','13.4'],
+ '年耗油量 (L)':['認證測試中','1,119','1,119','1,119'],
+ '油耗測試方式':R('歐盟 1999/100/EC 指令及其後續修正指令',4),
+ '能源效率等級':['認證測試中','2 級','2 級','2 級'],
+ 'Idle Stop／i-STOP 怠速節能':R(Y,4),
+ /* 外觀與燈光 */
+ '頭燈':R('LED 頭燈（附自動水平調整）',4),
+ '日行燈':R('●（LED）',4),
+ '尾燈':R('●（LED）',4),
+ '前後 LED 識別光條':[N,Y,Y,Y],
+ '頭尾燈自動啟閉':R('●（光感應自動啟閉頭燈）',4),
+ '後視鏡':['電動折疊加熱除霧（附上鎖自動收折），爍黑','電動折疊加熱除霧（附記憶功能、上鎖自動收折），爍黑','電動折疊加熱除霧（附記憶功能、上鎖自動收折），爍黑','電動折疊加熱除霧（附記憶功能、上鎖自動收折），爍黑'],
+ '電動尾門':[N,'●（電動啟閉）','●（Hands-free 感應式：智慧鑰匙／車內開關／腳踢感應）','●（Hands-free 感應式：智慧鑰匙／車內開關／腳踢感應）'],
+ '天窗':[N,N,N,'●（雙模式大型全景天窗）'],
+ '車頂行李架':[N,Y,Y,Y],
+ '外觀專屬套件':[N,'選購：SIGNATURE STYLE 原廠風格套件（黑銀雙色前下擾流板／黑銀雙色運動側裙／高效空力擾流尾翼／高光澤黑下擾流板）','選購：SIGNATURE STYLE 原廠風格套件（黑銀雙色前下擾流板／黑銀雙色運動側裙／高效空力擾流尾翼／高光澤黑下擾流板）','選購：SIGNATURE STYLE 原廠風格套件（黑銀雙色前下擾流板／黑銀雙色運動側裙／高效空力擾流尾翼／高光澤黑下擾流板）'],
+ '鋼琴烤漆車門飾板':R(Y,4),
+ '玻璃功能':R('降噪前擋風玻璃／抗 UV 淺色玻璃',4),
+ '水箱護罩':R('五幅式水箱護罩；懸浮式魂動之翼',4),
+ '車身下緣防護飾板':[N,'●（鋼琴烤漆車身環車護板）','●（鋼琴烤漆車身環車護板）','●（鋼琴烤漆車身環車護板）'],
+ '後擾流尾翼':R(Y,4),
+ /* 座椅 */
+ '座椅材質（前／後）':['夜幕黑高機能織布','夜幕黑透氣真皮','夜幕黑透氣真皮','夜幕黑／荒漠棕透氣真皮'],
+ '駕駛座電動調整':[N,'●（10 向，附電動腰靠、記憶功能）','●（10 向，附電動腰靠、記憶功能、迎賓模式）','●（10 向，附電動腰靠、記憶功能、迎賓模式）'],
+ '副駕駛座電動調整':[N,'●（6 向）','●（6 向）','●（6 向）'],
+ '前座加熱／通風':[N,'●（通風，三段式）','●（加熱／通風，三段式）','●（加熱／通風，三段式）'],
+ '後座椅調整':R('4/2/4 分離椅背傾倒／椅背角度調整／單鍵快速傾倒',4),
+ '後座加熱':[N,N,'●（三段式）','●（三段式）'],
+ /* 內裝與空間 */
+ 'HUD 抬頭顯示器':[N,Y,Y,Y],
+ '儀表':R('10.25 吋全數位多功能儀錶',4),
+ 'Driver Personalization System 駕駛面部辨識個人化':[N,N,Y,Y],
+ '方向盤型式':['真皮包覆','真皮包覆','真皮包覆（附加熱功能）','真皮包覆（附加熱功能）'],
+ '方向盤控制鍵':R('音響／通訊／駕駛輔助／行車資訊',4),
+ '氣氛燈':[N,'●（多彩環艙氣氛燈，可切換 7 色）','●（多彩環艙氣氛燈，可切換 7 色）','●（多彩環艙氣氛燈，可切換 7 色）'],
+ '隔音設計（NVH）':R('●（NVH 靜謐工程；降噪前擋風玻璃）',4),
+ '雙前座照地燈／手套箱 LED 照明':[N,Y,Y,Y],
+ '雙開啟式大型中央扶手':R(Y,4),
+ '電源／USB':['Type-C USB（前）','Type-C USB（前／後）','Type-C USB（前／後）','Type-C USB（前／後）'],
+ '後座 Type-C USB':[N,Y,Y,Y],
+ '行李廂遮物簾':R(Y,4),
+ /* 影音與連網 */
+ '音響主機':['12.9 吋中央資訊顯示幕','12.9 吋中央資訊顯示幕','15.6 吋中央資訊顯示幕','15.6 吋中央資訊顯示幕'],
+ '揚聲器':['Mazda Harmonic Acoustics 8 具高傳真揚聲器','BOSE 環繞音響 12 具高傳真揚聲器','BOSE 環繞音響 12 具高傳真揚聲器','BOSE 環繞音響 12 具高傳真揚聲器'],
+ 'Apple CarPlay／Android Auto':R('●（無線）／●（無線）',4),
+ '主機連結功能':R('藍牙／USB',4),
+ '無線充電座':R(Y,4),
+ '空調系統':R('雙區獨立恆溫空調',4),
+ '後座出風口':R(Y,4),
+ /* 便利與科技 */
+ 'Smart Entry／Smart Keyless 智慧型車門啟閉':R(Y,4),
+ '定速巡航系統':R(Y,4),
+ '雨刷':R('雨滴感應式雨刷',4),
+ '車內後視鏡':R('無邊框電子防眩',4),
+ '防盜功能':R('●（晶片防盜系統／防盜警報系統）',4),
+ '車速連動車門上鎖':R(Y,4),
+ /* 主動安全與駕駛輔助 */
+ '原廠智慧駕駛輔助套件':R('●（i-ACTIVSENSE 主動安全科技）',4),
+ '主動式定速巡航':R('●（MRCC 全速域主動車距控制巡航，前車停止後 3 秒內再起步可自動起步隨行）',4),
+ '車速調節速限器（ASL）':R(Y,4),
+ '預警式碰撞防護':['●（SBS：前行偵測、轉向來車 TAP、低速前後偵測、後方橫向車流、正面來車碰撞緩解）','●（SBS：前行偵測、轉向來車 TAP、低速前後偵測、後方橫向車流、正面來車碰撞緩解）','●（SBS：前行偵測、轉向來車 TAP、十字路口交通輔助、前方橫向車流、後方橫向車流、正面來車碰撞緩解、低速前後偵測）','●（SBS：前行偵測、轉向來車 TAP、十字路口交通輔助、前方橫向車流、後方橫向車流、正面來車碰撞緩解、低速前後偵測）'],
+ '車道輔助':R('●（LDWS 車道偏移警示；ELK 緊急車道偏移防止輔助：LAS 車道偏移防止、道路偏移防止、車道盲點避讓、對向車道超車避讓；CTS 巡航模式車道維持輔助）',4),
+ '智慧頭燈功能（HBC／ALH）':['HBC 遠近光燈自動調節系統','HBC 遠近光燈自動調節系統','ALH 進階型智慧頭燈附行人標記功能','ALH 進階型智慧頭燈附行人標記功能'],
+ '遠光燈自動切換（AHB／HBC）':R(Y,4),
+ '前方橫向來車警示（FCTA）':[N,N,Y,Y],
+ '駕駛疲勞／注意力監測':['●（DAA 駕駛疲勞警示）','●（DAA 駕駛疲勞警示）','●（DAA 駕駛疲勞警示；DM 面部偵測攝影機：睡意偵測、不專心駕駛偵測）','●（DAA 駕駛疲勞警示；DM 面部偵測攝影機：睡意偵測、不專心駕駛偵測）'],
+ '盲點偵測警示（BSM／BSI）':R(Y,4),
+ '倒車車側警示（RCTA／CTM）':R(Y,4),
+ '防碰撞輔助（PKSB／低速前後偵測）':R(Y,4),
+ '倒車影像':['●（倒車影像輔助，附動態導引線）','●（倒車影像輔助，附動態導引線）','含於 360° 環景影像輔助系統（後方視角，附倒車動態導引線）','含於 360° 環景影像輔助系統（後方視角，附倒車動態導引線）'],
+ '環景影像（PVM／MVCS）':[N,N,'●（上方俯視／前方廣角／車側／後方廣角／超廣角暨底盤透視／3D 全景）','●（上方俯視／前方廣角／車側／後方廣角／超廣角暨底盤透視／3D 全景）'],
+ '停車雷達':R('前後四眼式輔助雷達',4),
+ '二次碰撞迴避系統':R(Y,4),
+ '後方行人警示輔助功能':R(Y,4),
+ 'ABS／EBD／BA／BOS 煞車輔助':R('●（電子式防鎖死煞車系統 ABS）',4),
+ '緊急煞車警示（EBS／ESS）':R(Y,4),
+ '車身穩定控制（VSC＋TRC／VSA／DSC＋TCS）':R(Y,4),
+ '上坡起步輔助（HAC／HSA／HLA）':R(Y,4),
+ '下坡緩降（DAC／HDC）':R(Y,4),
+ '胎壓監控（TPMS）':R(Y,4),
+ /* 被動安全 */
+ '雙前座前方氣囊':R(Y,4),
+ '前座椅側方氣囊':R(Y,4),
+ '側簾式氣囊':R(Y,4),
+ '膝部氣囊':R('●（駕駛座）',4),
+ '第二排側方氣囊':R(Y,4),
+ 'SRS 氣囊總數':R('9 具',4),
+ '副駕駛座乘員感知器':R(Y,4),
+ '高剛性安全車體（GOA／ACE／SKYACTIV）':R(Y,4),
+ '安全帶':R('前後座三點式；自動緊縮裝置（雙前座／後座兩側）',4),
+ 'ISOFIX／i-Size 兒童座椅固定':R(Y,4),
+ /* 保固 */
+ '新車保證':R('3 年 10 萬公里（取自延長保固方案頁的申購資格說明）',4),
+ '延長保固方案':R('另購，最長再延長 4 年不限里程：第一階段全域安心型（第四至第五年）、第二階段核心守護型（第六至第七年）；CX-5 方案價第一階段 25,500、第二階段 25,500（新台幣）',4)
+};
+
 var DATA=RAW.map(function(c){
   return {name:c[0],rows:c[1].map(function(r){
     if(r[1].length!==5||r[2].length!==4){console.error('欄位數不符：'+r[0]);}
+    var mz=MZ[r[0]]||R(X,4);
+    if(mz.length!==4){console.error('CX-5 欄位數不符：'+r[0]);}
     var x=r[3]||[r[1][3],r[1][3]];
     var blk=r[4]||[r[1][3],x[0],x[1]];
     if(x.length!==2||blk.length!==3){console.error('ADVENTURE／GR SPORT 欄位數不符：'+r[0]);}
-    return {label:r[0],v:r[1].concat(r[2]),x:x,blk:blk};
+    return {label:r[0],v:r[1].concat(r[2],mz),x:x,blk:blk};
   })};
 });
+(function(){var names={};RAW.forEach(function(c){c[1].forEach(function(r){names[r[0]]=1;});});
+  Object.keys(MZ).forEach(function(k){if(!names[k]) console.error('CX-5 項目名稱對不到主表：'+k);});})();
 var ROW={};
 DATA.forEach(function(c){c.rows.forEach(function(r){ROW[r.label]=r;});});
 var PRICE=ROW['建議售價（萬元）'];
@@ -1034,7 +1456,7 @@ var PRICE=ROW['建議售價（萬元）'];
 /* ===== 工具 ===== */
 function esc(s){return String(s).replace(/[&<>"]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m];});}
 function fmt(v){
-  if(v===null) return '<span class="na">官網未列</span>';
+  if(v===null) return '<span class="na">未列</span>';
   var s=String(v), rest=s.length>1?'<span class="note">'+esc(s.slice(1))+'</span>':'';
   if(s.charAt(0)==='●') return '<span class="yes" role="img" aria-label="有">●</span>'+rest;
   if(s.charAt(0)==='－') return '<span class="no" role="img" aria-label="無">－</span>'+rest;
@@ -1096,7 +1518,7 @@ BCOLS.forEach(function(c){c.price=PRICE.blk[c.k];c.get=function(r){return r.blk[
 function $(id){return document.getElementById(id);}
 
 /* ===== 狀態 ===== */
-var Q={r:'r1',c:'c1',diff:false};
+var Q={r:'r1',c:'c1',m:'m1',diff:false};
 var F={sel:{},diff:false,collapsed:{}};
 var B={diff:false,collapsed:{}};
 F.undo=null;
@@ -1109,11 +1531,13 @@ function chip(t,type,name,checked){
   return '<label class="chip '+t.b+(checked?' on':'')+'"><input type="'+type+'" name="'+name+'" value="'+t.id+'"'+(checked?' checked':'')+'><span>'+esc(t.name)+'</span><small>'+PRICE.v[i]+' 萬</small></label>';
 }
 function buildPickers(){
-  var R_=TRIMS.filter(function(t){return t.b==='r';}),C_=TRIMS.filter(function(t){return t.b==='c';});
+  var R_=TRIMS.filter(function(t){return t.b==='r';}),C_=TRIMS.filter(function(t){return t.b==='c';}),M_=TRIMS.filter(function(t){return t.b==='m';});
   $('pickR').innerHTML=R_.map(function(t){return chip(t,'radio','qr',t.id===Q.r);}).join('');
   $('pickC').innerHTML=C_.map(function(t){return chip(t,'radio','qc',t.id===Q.c);}).join('');
+  $('pickM').innerHTML=M_.map(function(t){return chip(t,'radio','qm',t.id===Q.m);}).join('');
   $('fullR').innerHTML=R_.map(function(t){return chip(t,'checkbox','fs',F.sel[t.id]);}).join('');
   $('fullC').innerHTML=C_.map(function(t){return chip(t,'checkbox','fs',F.sel[t.id]);}).join('');
+  $('fullM').innerHTML=M_.map(function(t){return chip(t,'checkbox','fs',F.sel[t.id]);}).join('');
 }
 function syncChips(){
   Array.prototype.forEach.call(document.querySelectorAll('.chip input'),function(inp){
@@ -1130,11 +1554,13 @@ function card(i){
     KPI.map(function(k){return '<div><dt>'+k+'</dt><dd>'+fmt(ROW[k].v[i])+'</dd></div>';}).join('')+'</dl></div>';
 }
 function renderQuick(){
-  var ri=idxOf(Q.r),ci=idxOf(Q.c);
-  $('kpis').innerHTML=card(ri)+card(ci);
-  var pr=parseFloat(PRICE.v[ri]),pc=parseFloat(PRICE.v[ci]),d=Math.abs(pr-pc).toFixed(1);
-  $('gap').innerHTML=pr===pc?'兩款售價相同。':'售價差 <b>'+d+' 萬</b>（'+(pr>pc?'RAV4 '+esc(TRIMS[ri].name)+' 較高':'CR-V '+esc(TRIMS[ci].name)+' 較高')+'）';
-  var res=tableHTML([ri,ci],{onlyDiff:Q.diff,collapsed:null});
+  var ri=idxOf(Q.r),ci=idxOf(Q.c),mi=idxOf(Q.m);
+  $('kpis').innerHTML=card(ri)+card(ci)+card(mi);
+  var pv=[ri,ci,mi].map(function(i){return {p:parseFloat(PRICE.v[i]),n:TRIMS[i].brand+' '+TRIMS[i].name};});
+  pv.sort(function(a,b){return a.p-b.p;});
+  var lo=pv[0],hi=pv[2],d=(hi.p-lo.p).toFixed(1);
+  $('gap').innerHTML=hi.p===lo.p?'三款售價相同。':'最高與最低售價差 <b>'+d+' 萬</b>（'+esc(hi.n)+' 最高、'+esc(lo.n)+' 最低）';
+  var res=tableHTML([ri,ci,mi],{onlyDiff:Q.diff,collapsed:null});
   $('qtable').innerHTML=res.html;
   $('qstat').textContent='共 '+res.total+' 項，其中 '+res.diffs+' 項有差異';
 }
@@ -1157,6 +1583,7 @@ document.addEventListener('change',function(e){
   var t=e.target;
   if(t.name==='qr'){Q.r=t.value;syncChips();renderQuick();}
   else if(t.name==='qc'){Q.c=t.value;syncChips();renderQuick();}
+  else if(t.name==='qm'){Q.m=t.value;syncChips();renderQuick();}
   else if(t.name==='fs'){F.sel[t.value]=t.checked;F.undo=null;$('undoBtn').hidden=true;syncChips();renderFull();}
   else if(t.id==='qdiff'){Q.diff=t.checked;renderQuick();}
   else if(t.id==='fdiff'){F.diff=t.checked;renderFull();}
@@ -1231,7 +1658,7 @@ document.addEventListener('touchstart',function(){},{passive:true});
   var M={tab:'compare',scroll:{},
     compare:{l:'r1',r:'c1',diff:false,collapsed:{},cols:[],filter:hasMain,
       kpi:['動力型式','平均油耗 (km/L)','能源效率等級','空車重 (kg)'],
-      hero:['RAV4 × CR-V 規格對照','兩家官網與原廠型錄，2026/09/20 讀取']},
+      hero:['三大日系SUV規格對照','Toyota、Honda 官網與三家原廠型錄；CX-5 為 2026 年 7 月版型錄']},
     adv:{l:'a1',r:'a2',diff:false,collapsed:{},cols:[],filter:hasBlk,
       kpi:['動力型式','平均油耗 (km/L)','最大綜效馬力 (ps)','空車重 (kg)'],
       hero:['RAV4 ADVENTURE 與 GR SPORT','與旗艦（參考）一起比較；價格取自官網車款清單']}
@@ -1400,7 +1827,7 @@ document.addEventListener('touchstart',function(){},{passive:true});
   function buildList(){
     var S=M[M.tab],cols=S.cols,cur=SH.side==='l'?S.l:S.r,other=SH.side==='l'?S.r:S.l;
     titleEl.textContent=SH.side==='l'?'選擇左側車款':'選擇右側車款';
-    var groups=M.tab==='compare'?[['RAV4',cols.filter(function(c){return c.b==='r';})],['CR-V',cols.filter(function(c){return c.b==='c';})]]:[['RAV4',cols]];
+    var groups=M.tab==='compare'?[['RAV4',cols.filter(function(c){return c.b==='r';})],['CR-V',cols.filter(function(c){return c.b==='c';})],['CX-5',cols.filter(function(c){return c.b==='m';})]]:[['RAV4',cols]];
     var h='';
     groups.forEach(function(g){
       h+='<div class="m-grp-t">'+g[0]+'</div>';
