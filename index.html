@@ -14,7 +14,7 @@
 <script>
 /* 電腦版分頁：依網址 # 決定第一次顯示哪一頁 */
 (function(){
-  var V={quick:1,full:1,adv:1,intro:1,notes:1},h=(location.hash||'').replace('#','');
+  var V={quick:1,full:1,charts:1,adv:1,intro:1,notes:1},h=(location.hash||'').replace('#','');
   document.documentElement.setAttribute('data-view',V[h]?h:'quick');
 })();
 </script>
@@ -71,13 +71,17 @@
   function apply(theme,animate){
     if(theme===cur) return;
     var first=(cur===null);cur=theme;
-    if(animate&&!first){
-      root.classList.add('theme-fade');
-      setTimeout(function(){root.classList.remove('theme-fade');},1000);
+    function run(){
+      root.setAttribute('data-theme',theme);
+      var m=META[theme];
+      setMeta('mColorScheme',m.cs);setMeta('mThemeColor',m.tc);setMeta('mStatusBar',m.sb);
     }
-    root.setAttribute('data-theme',theme);
-    var m=META[theme];
-    setMeta('mColorScheme',m.cs);setMeta('mThemeColor',m.tc);setMeta('mStatusBar',m.sb);
+    // 換色時讓瀏覽器把「換色前」的畫面拍成快照，再與換色後的畫面淡入淡出（在顯示卡上處理，不會卡頓）。
+    // 不支援的瀏覽器、或系統設定為「減少動態」時，直接換色。
+    var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(animate&&!first&&!calm&&document.startViewTransition){
+      try{document.startViewTransition(run);}catch(e){run();}
+    }else run();
   }
   // 模式：auto＝依日出日落；light／dark＝手動固定。選擇記在這個瀏覽器（localStorage）
   var MODE='auto';
@@ -106,7 +110,7 @@
 </script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 40'%3E%3Crect width='66' height='40' fill='%230c1119'/%3E%3Cpolygon points='0,40 14,0 26,0 12,40' fill='%233d8bff'/%3E%3Cpolygon points='20,40 34,0 46,0 32,40' fill='%238a5cf0'/%3E%3Cpolygon points='40,40 54,0 66,0 52,40' fill='%23e4262b'/%3E%3C/svg%3E">
 <title>三大日系SUV規格對照</title>
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body data-tab="compare">
 <a class="skip" href="#main">跳到主要內容</a>
@@ -126,13 +130,14 @@
   </div>
 </header>
 
-<nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#adv">ADVENTURE 與 GR SPORT</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a><button type="button" class="theme-btn" data-theme-btn data-mode="auto" aria-label="外觀：自動"><svg class="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span class="tl">自動</span></button></div></nav>
+<nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#charts">圖表</a><a href="#adv">ADVENTURE 與 GR SPORT</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a><button type="button" class="theme-btn" data-theme-btn data-mode="auto" aria-label="外觀：自動"><svg class="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span class="tl">自動</span></button></div></nav>
 
 <header class="m-top" id="mTop">
   <div class="m-tabrow">
   <div class="m-tabs" role="tablist" aria-label="頁面分頁">
     <button type="button" class="m-tab" role="tab" id="tab-compare" aria-selected="true" aria-controls="m-compare" data-tab="compare">對照</button>
-    <button type="button" class="m-tab" role="tab" id="tab-adv" aria-selected="false" aria-controls="m-adv" data-tab="adv" tabindex="-1">ADV／GR</button>
+    <button type="button" class="m-tab" role="tab" id="tab-charts" aria-selected="false" aria-controls="charts" data-tab="charts" tabindex="-1">圖表</button>
+    <button type="button" class="m-tab" role="tab" id="tab-adv" aria-selected="false" aria-controls="m-adv" data-tab="adv" tabindex="-1">ADV</button>
     <button type="button" class="m-tab" role="tab" id="tab-intro" aria-selected="false" aria-controls="intro" data-tab="intro" tabindex="-1">介紹</button>
     <button type="button" class="m-tab" role="tab" id="tab-notes" aria-selected="false" aria-controls="notesWrap" data-tab="notes" tabindex="-1">說明</button>
   </div>
@@ -189,6 +194,38 @@
     <span class="stat" id="fstat" aria-live="polite"></span>
   </div>
   <div class="tw full" id="ftable" tabindex="0" role="region" aria-label="完整對照表，可上下左右捲動"></div>
+</section>
+
+<section id="charts" role="tabpanel" aria-labelledby="tab-charts">
+  <h2>圖表</h2>
+  <p class="lead">把 13 款的售價、耗油、重量與軸距畫成圖，數字都取自「完整對照表」，換算方式見各圖下方。</p>
+  <div class="legend">
+    <span><i class="lg r"></i>RAV4</span><span><i class="lg c"></i>CR-V</span><span><i class="lg m"></i>CX-5</span>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>建議售價（萬元）</h3>
+      <p class="chart-note">由低到高排列，橫條從 0 起算。</p>
+      <div id="chPrice"></div>
+    </div>
+    <div class="chart-card">
+      <h3>售價與年耗油量</h3>
+      <p class="chart-note">越靠左下，越便宜也越省油。年耗油量為官網與型錄依每年 15,000 公里換算的數值。</p>
+      <div id="chScatter" class="sc-wrap"></div>
+      <ul class="chart-foot" id="chScatterFoot"></ul>
+      <details><summary>看數值</summary><div id="chScatterTbl"></div></details>
+    </div>
+    <div class="chart-card">
+      <h3>空車重（kg）</h3>
+      <p class="chart-note">由輕到重排列，橫條從 0 起算。</p>
+      <div id="chWeight"></div>
+    </div>
+    <div class="chart-card">
+      <h3>軸距（mm）</h3>
+      <p class="chart-note">同一品牌的軸距全車系相同時，合併成一條。橫條從 2,500 mm 起算，差距已被放大。</p>
+      <div id="chWheelbase"></div>
+    </div>
+  </div>
 </section>
 
 <section id="adv">
@@ -629,6 +666,7 @@
   <li><b>CX-5 型錄沒有寫的細節：</b>進氣型式（自然進氣或渦輪增壓）、新車保固是否「先到者為準」、原廠風格套件價格，型錄都沒有列，表內不補寫。</li>
   <li><b>淺色與深色：</b>頁面依日出日落自動切換，日出到日落之間為淺色，其餘時間為深色；日出日落以台中的座標計算，不需要定位權限。在 iPhone 加入主畫面後，狀態列的深淺是開啟 App 時決定的，跨過日落後需重新開啟才會跟著換。</li>
   <li><b>手動切換：</b>導覽列最右邊（手機版在最上方分頁列的右端）有深淺色按鈕，每按一下依序切換「自動（依日出日落）」「淺色」「深色」。選擇會記在這個瀏覽器，下次開啟沿用；選「自動」就回到依日出日落切換。</li>
+  <li><b>圖表：</b>由頁面內的數值即時繪製，與完整對照表同一份資料。售價與年耗油量的散布圖只畫有年耗油量的款：CX-5 Elite 的油耗是「認證測試中」，沒有畫出；RAV4 PHEV 的年耗油量只計汽油，另需用電，不能和純燃油款直接比較，圖上以空心菱形標示。軸距圖的橫條從 2,500 mm 起算，差距已被放大，請以標示的數字為準。</li>
 </ul>
 </div>
 
@@ -1229,7 +1267,7 @@ document.addEventListener('scroll',function(e){
 document.addEventListener('touchstart',function(){},{passive:true});
 /* 電腦版分頁切換：點導覽列只顯示該頁；網址跟著變，可用瀏覽器上一頁／下一頁 */
 (function(){
-  var V={quick:1,full:1,adv:1,intro:1,notes:1},root=document.documentElement;
+  var V={quick:1,full:1,charts:1,adv:1,intro:1,notes:1},root=document.documentElement;
   var nav=document.querySelector('.topnav');
   var links=Array.prototype.slice.call(nav.querySelectorAll('a'));
   function fromHash(){var h=(location.hash||'').slice(1);return V[h]?h:null;}
@@ -1276,6 +1314,148 @@ document.addEventListener('touchstart',function(){},{passive:true});
   // 自動模式跨過日出、日落時，提示文字裡的「目前為…」要跟著更新
   new MutationObserver(function(){render(false);}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   render(false);
+})();
+
+/* ===== 圖表頁：資料都取自上方 DATA，不另存一份 ===== */
+(function(){
+  function num(v){if(v===null||v===undefined) return NaN;var n=parseFloat(String(v).replace(/,/g,''));return isNaN(n)?NaN:n;}
+  function vals(label){return ROW[label]?ROW[label].v:TRIMS.map(function(){return null;});}
+  var priceRaw=PRICE.v, price=priceRaw.map(num);
+  var fuelRaw=vals('年耗油量 (L)'), fuel=fuelRaw.map(num);
+  var elecRaw=vals('年耗電量（度）'), elec=elecRaw.map(num);
+  var wtRaw=vals('空車重 (kg)'), wt=wtRaw.map(num);
+  var wbRaw=vals('軸距 (mm)'), wb=wbRaw.map(num);
+  function fmtN(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+
+  /* ---------- 長條圖（用 HTML／CSS 畫，手機上文字不會被縮小） ---------- */
+  function barsHTML(items,min,max){
+    return '<div class="bars">'+items.map(function(it){
+      var pct=Math.max(0,Math.min(100,(it.val-min)/(max-min)*100));
+      return '<div class="bar-row"><div class="bar-lab">'+it.lab+'</div>'+
+        '<div class="bar-track"><div class="bar-fill '+it.b+'" style="width:'+pct.toFixed(1)+'%"></div></div>'+
+        '<div class="bar-val">'+it.text+'</div></div>';
+    }).join('')+'</div>';
+  }
+  function trimLab(i){var t=TRIMS[i];return '<b class="bb '+t.b+'">'+esc(t.brand)+'</b> '+esc(t.name);}
+  function drawBars(){
+    var idx=[];TRIMS.forEach(function(t,i){idx.push(i);});
+    // 售價（由低到高）
+    var p=idx.filter(function(i){return !isNaN(price[i]);}).sort(function(a,b){return price[a]-price[b];});
+    var pmax=Math.ceil(Math.max.apply(null,p.map(function(i){return price[i];}))/10)*10;
+    $('chPrice').innerHTML=barsHTML(p.map(function(i){return {b:TRIMS[i].b,lab:trimLab(i),val:price[i],text:esc(priceRaw[i])+' 萬'};}),0,pmax);
+    // 空車重（由輕到重）
+    var w=idx.filter(function(i){return !isNaN(wt[i]);}).sort(function(a,b){return wt[a]-wt[b];});
+    var wmax=Math.ceil(Math.max.apply(null,w.map(function(i){return wt[i];}))/500)*500;
+    $('chWeight').innerHTML=barsHTML(w.map(function(i){return {b:TRIMS[i].b,lab:trimLab(i),val:wt[i],text:fmtN(wt[i])+' kg'};}),0,wmax);
+    // 軸距：同品牌數值全相同就合併成一條
+    var items=[],brands=[];
+    TRIMS.forEach(function(t){if(brands.indexOf(t.b)<0) brands.push(t.b);});
+    brands.forEach(function(b){
+      var mine=idx.filter(function(i){return TRIMS[i].b===b&&!isNaN(wb[i]);});
+      if(!mine.length) return;
+      var same=mine.every(function(i){return wb[i]===wb[mine[0]];});
+      if(same){items.push({b:b,lab:'<b class="bb '+b+'">'+esc(TRIMS[mine[0]].brand)+'</b> 全車系',val:wb[mine[0]],text:fmtN(wb[mine[0]])+' mm'});}
+      else mine.forEach(function(i){items.push({b:b,lab:trimLab(i),val:wb[i],text:fmtN(wb[i])+' mm'});});
+    });
+    var wbMax=Math.ceil(Math.max.apply(null,items.map(function(it){return it.val;}))/50)*50;
+    $('chWheelbase').innerHTML=barsHTML(items,2500,wbMax);
+  }
+
+  /* ---------- 散布圖：依容器實際寬度繪製，文字大小固定，手機與電腦都清楚 ---------- */
+  function textW(s){var w=0;for(var k=0;k<s.length;k++){w+=s.charCodeAt(k)>255?13:7.6;}return w+8;}
+  function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
+  function drawScatter(){
+    var el=$('chScatter'),W=Math.floor(el.clientWidth);
+    if(!W) return;                                    // 目前看不到（在別的分頁），等顯示時再畫
+    var H=Math.max(340,W<520?Math.round(W*0.95):400);
+    var m={l:46,r:14,t:30,b:42},pw=W-m.l-m.r,ph=H-m.t-m.b;
+    var x0=90,x1=150,y0=0,y1=1500;
+    function X(v){return m.l+(v-x0)/(x1-x0)*pw;}
+    function Y(v){return m.t+ph-(v-y0)/(y1-y0)*ph;}
+    var pts=[],skipped=[],special=[];
+    TRIMS.forEach(function(t,i){
+      if(isNaN(price[i])||isNaN(fuel[i])){skipped.push(i);return;}
+      var hollow=!isNaN(elec[i]);
+      if(hollow) special.push(i);
+      pts.push({i:i,x:X(price[i]),y:Y(fuel[i]),hollow:hollow});
+    });
+    var svg='<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="售價與年耗油量散布圖">';
+    var k,v;
+    for(v=x0;v<=x1;v+=10){
+      svg+='<line class="sc-grid" x1="'+X(v).toFixed(1)+'" y1="'+m.t+'" x2="'+X(v).toFixed(1)+'" y2="'+(m.t+ph)+'"/>'+
+           '<text class="sc-t" x="'+X(v).toFixed(1)+'" y="'+(m.t+ph+16)+'" text-anchor="middle">'+v+'</text>';
+    }
+    for(v=y0;v<=y1;v+=300){
+      svg+='<line class="sc-grid" x1="'+m.l+'" y1="'+Y(v).toFixed(1)+'" x2="'+(m.l+pw)+'" y2="'+Y(v).toFixed(1)+'"/>'+
+           '<text class="sc-t" x="'+(m.l-6)+'" y="'+(Y(v)+4).toFixed(1)+'" text-anchor="end">'+fmtN(v)+'</text>';
+    }
+    svg+='<line class="sc-axis" x1="'+m.l+'" y1="'+(m.t+ph)+'" x2="'+(m.l+pw)+'" y2="'+(m.t+ph)+'"/>'+
+         '<line class="sc-axis" x1="'+m.l+'" y1="'+m.t+'" x2="'+m.l+'" y2="'+(m.t+ph)+'"/>'+
+         '<text class="sc-t" x="'+(m.l+pw)+'" y="'+(H-6)+'" text-anchor="end">建議售價（萬元）</text>'+
+         '<text class="sc-t" x="'+m.l+'" y="14">年耗油量（L／年）</text>';
+    // 先保留提示文字與所有點的位置，再替每個點找不重疊的標籤位置
+    var hint='← 越靠左下越便宜、越省油';
+    var boxes=[{x:m.l+6,y:m.t+ph-20,w:textW(hint),h:14}];
+    pts.forEach(function(p){boxes.push({x:p.x-8,y:p.y-8,w:16,h:16});});
+    svg+='<text class="sc-hint" x="'+(m.l+6)+'" y="'+(m.t+ph-9)+'">'+hint+'</text>';
+    var order=pts.slice().sort(function(a,b){return a.x-b.x;});
+    order.forEach(function(p){
+      var t=TRIMS[p.i],lab=t.name+(p.hollow?'＊':''),w=textW(lab),h=14;
+      var cands=[],ring;
+      for(ring=0;ring<5;ring++){
+        var dy=10+ring*(h+2);
+        cands.push({x:p.x-w/2,y:p.y-dy-h},{x:p.x-w/2,y:p.y+dy},
+                   {x:p.x+10,y:p.y-h/2-ring*(h+2)},{x:p.x-10-w,y:p.y-h/2-ring*(h+2)},
+                   {x:p.x+10,y:p.y-h/2+ring*(h+2)},{x:p.x-10-w,y:p.y-h/2+ring*(h+2)},
+                   {x:p.x+4,y:p.y-dy-h},{x:p.x-4-w,y:p.y-dy-h});
+      }
+      var pick=null;
+      for(k=0;k<cands.length;k++){
+        var r={x:cands[k].x,y:cands[k].y,w:w,h:h};
+        if(r.x<2||r.x+r.w>W-2||r.y<m.t-14||r.y+r.h>m.t+ph+4) continue;
+        var clash=false;for(var q=0;q<boxes.length;q++){if(hit(r,boxes[q])){clash=true;break;}}
+        if(!clash){pick=r;break;}
+      }
+      if(!pick) pick={x:Math.max(2,Math.min(W-2-w,cands[0].x)),y:cands[0].y,w:w,h:h};
+      boxes.push(pick);
+      p.lab=lab;p.lx=pick.x+w/2;p.ly=pick.y+h-3;p.box=pick;
+    });
+    pts.forEach(function(p){
+      var t=TRIMS[p.i],tip=t.brand+' '+t.name+'：售價 '+priceRaw[p.i]+' 萬，年耗油量 '+fuelRaw[p.i]+' L'+(p.hollow?'，另耗電 '+fmtN(elec[p.i])+' 度':'');
+      svg+='<g><title>'+esc(tip)+'</title>';
+      var bx=p.box,nx=Math.max(bx.x,Math.min(p.x,bx.x+bx.w)),ny=Math.max(bx.y,Math.min(p.y,bx.y+bx.h));
+      var dist=Math.sqrt((nx-p.x)*(nx-p.x)+(ny-p.y)*(ny-p.y));
+      if(dist>16){
+        var ux=(nx-p.x)/dist,uy=(ny-p.y)/dist;
+        svg+='<line class="sc-lead" x1="'+(p.x+ux*8).toFixed(1)+'" y1="'+(p.y+uy*8).toFixed(1)+'" x2="'+nx.toFixed(1)+'" y2="'+ny.toFixed(1)+'"/>';
+      }
+      if(p.hollow) svg+='<polygon class="dot hollow '+t.b+'" points="'+p.x.toFixed(1)+','+(p.y-7).toFixed(1)+' '+(p.x+7).toFixed(1)+','+p.y.toFixed(1)+' '+p.x.toFixed(1)+','+(p.y+7).toFixed(1)+' '+(p.x-7).toFixed(1)+','+p.y.toFixed(1)+'"/>';
+      else svg+='<circle class="dot '+t.b+'" cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="6"/>';
+      svg+='<text class="sc-lab" x="'+p.lx.toFixed(1)+'" y="'+p.ly.toFixed(1)+'" text-anchor="middle">'+esc(p.lab)+'</text></g>';
+    });
+    svg+='</svg>';
+    el.innerHTML=svg;
+    // 圖下方的註記與數值表
+    var foot='';
+    special.forEach(function(i){foot+='<li>＊'+esc(TRIMS[i].brand+' '+TRIMS[i].name)+'：年耗油量 '+esc(fuelRaw[i])+' L 只計汽油，另耗電 '+fmtN(elec[i])+' 度，不能和純燃油款直接比較，圖上以空心菱形標示。</li>';});
+    skipped.forEach(function(i){foot+='<li>'+esc(TRIMS[i].brand+' '+TRIMS[i].name)+'：'+(isNaN(fuel[i])?'年耗油量為「'+esc(fuelRaw[i]===null?'未列':fuelRaw[i])+'」，':'')+'沒有畫出。</li>';});
+    $('chScatterFoot').innerHTML=foot;
+    var tb='<div class="tw short"><table><thead><tr><th class="lab" scope="col">車款</th><th scope="col">售價（萬）</th><th scope="col">年耗油量（L）</th><th scope="col">年耗電量（度）</th></tr></thead><tbody>';
+    TRIMS.forEach(function(t,i){
+      tb+='<tr><th class="lab" scope="row">'+esc(t.brand+' '+t.name)+'</th><td>'+esc(priceRaw[i])+'</td><td>'+fmt(fuelRaw[i])+'</td><td>'+fmt(elecRaw[i])+'</td></tr>';
+    });
+    $('chScatterTbl').innerHTML=tb+'</tbody></table></div>';
+  }
+
+  drawBars();
+  drawScatter();
+  if('ResizeObserver' in window){
+    var ro=new ResizeObserver(function(){drawScatter();});
+    ro.observe($('chScatter'));
+  }else{
+    window.addEventListener('resize',drawScatter);
+    window.addEventListener('hashchange',drawScatter);
+  }
 })();
 
 /* ===== 手機版（iPhone 直向，640 px 以下）===== */
