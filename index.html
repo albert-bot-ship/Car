@@ -12,6 +12,13 @@
 <meta name="apple-mobile-web-app-title" content="三大日系SUV規格對照">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACMklEQVR42u3csU1DQRREUYwcOjESgV2BCamDjggICOjIdRDiCpwgUQMNILTir9g3+8+JESB09WadsNntDzfwk1t/AsSBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA8SBOBAH4kAciANxIA7EgThAHIgDcSAOxIE4EAfiQByIA3GAOBAH4kAciINatim/6OPzdfk3eX87tnzZy9PH8p/1en5o+bLL/d3yn3X6/HI5MCvORoGz4XIgDmaNw6YM2RSXA3EgDtYVhwfHqAeHy4E4mC8OmzJwU1wOxMFkcdiUsZviciAOZorDpgzfFJcDcSCOP2xKF42b0sW/bUrROLo8OBp1eXA06vLgcDkQB+LwITbuQ6zLgTiYIw6bUmdTXA7EQXocNqXUprgciIPoOGxKtU1xORAH4mDCODw4Cj44XA7EQWgcNqXmprgciIPEOGxK2U1xORAHcXHYlMqb4nIgDsTBJHF4cBR/cLgciIOgOGxK/U1xORAHKXHYlIhNcTkQBxFx2JSUTXE5EAcricO/Jp4zDv+a2OVAHIjDh9gVfoh1ORAHxeOwKXGb4nIgDsrGYVMSN8XlQBzUjMOmhG6Ky4E4EAdJcXhw5D44XA7EQbU4bEr0prgc/Gaz2x/8FXA5EAfiQByIA3EgDsSBOBAHiANxIA7EgTgQB+JAHIgDcYA4EAfiQByIA3EgDsSBOBAH4gBxIA7EgTgQB+JAHIgDcSAOEAfiQByIA3FQyDce5vTVm2TwDAAAAABJRU5ErkJggg==">
 <script>
+/* 電腦版分頁：依網址 # 決定第一次顯示哪一頁 */
+(function(){
+  var V={quick:1,full:1,adv:1,intro:1,notes:1},h=(location.hash||'').replace('#','');
+  document.documentElement.setAttribute('data-view',V[h]?h:'quick');
+})();
+</script>
+<script>
 /* 依日出日落自動切換：日出到日落＝淺色，其餘時間＝深色 */
 (function(){
   var LAT=24.15, LON=120.67, TZ=8;            // 台中；TZ＝台灣時區（小時）
@@ -457,6 +464,19 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .m-tab[aria-selected="true"],.m-opt.on,.m-diff[aria-pressed="true"]{outline:.125rem solid Highlight}
 }
 
+/* ===== 電腦版分頁：導覽列每個項目一頁，一次只顯示一頁 ===== */
+@media (min-width:40.0625em){
+  html[data-view] main.wrap>section,html[data-view] #notesWrap{display:none}
+  html[data-view="quick"] #quick,html[data-view="full"] #full,html[data-view="adv"] #adv,
+  html[data-view="intro"] #intro,html[data-view="notes"] #notesWrap{display:block}
+  #notesWrap h2{margin:1.875rem 0 .5rem}
+  main.wrap{min-height:60vh}
+}
+@media (min-width:40.0625em) and (prefers-reduced-motion:no-preference){
+  html[data-view] main.wrap>section,html[data-view] #notesWrap{animation:pgin .2s ease-out}
+}
+@keyframes pgin{from{opacity:0;transform:translateY(.25rem)}to{opacity:1;transform:none}}
+
 /* 說明 */
 .notes{margin:.5rem 0 2.5rem;padding:1rem 1.125rem 1rem 2.125rem;background:var(--panel);border:1px solid var(--line);border-radius:.625rem;color:var(--mute);font-size:.8125rem}
 .notes li{margin:.3125rem 0;line-height:1.55}
@@ -520,7 +540,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
 </style>
 </head>
 <body data-tab="compare">
-<a class="skip" href="#quick">跳到主要內容</a>
+<a class="skip" href="#main">跳到主要內容</a>
 
 <header class="top">
   <div class="wrap head">
@@ -553,7 +573,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
   <section class="m-panel" id="m-adv" role="tabpanel" aria-labelledby="tab-adv"></section>
 </div>
 
-<main class="wrap">
+<main class="wrap" id="main">
 
 <section id="quick">
   <h2>快速對照</h2>
@@ -600,7 +620,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
 
 <section id="adv">
   <h2>RAV4 ADVENTURE 與 GR SPORT</h2>
-  <p class="lead">這兩款不參與上方與 CR-V、CX-5 的比較，另以 RAV4 旗艦作參考，方便看出兩款比旗艦多了或少了什麼。資料取自 RAV4 型錄規格配備表，價格取自 Toyota 官網車款清單。</p>
+  <p class="lead">這兩款不參與「快速對照」與「完整對照表」的比較，另以 RAV4 旗艦作參考，方便看出兩款比旗艦多了或少了什麼。資料取自 RAV4 型錄規格配備表，價格取自 Toyota 官網車款清單。</p>
   <div class="bar">
     <button type="button" class="btn" data-act="bexpand">展開全部分類</button>
     <button type="button" class="btn" data-act="bcollapse">收合全部分類</button>
@@ -612,7 +632,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
 
 <section id="intro" role="tabpanel" aria-labelledby="tab-intro">
   <h2>官網介紹內容</h2>
-  <p class="lead">Toyota、Honda 官網介紹頁與三份型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入上方對照表。</p>
+  <p class="lead">Toyota、Honda 官網介紹頁與三份型錄的文字重點，已用簡述方式整理。介紹頁沒有註明等級的項目，不併入對照表。</p>
   <div class="info">
 
     <div class="icol r">
@@ -728,7 +748,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
           <li>專屬外觀：霧黑水箱罩飾板、霧銀前後下護板、ADVENTURE 專屬銘板、越野型橋式車頂架、18 吋六幅式霧黑鋁圈、霧黑厚覆式輪拱飾板、馭黑外車門把手。</li>
           <li>內裝：專屬越野塗裝；座椅為豪華皮質專屬設計，前座舒適功能型錄只列加熱。</li>
           <li>E-Four 4WD：兼顧 SUV 所需的四輪驅動性能與燃油效率，濕地、泥濘或碎石路等易打滑路面時，由傳動系統最佳化分配四輪驅動力；搭配新的 ECB 電子控制煞車，把驅動力移轉到抓地力較好的車輪，強化脫困能力。</li>
-          <li>與旗艦的差異請見上方「RAV4 ADVENTURE 與 GR SPORT」獨立區塊。</li>
+          <li>與旗艦的差異請見「ADVENTURE 與 GR SPORT」分頁。</li>
         </ul>
       </details>
 
@@ -1017,7 +1037,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
 </section>
 
 <div id="notesWrap" role="tabpanel" aria-labelledby="tab-notes">
-<h2 class="m-only m-notes-h">資料說明</h2>
+<h2 class="m-notes-h">資料說明</h2>
 <ul class="notes" id="notes">
   <li class="m-only-li"><b>手機版：</b>螢幕寬度 640 px 以下（例如 iPhone 直向）會自動切換為卡片式手機版；橫向或平板仍使用電腦版面。</li>
   <li class="m-only-li"><b>加入主畫面：</b>用 Safari 開啟後，點下方的分享鈕，選「加入主畫面」，之後會以全螢幕 App 樣式開啟；頂部與底部會依動態島與 Home 指示條自動留白。iPhone 是否採用內嵌圖示由系統決定，若沒有顯示，會改用頁面截圖當圖示。</li>
@@ -1026,7 +1046,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
   <li><b>未列：</b>表示該資料來源（官網頁面或型錄）沒有這一項，不代表車輛沒有此配備。CX-5 只依型錄，所以型錄沒寫的項目（例如衛星導航、內建聯網服務、行車紀錄器、前後霧燈、杯架與置物空間）都顯示「未列」。</li>
   <li><b>差異標色：</b>依官網與型錄的文字逐項比對，不做語意判斷，同一功能在不同品牌的寫法不同時會被標為差異；未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI、Idle Stop／i-STOP、Smart Entry／Smart Keyless、PKSB／低速前後偵測）已在項目名稱並列。</li>
   <li><b>油耗：</b>兩家官網都註明依歐盟 1999/100/EC 指令測試，年耗油量都以每年 15,000 公里計算；CR-V 頁面另標示 NEDC。RAV4 PHEV 的 131.6 km/L 為官網與型錄標示值，沒有說明換算方式；純電里程 135 km 的測試依據，型錄兩處寫法不同（1999/100/EC 與 ECE R101），都註明 NEDC 行車型態。CX-5 型錄同樣依歐盟 1999/100/EC 指令測試、年耗油量以每年 15,000 公里計算；Elite 標示「認證測試中」，其餘三款為 13.4 km/L，型錄沒有提供 Elite 的數值。</li>
-  <li><b>範圍：</b>主表為 RAV4 五個等級、CR-V 四個等級加 CX-5 四個等級（Elite、Exclusive、Premium、Premium Plus，型錄全名為 25S AWD…）；RAV4 ADVENTURE 與 GR SPORT 收錄在獨立區塊，不參與與 CR-V、CX-5 的比較。</li>
+  <li><b>範圍：</b>主表為 RAV4 五個等級、CR-V 四個等級加 CX-5 四個等級（Elite、Exclusive、Premium、Premium Plus，型錄全名為 25S AWD…）；RAV4 ADVENTURE 與 GR SPORT 收錄在「ADVENTURE 與 GR SPORT」分頁，不參與與 CR-V、CX-5 的比較。</li>
   <li><b>介紹內容：</b>介紹頁有註明等級的項目已補進對照表；沒有註明等級的項目只列在「官網介紹內容」，不假設各等級是否都有。</li>
   <li><b>車色：</b>RAV4 各車系的車色來自型錄；CR-V 型錄沒有註明各等級可選哪些顏色，表內四款列同一組 5 色，實際各等級可選的顏色以原廠為準。CX-5 型錄同樣沒有註明各等級可選的顏色，表內也是四款列同一組 5 色，並註明加價金額。</li>
   <li><b>PHEV 駕駛模式：</b>官網完整規配頁與型錄的寫法不同（官網有 EV，型錄沒有，但另列 EV/HV 模式切換鈕），表內並列兩個來源，這裡沒有判定哪個正確。</li>
@@ -1633,20 +1653,29 @@ document.addEventListener('scroll',function(e){
 },true);
 /* 觸控裝置：讓 :active 在按下當下就生效 */
 document.addEventListener('touchstart',function(){},{passive:true});
-/* 導覽定位：標示目前所在區塊 */
+/* 電腦版分頁切換：點導覽列只顯示該頁；網址跟著變，可用瀏覽器上一頁／下一頁 */
 (function(){
-  if(!('IntersectionObserver' in window)) return;
-  var links={};
-  Array.prototype.forEach.call(document.querySelectorAll('.topnav a'),function(a){links[a.getAttribute('href').slice(1)]=a;});
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(en.isIntersecting){
-        Object.keys(links).forEach(function(k){links[k].removeAttribute('aria-current');});
-        var a=links[en.target.id]; if(a) a.setAttribute('aria-current','location');
-      }
-    });
-  },{rootMargin:'-30% 0px -60% 0px'});
-  Object.keys(links).forEach(function(k){var el=document.getElementById(k); if(el) io.observe(el);});
+  var V={quick:1,full:1,adv:1,intro:1,notes:1},root=document.documentElement;
+  var nav=document.querySelector('.topnav');
+  var links=Array.prototype.slice.call(nav.querySelectorAll('a'));
+  function fromHash(){var h=(location.hash||'').slice(1);return V[h]?h:null;}
+  function mark(v){links.forEach(function(a){
+    if(a.getAttribute('href')==='#'+v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+  });}
+  function show(v){root.setAttribute('data-view',v);mark(v);window.scrollTo(0,0);}
+  nav.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('a'):null;
+    if(!a) return;
+    var v=a.getAttribute('href').slice(1);
+    if(!V[v]) return;
+    e.preventDefault();
+    if(root.getAttribute('data-view')===v){window.scrollTo(0,0);return;}   // 點目前這一頁：回到頁面頂端
+    history.pushState(null,'','#'+v);
+    show(v);
+  });
+  window.addEventListener('popstate',function(){show(fromHash()||'quick');});
+  window.addEventListener('hashchange',function(){var v=fromHash();if(v&&v!==root.getAttribute('data-view')) show(v);});
+  mark(root.getAttribute('data-view')||'quick');
 })();
 
 /* ===== 手機版（iPhone 直向，640 px 以下）===== */
