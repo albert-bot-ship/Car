@@ -419,6 +419,13 @@ html.m-lock,html.m-lock body{overflow:hidden}
 .chart-foot{margin:.625rem 0 0;padding-left:1.125rem;color:var(--mute);font-size:.8125rem;line-height:1.55}
 .chart-foot:empty{display:none}
 .chart-card details{margin:.75rem 0 0}
+.chart-card.wide{grid-column:1 / -1}
+.bars.adas .bar-row{grid-template-columns:9.5rem minmax(0,1fr) 6.5rem}
+.bar-sub{color:var(--mute);font-variant-numeric:tabular-nums}
+.bar-fill.adas-fill{background:var(--green)}
+@media (max-width:40em){
+  .bars.adas .bar-row{grid-template-columns:minmax(0,1fr) auto}
+}
 @media (max-width:64em){.chart-grid{grid-template-columns:1fr}}
 @media (max-width:40em){
   .bar-row{grid-template-columns:minmax(0,1fr) auto;gap:.125rem .5rem}
