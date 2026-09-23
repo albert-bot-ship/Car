@@ -233,14 +233,14 @@ html.m-lock,html.m-lock body{overflow:hidden}
   :root{--m-top-h:7.5rem;--m-bar-h:4rem}
   html{scroll-padding-top:calc(var(--m-top-h) + .5rem)}
   body{touch-action:manipulation;-webkit-touch-callout:none}
-  .top,.topnav,.skip,#quick,#full,#adv{display:none!important}
+  .top,.topnav,.skip,#quick,#full{display:none!important}
   #mobile,.m-only{display:block}
   .m-top{display:block}
   .m-only-li{display:list-item}
   .wrap{padding-left:max(1rem,env(safe-area-inset-left));padding-right:max(1rem,env(safe-area-inset-right))}
-  #intro,#notesWrap,#charts,#m-compare,#m-adv{display:none}
-  body[data-tab="intro"] #intro,body[data-tab="charts"] #charts,body[data-tab="notes"] #notesWrap,body[data-tab="compare"] #m-compare,body[data-tab="adv"] #m-adv{display:block}
-  body[data-tab="compare"] .m-bar,body[data-tab="adv"] .m-bar{display:flex}
+  #intro,#notesWrap,#charts,#m-compare{display:none}
+  body[data-tab="intro"] #intro,body[data-tab="charts"] #charts,body[data-tab="notes"] #notesWrap,body[data-tab="compare"] #m-compare{display:block}
+  body[data-tab="compare"] .m-bar{display:flex}
   #intro,#charts{padding-top:1rem}
   .m-notes-h{margin:1.25rem 0 .75rem}
   main.wrap{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom))}
@@ -257,7 +257,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
   .m-tab[aria-selected="true"]{background:var(--panel2);color:var(--text)}
   .m-tab:active{transform:scale(.97)}
   .m-pair{display:none;grid-template-columns:1fr 1fr;gap:.5rem;padding:0 max(.75rem,env(safe-area-inset-right)) .5rem max(.75rem,env(safe-area-inset-left))}
-  body[data-tab="compare"] .m-pair,body[data-tab="adv"] .m-pair{display:grid}
+  body[data-tab="compare"] .m-pair{display:grid}
   .m-pcell{min-width:0;min-height:2.75rem;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:.3125rem .625rem;
     border:0;border-top:.1875rem solid var(--line);border-radius:.5rem;background:var(--panel);
     transition:transform .1s ease-out,background-color .1s ease-out;-webkit-tap-highlight-color:transparent}
@@ -484,6 +484,22 @@ html.m-lock,html.m-lock body{overflow:hidden}
 @media (max-width:40em){
   .bars.adas .bar-row{grid-template-columns:minmax(0,1fr) auto}
 }
+.tc-inputs{display:flex;flex-wrap:wrap;gap:.875rem 1.25rem;margin-bottom:.875rem}
+.tc-inputs label{display:flex;flex-direction:column;gap:.25rem;font-size:.8125rem;color:var(--label)}
+.tc-inputs input{border:1px solid var(--line);border-radius:.5rem;background:var(--panel2);color:var(--text);
+  padding:.4375rem .625rem;font-size:.9375rem;width:9rem;font-variant-numeric:tabular-nums}
+.tc-inputs input:focus{outline:2px solid var(--blue);outline-offset:1px}
+.bars.tc .bar-row{grid-template-columns:9.5rem minmax(0,1fr) 8.5rem}
+.tc-val{display:flex;flex-direction:column;align-items:flex-end;gap:.0625rem;line-height:1.3}
+.tc-val b{font-variant-numeric:tabular-nums}
+.tc-val .bar-sub{font-size:.75rem}
+.bar-fill.tc-fill.r{background:var(--red)}.bar-fill.tc-fill.c{background:var(--blue)}.bar-fill.tc-fill.m{background:var(--amber)}
+@media (max-width:40em){
+  .tc-inputs{gap:.625rem 1rem}
+  .tc-inputs input{width:7.5rem}
+  .bars.tc .bar-row{grid-template-columns:minmax(0,1fr) auto}
+  .tc-val{align-items:flex-end}
+}
 @media (max-width:64em){.chart-grid{grid-template-columns:1fr}}
 @media (max-width:40em){
   .bar-row{grid-template-columns:minmax(0,1fr) auto;gap:.125rem .5rem}
@@ -495,7 +511,7 @@ html.m-lock,html.m-lock body{overflow:hidden}
 /* ===== 電腦版分頁：導覽列每個項目一頁，一次只顯示一頁 ===== */
 @media (min-width:40.0625em){
   html[data-view] main.wrap>section,html[data-view] #notesWrap{display:none}
-  html[data-view="quick"] #quick,html[data-view="full"] #full,html[data-view="charts"] #charts,html[data-view="adv"] #adv,
+  html[data-view="quick"] #quick,html[data-view="full"] #full,html[data-view="charts"] #charts,
   html[data-view="intro"] #intro,html[data-view="notes"] #notesWrap{display:block}
   #notesWrap h2{margin:1.875rem 0 .5rem}
   main.wrap{min-height:60vh}
