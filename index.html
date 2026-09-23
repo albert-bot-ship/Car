@@ -14,7 +14,7 @@
 <script>
 /* 電腦版分頁：依網址 # 決定第一次顯示哪一頁 */
 (function(){
-  var V={quick:1,full:1,charts:1,adv:1,intro:1,notes:1},h=(location.hash||'').replace('#','');
+  var V={quick:1,full:1,charts:1,intro:1,notes:1},h=(location.hash||'').replace('#','');
   document.documentElement.setAttribute('data-view',V[h]?h:'quick');
 })();
 </script>
@@ -110,7 +110,7 @@
 </script>
 <link rel="icon" href="icon.png">
 <title>三大日系SUV規格對照</title>
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body data-tab="compare">
 <a class="skip" href="#main">跳到主要內容</a>
@@ -126,14 +126,13 @@
   </div>
 </header>
 
-<nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#charts">圖表</a><a href="#adv">ADVENTURE 與 GR SPORT</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a><button type="button" class="qa-open" data-qa-open aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="tl">問答搜尋</span></button><button type="button" class="theme-btn" data-theme-btn data-mode="auto" aria-label="外觀：自動"><svg class="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span class="tl">自動</span></button></div></nav>
+<nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#charts">圖表</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a><button type="button" class="qa-open" data-qa-open aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="tl">問答搜尋</span></button><button type="button" class="theme-btn" data-theme-btn data-mode="auto" aria-label="外觀：自動"><svg class="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span class="tl">自動</span></button></div></nav>
 
 <header class="m-top" id="mTop">
   <div class="m-tabrow">
   <div class="m-tabs" role="tablist" aria-label="頁面分頁">
     <button type="button" class="m-tab" role="tab" id="tab-compare" aria-selected="true" aria-controls="m-compare" data-tab="compare">對照</button>
     <button type="button" class="m-tab" role="tab" id="tab-charts" aria-selected="false" aria-controls="charts" data-tab="charts" tabindex="-1">圖表</button>
-    <button type="button" class="m-tab" role="tab" id="tab-adv" aria-selected="false" aria-controls="m-adv" data-tab="adv" tabindex="-1">ADV</button>
     <button type="button" class="m-tab" role="tab" id="tab-intro" aria-selected="false" aria-controls="intro" data-tab="intro" tabindex="-1">介紹</button>
     <button type="button" class="m-tab" role="tab" id="tab-notes" aria-selected="false" aria-controls="notesWrap" data-tab="notes" tabindex="-1">說明</button>
   </div>
@@ -145,7 +144,6 @@
 
 <div id="mobile">
   <section class="m-panel" id="m-compare" role="tabpanel" aria-labelledby="tab-compare"></section>
-  <section class="m-panel" id="m-adv" role="tabpanel" aria-labelledby="tab-adv"></section>
 </div>
 
 <main class="wrap" id="main">
@@ -175,7 +173,7 @@
 
 <section id="full">
   <h2>完整對照表</h2>
-  <p class="lead">勾選要比的等級，最多可同時比 13 款。</p>
+  <p class="lead">勾選要比的等級，最多可同時比 15 款。</p>
   <div class="picker">
     <div class="grp r"><h3>RAV4</h3><div class="chips" id="fullR"></div></div>
     <div class="grp c"><h3>CR-V</h3><div class="chips" id="fullC"></div></div>
@@ -195,7 +193,7 @@
 
 <section id="charts" role="tabpanel" aria-labelledby="tab-charts">
   <h2>圖表</h2>
-  <p class="lead">把 13 款的售價、耗油、重量、軸距與主動安全配備完整度畫成圖，數字都取自「完整對照表」，換算方式見各圖下方。</p>
+  <p class="lead">把 15 款的售價、耗油、重量、軸距、主動安全配備完整度畫成圖，並提供稅金與油錢試算，數字都取自「完整對照表」，換算方式見各圖下方。</p>
   <div class="legend">
     <span><i class="lg r"></i>RAV4</span><span><i class="lg c"></i>CR-V</span><span><i class="lg m"></i>CX-5</span>
   </div>
@@ -228,20 +226,20 @@
       <div id="chAdas"></div>
       <p class="chart-note" id="chAdasFoot"></p>
     </div>
+    <div class="chart-card wide">
+      <h3>稅金與油錢試算</h3>
+      <p class="chart-note">輸入年行駛里程與油價，試算 15 款每年的牌照稅＋燃料稅（公路養管費）＋油錢，由低到高排列。稅額是 2026 年自用小客車費率，依各款排氣量分級；油價僅為預設，請依當時牌價自行調整。</p>
+      <div class="tc-inputs">
+        <label>年行駛里程（公里）<input type="number" id="tcKm" min="0" step="500" value="15000" inputmode="numeric"></label>
+        <label>油價（元／公升）<input type="number" id="tcPrice" min="0" step="0.1" value="32.7" inputmode="decimal"></label>
+      </div>
+      <div id="chTaxCost"></div>
+      <p class="chart-note" id="chTaxFoot"></p>
+    </div>
   </div>
 </section>
 
-<section id="adv">
-  <h2>RAV4 ADVENTURE 與 GR SPORT</h2>
-  <p class="lead">這兩款不參與「快速對照」與「完整對照表」的比較，另以 RAV4 旗艦作參考，方便看出兩款比旗艦多了或少了什麼。資料取自 RAV4 型錄規格配備表，價格取自 Toyota 官網車款清單。</p>
-  <div class="bar">
-    <button type="button" class="btn" data-act="bexpand">展開全部分類</button>
-    <button type="button" class="btn" data-act="bcollapse">收合全部分類</button>
-    <label class="sw"><input type="checkbox" id="bdiff"><i></i>只顯示差異</label>
-    <span class="stat" id="bstat" aria-live="polite"></span>
-  </div>
-  <div class="tw full" id="btable" tabindex="0" role="region" aria-label="ADVENTURE 與 GR SPORT 對照表，可上下左右捲動"></div>
-</section>
+
 
 <section id="intro" role="tabpanel" aria-labelledby="tab-intro">
   <h2>官網介紹內容</h2>
@@ -361,7 +359,7 @@
           <li>專屬外觀：霧黑水箱罩飾板、霧銀前後下護板、ADVENTURE 專屬銘板、越野型橋式車頂架、18 吋六幅式霧黑鋁圈、霧黑厚覆式輪拱飾板、馭黑外車門把手。</li>
           <li>內裝：專屬越野塗裝；座椅為豪華皮質專屬設計，前座舒適功能型錄只列加熱。</li>
           <li>E-Four 4WD：兼顧 SUV 所需的四輪驅動性能與燃油效率，濕地、泥濘或碎石路等易打滑路面時，由傳動系統最佳化分配四輪驅動力；搭配新的 ECB 電子控制煞車，把驅動力移轉到抓地力較好的車輪，強化脫困能力。</li>
-          <li>與旗艦的差異請見「ADVENTURE 與 GR SPORT」分頁。</li>
+          <li>與旗艦的差異已併入「快速對照」與「完整對照表」，可直接選這兩款比較。</li>
         </ul>
       </details>
 
@@ -654,12 +652,12 @@
 <ul class="notes" id="notes">
   <li class="m-only-li"><b>手機版：</b>螢幕寬度 640 px 以下（例如 iPhone 直向）會自動切換為卡片式手機版；橫向或平板仍使用電腦版面。</li>
   <li class="m-only-li"><b>加入主畫面：</b>用 Safari 開啟後，點下方的分享鈕，選「加入主畫面」，之後會以全螢幕 App 樣式開啟；頂部與底部會依動態島與 Home 指示條自動留白。iPhone 是否採用內嵌圖示由系統決定，若沒有顯示，會改用頁面截圖當圖示。</li>
-  <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）、RAV4 介紹頁（toyota.com.tw/showroom/RAV4/#hybrid）與 RAV4 電子型錄 PDF（日本進口，2026 年 6 月）；Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）與 Honda CR-V 型錄 PDF（封底印製日期 2025.06），皆於 2026/09/20 讀取。價格為官網建議售價，ADVENTURE 與 GR SPORT 的價格取自 Toyota 官網車款清單。</li>
+  <li><b>資料來源：</b>Toyota Taiwan 官網 RAV4 完整規配頁（toyota.com.tw/showroom/RAV4/fullsepc.aspx）、RAV4 介紹頁（toyota.com.tw/showroom/RAV4/#hybrid）與 RAV4 電子型錄 PDF（日本進口，2026 年 6 月）；Honda Taiwan 官網 2026 CR-V 頁（honda-taiwan.com.tw/2026CR-V/index.html）與 Honda CR-V 型錄 PDF（封底印製日期 2025.06），皆於 2026/09/20 讀取。價格為官網建議售價；ADVENTURE（133 萬）與 GR SPORT（139 萬）的價格另取自 Toyota 官網車款清單。</li>
   <li><b>CX-5 資料來源：</b>台灣馬自達 CX-5 產品型錄 PDF（頁內標示 2026 年 7 月版，規配表適用 2027 年式車型），是使用者提供的檔案，沒有另外讀取 Mazda 官網頁面。價格取自型錄第 6 頁，不含車色加價（晶艷魂動紅 +1.5 萬、鋼鐵灰與雪幻白各 +1 萬）。RAV4、CR-V 與 CX-5 的資料時間點不同，比較時請留意。</li>
   <li><b>未列：</b>表示該資料來源（官網頁面或型錄）沒有這一項，不代表車輛沒有此配備。CX-5 只依型錄，所以型錄沒寫的項目（例如衛星導航、內建聯網服務、行車紀錄器、前後霧燈、杯架與置物空間）都顯示「未列」。</li>
   <li><b>差異標色：</b>依官網與型錄的文字逐項比對，不做語意判斷，同一功能在不同品牌的寫法不同時會被標為差異；未列的欄位不列入差異判斷。品牌不同名稱的對應功能（例如 BSM／BSI、Idle Stop／i-STOP、Smart Entry／Smart Keyless、PKSB／低速前後偵測）已在項目名稱並列。</li>
   <li><b>油耗：</b>兩家官網都註明依歐盟 1999/100/EC 指令測試，年耗油量都以每年 15,000 公里計算；CR-V 頁面另標示 NEDC。RAV4 PHEV 的 131.6 km/L 為官網與型錄標示值，沒有說明換算方式；純電里程 135 km 的測試依據，型錄兩處寫法不同（1999/100/EC 與 ECE R101），都註明 NEDC 行車型態。CX-5 型錄同樣依歐盟 1999/100/EC 指令測試、年耗油量以每年 15,000 公里計算；Elite 標示「認證測試中」，其餘三款為 13.4 km/L，型錄沒有提供 Elite 的數值。</li>
-  <li><b>範圍：</b>主表為 RAV4 五個等級、CR-V 四個等級加 CX-5 四個等級（Elite、Exclusive、Premium、Premium Plus，型錄全名為 25S AWD…）；RAV4 ADVENTURE 與 GR SPORT 收錄在「ADVENTURE 與 GR SPORT」分頁，不參與與 CR-V、CX-5 的比較。</li>
+  <li><b>範圍：</b>主表共 15 款：RAV4 七個等級（豪華、尊爵、尊爵+、旗艦、PHEV、ADVENTURE 4WD、GR SPORT 4WD）、CR-V 四個等級、CX-5 四個等級（Elite、Exclusive、Premium、Premium Plus，型錄全名為 25S AWD…）。ADVENTURE、GR SPORT 兩款是以 RAV4 旗艦為基礎的外觀套件，189 個項目裡只有 35 項實際記錄跟旗艦不同，其餘沿用旗艦的數值，這是官網資料本身的呈現方式，不是本站另外假設的。</li>
   <li><b>介紹內容：</b>介紹頁有註明等級的項目已補進對照表；沒有註明等級的項目只列在「官網介紹內容」，不假設各等級是否都有。</li>
   <li><b>車色：</b>RAV4 各車系的車色來自型錄；CR-V 型錄沒有註明各等級可選哪些顏色，表內四款列同一組 5 色，實際各等級可選的顏色以原廠為準。CX-5 型錄同樣沒有註明各等級可選的顏色，表內也是四款列同一組 5 色，並註明加價金額。</li>
   <li><b>PHEV 駕駛模式：</b>官網完整規配頁與型錄的寫法不同（官網有 EV，型錄沒有，但另列 EV/HV 模式切換鈕），表內並列兩個來源，這裡沒有判定哪個正確。</li>
@@ -669,7 +667,7 @@
   <li><b>CX-5 型錄沒有寫的細節：</b>進氣型式（自然進氣或渦輪增壓）、新車保固是否「先到者為準」、原廠風格套件價格，型錄都沒有列，表內不補寫。</li>
   <li><b>淺色與深色：</b>頁面依日出日落自動切換，日出到日落之間為淺色，其餘時間為深色；日出日落以台中的座標計算，不需要定位權限。在 iPhone 加入主畫面後，狀態列的深淺是開啟 App 時決定的，跨過日落後需重新開啟才會跟著換。</li>
   <li><b>手動切換：</b>導覽列最右邊（手機版在最上方分頁列的右端）有深淺色按鈕，每按一下依序切換「自動（依日出日落）」「淺色」「深色」。選擇會記在這個瀏覽器，下次開啟沿用；選「自動」就回到依日出日落切換。</li>
-  <li><b>圖表：</b>由頁面內的數值即時繪製，與完整對照表同一份資料。「主動安全配備完整度」只計「主動安全與駕駛輔助」分類，排除「停車雷達」這種每款寫法都不同、無法簡單判斷有無的項目；分母是每一款有明確標示「有」或「無」的項目數（未列的不算），所以官網資訊較不完整的品牌，分數是算在較小的已知項目數上，條狀旁的分數已註明是哪幾項算出來的，比較時請留意。售價與年耗油量的散布圖只畫有年耗油量的款：CX-5 Elite 的油耗是「認證測試中」，沒有畫出；RAV4 PHEV 的年耗油量只計汽油，另需用電，不能和純燃油款直接比較，圖上以空心菱形標示。軸距圖的橫條從 2,500 mm 起算，差距已被放大，請以標示的數字為準。</li>
+  <li><b>圖表：</b>由頁面內的數值即時繪製，與完整對照表同一份資料。「稅金與油錢試算」的牌照稅、燃料稅（公路養管費）級距，取自交通部公路局 2026 年公路養管費費額表與財政部使用牌照稅稅額表（自用小客車，依排氣量分級，只涵蓋到 4,200 c.c.）；油價預設值是台灣中油 2026 年 9 月公告的 95 無鉛牌價每公升 32.7 元，會隨時間變動，試算時請自行改成當時的牌價。CX-5 Elite 因為型錄油耗欄位是「認證測試中」，無法算出油錢，圖上會列在「無法試算」，不會用其他等級的數字代替。RAV4 PHEV 的平均油耗（131.6 km/L）是官網與型錄的官方標示值，測試方式含電力，和純燃油款不是同一基礎，試算結果僅供參考。「主動安全配備完整度」只計「主動安全與駕駛輔助」分類，排除「停車雷達」這種每款寫法都不同、無法簡單判斷有無的項目；分母是每一款有明確標示「有」或「無」的項目數（未列的不算），所以官網資訊較不完整的品牌，分數是算在較小的已知項目數上，條狀旁的分數已註明是哪幾項算出來的，比較時請留意。售價與年耗油量的散布圖只畫有年耗油量的款：CX-5 Elite 的油耗是「認證測試中」，沒有畫出；RAV4 PHEV 的年耗油量只計汽油，另需用電，不能和純燃油款直接比較，圖上以空心菱形標示。軸距圖的橫條從 2,500 mm 起算，差距已被放大，請以標示的數字為準。</li>
 </ul>
 </div>
 
@@ -729,7 +727,9 @@ var TRIMS=[
  {id:'m1',b:'m',brand:'CX-5',name:'Elite'},
  {id:'m2',b:'m',brand:'CX-5',name:'Exclusive'},
  {id:'m3',b:'m',brand:'CX-5',name:'Premium'},
- {id:'m4',b:'m',brand:'CX-5',name:'Premium Plus'}
+ {id:'m4',b:'m',brand:'CX-5',name:'Premium Plus'},
+ {id:'r6',b:'r',brand:'RAV4',name:'ADVENTURE 4WD'},
+ {id:'r7',b:'r',brand:'RAV4',name:'GR SPORT 4WD'}
 ];
 
 /* 每列：[項目, RAV4 五欄（豪華/尊爵/尊爵+/旗艦/PHEV）, CR-V 四欄（VTi-S/S/e:HEV S/e:HEV Prestige）]；CX-5 四欄另放在下方的 MZ（依項目名稱對應）；null＝該資料來源未列 */
@@ -1096,7 +1096,7 @@ var DATA=RAW.map(function(c){
     var x=r[3]||[r[1][3],r[1][3]];
     var blk=r[4]||[r[1][3],x[0],x[1]];
     if(x.length!==2||blk.length!==3){console.error('ADVENTURE／GR SPORT 欄位數不符：'+r[0]);}
-    return {label:r[0],v:r[1].concat(r[2],mz),x:x,blk:blk};
+    return {label:r[0],v:r[1].concat(r[2],mz,[blk[1],blk[2]]),x:x,blk:blk};
   })};
 });
 (function(){var names={};RAW.forEach(function(c){c[1].forEach(function(r){names[r[0]]=1;});});
@@ -1182,18 +1182,11 @@ function tableHTML(idxs,opt){
   var cols=idxs.map(function(i){var t=TRIMS[i];return {b:t.b,brand:t.brand,name:t.name,price:PRICE.v[i],get:function(r){return r.v[i];}};});
   return buildTable(cols,{onlyDiff:opt.onlyDiff,collapsed:opt.collapsed,rowFilter:hasMain});
 }
-var BCOLS=[
-  {b:'r',brand:'RAV4',name:'ADVENTURE 4WD',price:null,k:1},
-  {b:'r',brand:'RAV4',name:'GR SPORT 4WD',price:null,k:2},
-  {b:'r',brand:'RAV4',name:'旗艦（參考）',price:null,k:0}
-];
-BCOLS.forEach(function(c){c.price=PRICE.blk[c.k];c.get=function(r){return r.blk[c.k];};});
 function $(id){return document.getElementById(id);}
 
 /* ===== 狀態 ===== */
 var Q={r:'r1',c:'c1',m:'m1',diff:false};
 var F={sel:{},diff:false,collapsed:{}};
-var B={diff:false,collapsed:{}};
 F.undo=null;
 TRIMS.forEach(function(t){F.sel[t.id]=true;});
 function idxOf(id){for(var i=0;i<TRIMS.length;i++){if(TRIMS[i].id===id)return i;}return -1;}
@@ -1245,11 +1238,6 @@ function renderFull(){
   $('fstat').textContent=idxs.length?('已選 '+idxs.length+' 款，共 '+res.total+' 項，其中 '+res.diffs+' 項有差異'):'';
 }
 
-function renderBlock(){
-  var res=buildTable(BCOLS,{onlyDiff:B.diff,collapsed:B.collapsed,rowFilter:hasBlk});
-  $('btable').innerHTML=res.html;
-  $('bstat').textContent='共 '+res.total+' 項，其中 '+res.diffs+' 項有差異';
-}
 
 /* ===== 事件 ===== */
 document.addEventListener('change',function(e){
@@ -1260,15 +1248,13 @@ document.addEventListener('change',function(e){
   else if(t.name==='fs'){F.sel[t.value]=t.checked;F.undo=null;$('undoBtn').hidden=true;syncChips();renderFull();}
   else if(t.id==='qdiff'){Q.diff=t.checked;renderQuick();}
   else if(t.id==='fdiff'){F.diff=t.checked;renderFull();}
-  else if(t.id==='bdiff'){B.diff=t.checked;renderBlock();}
 });
 document.addEventListener('click',function(e){
   var b=e.target.closest?e.target.closest('button'):null;
   if(!b) return;
   if(b.hasAttribute('data-cat')){
     var ci=b.getAttribute('data-cat');
-    if(b.closest('#btable')){B.collapsed[ci]=!B.collapsed[ci];renderBlock();}
-    else{F.collapsed[ci]=!F.collapsed[ci];renderFull();}
+    F.collapsed[ci]=!F.collapsed[ci];renderFull();
     return;
   }
   var act=b.getAttribute('data-act');
@@ -1287,14 +1273,11 @@ document.addEventListener('click',function(e){
     syncChips();renderFull();
   }else if(act==='expand'){F.collapsed={};renderFull();}
   else if(act==='collapse'){DATA.forEach(function(c,i){F.collapsed[i]=true;});renderFull();}
-  else if(act==='bexpand'){B.collapsed={};renderBlock();}
-  else if(act==='bcollapse'){DATA.forEach(function(c,i){B.collapsed[i]=true;});renderBlock();}
 });
 
 buildPickers();
 renderQuick();
 renderFull();
-renderBlock();
 
 /* 捲動邊緣：內容真的被固定表頭或固定欄蓋住時，才顯示淡出 */
 document.addEventListener('scroll',function(e){
@@ -1308,7 +1291,7 @@ document.addEventListener('scroll',function(e){
 document.addEventListener('touchstart',function(){},{passive:true});
 /* 電腦版分頁切換：點導覽列只顯示該頁；網址跟著變，可用瀏覽器上一頁／下一頁 */
 (function(){
-  var V={quick:1,full:1,charts:1,adv:1,intro:1,notes:1},root=document.documentElement;
+  var V={quick:1,full:1,charts:1,intro:1,notes:1},root=document.documentElement;
   var nav=document.querySelector('.topnav');
   var links=Array.prototype.slice.call(nav.querySelectorAll('a'));
   function fromHash(){var h=(location.hash||'').slice(1);return V[h]?h:null;}
@@ -1504,6 +1487,47 @@ function drawAdas(){
 }
 drawAdas();
 
+/* ---------- 稅金與油錢試算 ---------- */
+/* 2026 年自用小客車稅額級距（牌照稅、燃料稅／公路養管費），只到 4,200 c.c.：
+   來源見「資料說明」頁；更大排氣量各資料來源數字有出入，不放進來，超出範圍會顯示「無法試算」。 */
+var TAX_BRACKETS=[
+  [0,500,1620,2160],[501,600,2160,2160],[601,1200,4320,4320],
+  [1201,1800,7120,4800],[1801,2400,11230,6180],[2401,3000,15210,7200],[3001,4200,28220,8640]
+];
+function taxFor(cc){
+  for(var i=0;i<TAX_BRACKETS.length;i++){var b=TAX_BRACKETS[i];if(cc>=b[0]&&cc<=b[1]) return {license:b[2],fuel:b[3]};}
+  return null;
+}
+function drawTaxCost(){
+  var kmEl=$('tcKm'),priceEl=$('tcPrice');
+  if(!kmEl||!priceEl) return;
+  var km=Math.max(0,parseFloat(kmEl.value)||0),price=Math.max(0,parseFloat(priceEl.value)||0);
+  var ccRow=ROW['排氣量 (c.c.)'],fuelRow=ROW['平均油耗 (km/L)'];
+  var rows=TRIMS.map(function(t,i){
+    var cc=num(ccRow.v[i]),kml=num(fuelRow.v[i]),tax=cc?taxFor(cc):null;
+    if(!tax||isNaN(kml)||kml<=0) return {i:i,ok:false};
+    var fuelCost=km/kml*price,taxTotal=tax.license+tax.fuel;
+    return {i:i,ok:true,fuelCost:fuelCost,taxTotal:taxTotal,total:fuelCost+taxTotal};
+  });
+  var known=rows.filter(function(r){return r.ok;}).sort(function(a,b){return a.total-b.total;});
+  var unknown=rows.filter(function(r){return !r.ok;});
+  var max=known.length?known[known.length-1].total:0;
+  $('chTaxCost').innerHTML='<div class="bars tc">'+known.map(function(r){
+    var pct=max?r.total/max*100:0;
+    return '<div class="bar-row"><div class="bar-lab">'+trimLab(r.i)+'</div>'+
+      '<div class="bar-track"><div class="bar-fill tc-fill '+TRIMS[r.i].b+'" style="width:'+pct.toFixed(1)+'%"></div></div>'+
+      '<div class="bar-val tc-val"><b>'+fmtN(Math.round(r.total))+' 元</b>'+
+      '<span class="bar-sub">稅 '+fmtN(r.taxTotal)+'／油 '+fmtN(Math.round(r.fuelCost))+'</span></div></div>';
+  }).join('')+'</div>';
+  var foot='';
+  if(unknown.length) foot='油耗未公布、無法試算：'+unknown.map(function(r){return esc(TRIMS[r.i].brand+' '+TRIMS[r.i].name);}).join('、')+'。';
+  $('chTaxFoot').textContent=foot;
+}
+drawTaxCost();
+['tcKm','tcPrice'].forEach(function(id){
+  var el=$(id);if(el) el.addEventListener('input',drawTaxCost);
+});
+
   drawBars();
   drawScatter();
   if('ResizeObserver' in window){
@@ -1525,7 +1549,7 @@ drawAdas();
   function norm(s){return String(s||'').toLowerCase().replace(/[\s\-－—_/／．.,，、!！?？:：()（）]/g,'');}
   function leadNum(v){if(v===null||v===undefined) return NaN;var m=String(v).match(/[\d,]+(\.\d+)?/);return m?parseFloat(m[0].replace(/,/g,'')):NaN;}
 
-  /* ---------- 13 款的比對詞（品牌＋等級／等級單獨），供辨識句子裡提到哪一款 ---------- */
+  /* ---------- 15 款的比對詞（品牌＋等級／等級單獨），供辨識句子裡提到哪一款 ---------- */
   var ALIAS_FLAT=[];
   TRIMS.forEach(function(t,i){
     var brand=norm(t.brand), name=norm(t.name);
@@ -1693,7 +1717,7 @@ drawAdas();
         hits.slice(0,8).map(function(label){
           var row=ROW[label],yes=[],no=[],un=0;
           TRIMS.forEach(function(t,i){var v=row.v[i];if(v===null)un++;else if(v==='－')no.push(t.brand+' '+t.name);else yes.push(t.brand+' '+t.name);});
-          var sum=yes.length+'／13 款有配備';
+          var sum=yes.length+'／'+TRIMS.length+' 款有配備';
           if(yes.length&&yes.length<=6) sum+='（'+esc(yes.join('、'))+'）';
           if(un) sum+='，'+un+' 款未列';
           return '<div><dt>'+esc(label)+'</dt><dd>'+sum+'</dd></div>';
@@ -1789,10 +1813,7 @@ drawAdas();
   var M={tab:'compare',scroll:{},
     compare:{l:'r1',r:'c1',diff:false,collapsed:{},cols:[],filter:hasMain,
       kpi:['動力型式','平均油耗 (km/L)','能源效率等級','空車重 (kg)'],
-      hero:['三大日系SUV規格對照','Toyota、Honda 官網與三家原廠型錄；CX-5 為 2026 年 7 月版型錄']},
-    adv:{l:'a1',r:'a2',diff:false,collapsed:{},cols:[],filter:hasBlk,
-      kpi:['動力型式','平均油耗 (km/L)','最大綜效馬力 (ps)','空車重 (kg)'],
-      hero:['RAV4 ADVENTURE 與 GR SPORT','與旗艦（參考）一起比較；價格取自官網車款清單']}
+      hero:['三大日系SUV規格對照','Toyota、Honda 官網與三家原廠型錄；CX-5 為 2026 年 7 月版型錄']}
   };
 
   /* ---------- 資料欄位 ---------- */
@@ -1800,12 +1821,9 @@ drawAdas();
     M.compare.cols=TRIMS.map(function(t,i){
       return {id:t.id,b:t.b,brand:t.brand,name:t.name,price:PRICE.v[i],get:function(r){return r.v[i];}};
     });
-    M.adv.cols=[{id:'a1',k:1,name:'ADVENTURE 4WD'},{id:'a2',k:2,name:'GR SPORT 4WD'},{id:'a0',k:0,name:'旗艦（參考）'}].map(function(c){
-      return {id:c.id,b:'r',brand:'RAV4',name:c.name,price:PRICE.blk[c.k],get:function(r){return r.blk[c.k];}};
-    });
   }
   function colById(tab,id){var a=M[tab].cols;for(var i=0;i<a.length;i++){if(a[i].id===id)return a[i];}return a[0];}
-  function isPanelTab(){return M.tab==='compare'||M.tab==='adv';}
+  function isPanelTab(){return M.tab==='compare';}
 
   /* ---------- 繪製 ---------- */
   function panelHTML(tab){
@@ -2119,7 +2137,7 @@ drawAdas();
     if(inited) return;
     inited=true;
     buildCols();wire();
-    renderPanel('compare');renderPanel('adv');
+    renderPanel('compare');
     renderPair();renderBar();updateVars();
   }
   function onChange(){
