@@ -14,7 +14,7 @@
 <script>
 /* 電腦版分頁：依網址 # 決定第一次顯示哪一頁 */
 (function(){
-  var V={quick:1,full:1,charts:1,intro:1,notes:1},h=(location.hash||'').replace('#','');
+  var V={quick:1,full:1,charts:1,photos:1,intro:1,notes:1},h=(location.hash||'').replace('#','');
   document.documentElement.setAttribute('data-view',V[h]?h:'quick');
 })();
 </script>
@@ -110,7 +110,7 @@
 </script>
 <link rel="icon" href="icon.png">
 <title>三大日系SUV規格對照</title>
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=9">
 </head>
 <body data-tab="compare">
 <a class="skip" href="#main">跳到主要內容</a>
@@ -126,13 +126,14 @@
   </div>
 </header>
 
-<nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#charts">圖表</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a><button type="button" class="qa-open" data-qa-open aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="tl">問答搜尋</span></button><button type="button" class="theme-btn" data-theme-btn data-mode="auto" aria-label="外觀：自動"><svg class="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span class="tl">自動</span></button></div></nav>
+<nav class="topnav" aria-label="頁面導覽"><div class="wrap"><a href="#quick">快速對照</a><a href="#full">完整對照表</a><a href="#charts">圖表</a><a href="#photos">照片</a><a href="#intro">官網介紹內容</a><a href="#notes">資料說明</a><button type="button" class="qa-open" data-qa-open aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="tl">問答搜尋</span></button><button type="button" class="theme-btn" data-theme-btn data-mode="auto" aria-label="外觀：自動"><svg class="i-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span class="tl">自動</span></button></div></nav>
 
 <header class="m-top" id="mTop">
   <div class="m-tabrow">
   <div class="m-tabs" role="tablist" aria-label="頁面分頁">
     <button type="button" class="m-tab" role="tab" id="tab-compare" aria-selected="true" aria-controls="m-compare" data-tab="compare">對照</button>
     <button type="button" class="m-tab" role="tab" id="tab-charts" aria-selected="false" aria-controls="charts" data-tab="charts" tabindex="-1">圖表</button>
+    <button type="button" class="m-tab" role="tab" id="tab-photos" aria-selected="false" aria-controls="photos" data-tab="photos" tabindex="-1">照片</button>
     <button type="button" class="m-tab" role="tab" id="tab-intro" aria-selected="false" aria-controls="intro" data-tab="intro" tabindex="-1">介紹</button>
     <button type="button" class="m-tab" role="tab" id="tab-notes" aria-selected="false" aria-controls="notesWrap" data-tab="notes" tabindex="-1">說明</button>
   </div>
@@ -240,6 +241,12 @@
 </section>
 
 
+
+<section id="photos" role="tabpanel" aria-labelledby="tab-photos">
+  <h2>照片</h2>
+  <p class="lead">車色是依名稱畫的示意色，不是原廠實際烤漆，實際色澤請以展間實車或原廠型錄為準。外觀與內裝照片由使用者自行上傳，尚未上傳的款式會顯示「尚未上傳照片」。</p>
+  <div class="photo-grid" id="photoGrid"></div>
+</section>
 
 <section id="intro" role="tabpanel" aria-labelledby="tab-intro">
   <h2>官網介紹內容</h2>
@@ -667,11 +674,39 @@
   <li><b>CX-5 型錄沒有寫的細節：</b>進氣型式（自然進氣或渦輪增壓）、新車保固是否「先到者為準」、原廠風格套件價格，型錄都沒有列，表內不補寫。</li>
   <li><b>淺色與深色：</b>頁面依日出日落自動切換，日出到日落之間為淺色，其餘時間為深色；日出日落以台中的座標計算，不需要定位權限。在 iPhone 加入主畫面後，狀態列的深淺是開啟 App 時決定的，跨過日落後需重新開啟才會跟著換。</li>
   <li><b>手動切換：</b>導覽列最右邊（手機版在最上方分頁列的右端）有深淺色按鈕，每按一下依序切換「自動（依日出日落）」「淺色」「深色」。選擇會記在這個瀏覽器，下次開啟沿用；選「自動」就回到依日出日落切換。</li>
+  <li><b>照片：</b>車色色塊是依顏色名稱畫的示意色（不是原廠實際烤漆，實際色澤請以展間實車或原廠型錄為準）；外觀與內裝照片由使用者自行上傳，不是官網或型錄的照片，尚未上傳的款式會顯示「尚未上傳照片」。</li>
   <li><b>圖表：</b>由頁面內的數值即時繪製，與完整對照表同一份資料。「稅金與油錢試算」的牌照稅、燃料稅（公路養管費）級距，取自交通部公路局 2026 年公路養管費費額表與財政部使用牌照稅稅額表（自用小客車，依排氣量分級，只涵蓋到 4,200 c.c.）；油價預設值是台灣中油 2026 年 9 月公告的 95 無鉛牌價每公升 32.7 元，會隨時間變動，試算時請自行改成當時的牌價。CX-5 Elite 因為型錄油耗欄位是「認證測試中」，無法算出油錢，圖上會列在「無法試算」，不會用其他等級的數字代替。RAV4 PHEV 的平均油耗（131.6 km/L）是官網與型錄的官方標示值，測試方式含電力，和純燃油款不是同一基礎，試算結果僅供參考。「主動安全配備完整度」只計「主動安全與駕駛輔助」分類，排除「停車雷達」這種每款寫法都不同、無法簡單判斷有無的項目；分母是每一款有明確標示「有」或「無」的項目數（未列的不算），所以官網資訊較不完整的品牌，分數是算在較小的已知項目數上，條狀旁的分數已註明是哪幾項算出來的，比較時請留意。售價與年耗油量的散布圖只畫有年耗油量的款：CX-5 Elite 的油耗是「認證測試中」，沒有畫出；RAV4 PHEV 的年耗油量只計汽油，另需用電，不能和純燃油款直接比較，圖上以空心菱形標示。軸距圖的橫條從 2,500 mm 起算，差距已被放大，請以標示的數字為準。</li>
 </ul>
 </div>
 
 </main>
+
+<div id="photoAdmin" class="padmin" hidden>
+  <div class="padmin-wrap">
+    <h1>照片管理（本機暫存）</h1>
+    <p class="padmin-note">這個頁面沒有連結指到這裡，只有知道網址的人（也就是你）看得到；訪客看到的是一般的「照片」分頁。
+      這裡加的照片<b>只存在這個瀏覽器裡</b>，還沒有真正上線。加好之後按「下載備份檔」會產生一個 <code>photos.json</code> 檔案，
+      把這一個檔案放進你放 index.html 的專案資料夾（跟 index.html 同一層），一起上傳到 GitHub，訪客才會看到——不用解壓縮，也不用拖資料夾。
+      每次匯出都是「目前這個瀏覽器裡」的完整清單，如果之前已經上線過照片，這次匯出不會自動合併，請把該款所有照片一次加齊再匯出。
+      照片是直接存在這個檔案裡的，照片越多、越大張，這個檔案就越大，訪客打開「照片」分頁時也會等比較久，請留意不要放太多、太大張的照片。</p>
+    <div class="padmin-body">
+      <nav class="padmin-trims" id="padminTrims" aria-label="選擇車款"></nav>
+      <div class="padmin-main">
+        <div class="padmin-drop" id="pdrop" tabindex="0" role="button" aria-label="點擊選擇照片，或拖曳、貼上照片到這裡">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          <span>點擊選擇照片、拖曳檔案，或直接貼上（Ctrl+V）</span>
+          <input type="file" id="pfile" accept="image/*" multiple hidden>
+        </div>
+        <div class="padmin-thumbs" id="pthumbs"></div>
+      </div>
+    </div>
+    <div class="padmin-foot">
+      <span id="psummary" class="padmin-sum"></span>
+      <button type="button" class="btn" id="pclear">清除全部本機暫存</button>
+      <button type="button" class="btn primary" id="pexport">下載備份檔（photos.json）</button>
+    </div>
+  </div>
+</div>
 
 <div class="qa-scrim" id="qaScrim" hidden></div>
 <div class="qa-dialog" id="qaModal" role="dialog" aria-modal="true" aria-labelledby="qaTitle" hidden>
@@ -688,6 +723,15 @@
   <div class="qa-hint">不會連到外部 AI，答案只依本站已收錄的官網與型錄資料規則比對得出，答不出來的問題請直接到「完整對照表」查。</div>
   <div class="qa-chips" id="qaChips"></div>
   <div class="qa-out" id="qaOut" aria-live="polite"></div>
+</div>
+
+<div class="lb-scrim" id="lbScrim" hidden></div>
+<div class="lb-box" id="lbBox" role="dialog" aria-modal="true" aria-label="照片放大檢視" hidden>
+  <button type="button" class="lb-x" id="lbClose" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="上一張"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <img id="lbImg" alt="">
+  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="下一張"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+  <div class="lb-cap" id="lbCap"></div>
 </div>
 
 <div class="m-bar" id="mBar" role="toolbar" aria-label="比較操作">
@@ -1291,7 +1335,7 @@ document.addEventListener('scroll',function(e){
 document.addEventListener('touchstart',function(){},{passive:true});
 /* 電腦版分頁切換：點導覽列只顯示該頁；網址跟著變，可用瀏覽器上一頁／下一頁 */
 (function(){
-  var V={quick:1,full:1,charts:1,intro:1,notes:1},root=document.documentElement;
+  var V={quick:1,full:1,charts:1,photos:1,intro:1,notes:1},root=document.documentElement;
   var nav=document.querySelector('.topnav');
   var links=Array.prototype.slice.call(nav.querySelectorAll('a'));
   function fromHash(){var h=(location.hash||'').slice(1);return V[h]?h:null;}
@@ -1802,6 +1846,235 @@ drawTaxCost();
     var b=e.target.closest('.qa-chip');if(!b) return;
     input.value=b.textContent;handle(input.value);input.focus();
   });
+})();
+
+/* ===== 車色示意色（不是原廠實際烤漆，只是依顏色名稱畫的示意色） ===== */
+var COLOR_HEX={
+ '鉑鑽白':'#efeee8','雪貂白':'#eee9dd','雲朵白':'#f2f0ea','雪幻白':'#eceae3',
+ '尊爵黑':'#1b1c1e','水晶黑':'#0e0e10',
+ '綻曜藍':'#274a72','湛海藍':'#1c3c5c',
+ '霧岩灰':'#75767a','月光鈦':'#8d8478','靜謐灰':'#5d6064','流星灰':'#4b4d50',
+ '風尚灰':'#9a9b9d','鋼鐵灰':'#5a5e62','天際灰':'#9296a0',
+ '熾焰紅':'#a51d2c','晶艷魂動紅':'#8f1c24','晶燦紅':'#c81f2c',
+ '野境綠':'#4a5a3c'
+};
+function parseColors(str){
+  if(!str) return [];
+  return str.split('／').map(function(seg){
+    var m=seg.match(/^([^（]+)(?:（([^）]+)）)?/);
+    return {name:(m?m[1]:seg).trim(),note:m&&m[2]?m[2]:null};
+  });
+}
+function swatchesHTML(str){
+  var list=parseColors(str);
+  if(!list.length) return '<p class="photo-empty">未列</p>';
+  return '<div class="swatches">'+list.map(function(cl){
+    var hex=COLOR_HEX[cl.name];
+    var dot=hex?'<span class="sw-dot" style="background:'+hex+'"></span>':'<span class="sw-dot sw-unknown">？</span>';
+    return '<div class="swatch">'+dot+'<span class="sw-name">'+esc(cl.name)+'</span>'+(cl.note?'<span class="sw-note">'+esc(cl.note)+'</span>':'')+'</div>';
+  }).join('')+'</div>';
+}
+
+/* ===== 照片分頁：車色示意色＋照片圖庫（讀 photos/manifest.json） ===== */
+(function(){
+  var grid=$('photoGrid');
+  if(!grid) return;
+  function trimHead(i){
+    var t=TRIMS[i];
+    return '<div class="ph-head"><span class="br '+t.b+'">'+esc(t.brand)+'</span><span class="ph-name">'+esc(t.name)+'</span><span class="ph-price">'+PRICE.v[i]+' 萬</span></div>';
+  }
+  function galleryHTML(tid,files){
+    if(!files||!files.length) return '<p class="photo-empty">尚未上傳照片</p>';
+    return '<div class="photo-thumbs">'+files.map(function(f,idx){
+      return '<button type="button" class="photo-thumb" style="background-image:url(\''+f+'\')" data-tid="'+tid+'" data-idx="'+idx+'" aria-label="放大檢視"></button>';
+    }).join('')+'</div>';
+  }
+  function render(manifest){
+    grid.innerHTML=TRIMS.map(function(t,i){
+      var files=(manifest&&manifest[t.id])||[];
+      return '<div class="photo-card '+t.b+'">'+trimHead(i)+swatchesHTML(ROW['車色'].v[i])+galleryHTML(t.id,files)+'</div>';
+    }).join('');
+  }
+  var MANIFEST=null;
+  render(null);
+  fetch('photos.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{};}).then(function(m){MANIFEST=m||{};render(MANIFEST);}).catch(function(){MANIFEST={};});
+
+  /* ---------- 燈箱 ---------- */
+  var scrim=$('lbScrim'),box=$('lbBox'),img=$('lbImg'),cap=$('lbCap');
+  var curTid=null,curIdx=0,curFiles=[];
+  function openLB(tid,idx){
+    curTid=tid;curFiles=(MANIFEST&&MANIFEST[tid])||[];curIdx=idx;
+    show();scrim.hidden=false;box.hidden=false;document.body.style.overflow='hidden';
+  }
+  function show(){
+    if(!curFiles.length) return;
+    img.src=curFiles[curIdx];
+    var t=TRIMS.filter(function(x){return x.id===curTid;})[0];
+    cap.textContent=(t?t.brand+' '+t.name:'')+'　'+(curIdx+1)+' / '+curFiles.length;
+  }
+  function closeLB(){scrim.hidden=true;box.hidden=true;document.body.style.overflow='';}
+  function step(d){if(!curFiles.length) return;curIdx=(curIdx+d+curFiles.length)%curFiles.length;show();}
+  grid.addEventListener('click',function(e){
+    var b=e.target.closest('.photo-thumb');if(!b) return;
+    openLB(b.getAttribute('data-tid'),parseInt(b.getAttribute('data-idx'),10));
+  });
+  $('lbClose').addEventListener('click',closeLB);
+  scrim.addEventListener('click',closeLB);
+  $('lbPrev').addEventListener('click',function(){step(-1);});
+  $('lbNext').addEventListener('click',function(){step(1);});
+  document.addEventListener('keydown',function(e){
+    if(box.hidden) return;
+    if(e.key==='Escape') closeLB();
+    else if(e.key==='ArrowLeft') step(-1);
+    else if(e.key==='ArrowRight') step(1);
+  });
+})();
+
+/* ===== 隱藏的照片管理介面：網址打 #admin-photos 才會顯示 ===== */
+(function(){
+  var panel=$('photoAdmin');
+  if(!panel||typeof indexedDB==='undefined') return;
+
+  /* ---------- IndexedDB：本機暫存，不會自動上線 ---------- */
+  var PDB=(function(){
+    var dbp=null;
+    function open(){
+      if(dbp) return dbp;
+      dbp=new Promise(function(res,rej){
+        var req=indexedDB.open('carPhotosAdmin',1);
+        req.onupgradeneeded=function(){
+          var db=req.result;
+          if(!db.objectStoreNames.contains('photos')){
+            var s=db.createObjectStore('photos',{keyPath:'id',autoIncrement:true});
+            s.createIndex('trimId','trimId',{unique:false});
+          }
+        };
+        req.onsuccess=function(){res(req.result);};
+        req.onerror=function(){rej(req.error);};
+      });
+      return dbp;
+    }
+    function tx(mode,fn){
+      return open().then(function(db){return new Promise(function(res,rej){
+        var t=db.transaction('photos',mode),s=t.objectStore('photos'),out;
+        out=fn(s);
+        t.oncomplete=function(){res(out);};
+        t.onerror=function(){rej(t.error);};
+      });});
+    }
+    return {
+      add:function(trimId,name,blob){return tx('readwrite',function(s){s.add({trimId:trimId,name:name,blob:blob,addedAt:Date.now()});});},
+      del:function(id){return tx('readwrite',function(s){s.delete(id);});},
+      clear:function(){return tx('readwrite',function(s){s.clear();});},
+      all:function(){
+        return open().then(function(db){return new Promise(function(res,rej){
+          var t=db.transaction('photos','readonly'),out=[];
+          t.objectStore('photos').openCursor().onsuccess=function(e){
+            var cur=e.target.result;
+            if(cur){out.push(cur.value);cur.continue();} else res(out);
+          };
+          t.onerror=function(){rej(t.error);};
+        });});
+      }
+    };
+  })();
+
+  /* ---------- 畫面 ---------- */
+  var curTrim=TRIMS[0].id;
+  var trimsEl=$('padminTrims'),thumbsEl=$('pthumbs'),dropEl=$('pdrop'),fileEl=$('pfile'),sumEl=$('psummary');
+  var ALL=[];
+
+  function renderTrims(){
+    var groups=[['RAV4','r'],['CR-V','c'],['CX-5','m']];
+    trimsEl.innerHTML=groups.map(function(g){
+      var items=TRIMS.filter(function(t){return t.b===g[1];});
+      return '<div class="padmin-grp"><h3>'+g[0]+'</h3>'+items.map(function(t){
+        var n=ALL.filter(function(r){return r.trimId===t.id;}).length;
+        return '<button type="button" class="padmin-trimbtn '+t.b+(t.id===curTrim?' on':'')+'" data-id="'+t.id+'">'+esc(t.name)+(n?'<span class="padmin-badge">'+n+'</span>':'')+'</button>';
+      }).join('')+'</div>';
+    }).join('');
+  }
+  function renderThumbs(){
+    var mine=ALL.filter(function(r){return r.trimId===curTrim;});
+    thumbsEl.innerHTML=mine.length?mine.map(function(r){
+      return '<div class="padmin-thumb"><img src="'+URL.createObjectURL(r.blob)+'" alt="">'+
+        '<button type="button" class="padmin-del" data-id="'+r.id+'" aria-label="刪除這張">×</button></div>';
+    }).join(''):'<p class="photo-empty">這一款目前沒有暫存照片。</p>';
+  }
+  function renderSummary(){
+    var trimSet={};ALL.forEach(function(r){trimSet[r.trimId]=1;});
+    sumEl.textContent='已加入 '+Object.keys(trimSet).length+' 款、共 '+ALL.length+' 張照片（本機暫存）';
+  }
+  function refresh(){return PDB.all().then(function(list){ALL=list;renderTrims();renderThumbs();renderSummary();});}
+
+  function addFiles(files){
+    var arr=Array.prototype.filter.call(files,function(f){return f.type.indexOf('image/')===0;});
+    if(!arr.length) return;
+    Promise.all(arr.map(function(f){return PDB.add(curTrim,f.name,f);})).then(refresh);
+  }
+
+  trimsEl.addEventListener('click',function(e){
+    var b=e.target.closest('.padmin-trimbtn');if(!b) return;
+    curTrim=b.getAttribute('data-id');renderTrims();renderThumbs();
+  });
+  dropEl.addEventListener('click',function(){fileEl.click();});
+  dropEl.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();fileEl.click();}});
+  fileEl.addEventListener('change',function(){addFiles(fileEl.files);fileEl.value='';});
+  ['dragover','dragenter'].forEach(function(ev){dropEl.addEventListener(ev,function(e){e.preventDefault();dropEl.classList.add('drag');});});
+  ['dragleave','drop'].forEach(function(ev){dropEl.addEventListener(ev,function(e){e.preventDefault();dropEl.classList.remove('drag');});});
+  dropEl.addEventListener('drop',function(e){if(e.dataTransfer) addFiles(e.dataTransfer.files);});
+  document.addEventListener('paste',function(e){
+    if(panel.hidden) return;
+    var items=(e.clipboardData||{}).items||[],files=[];
+    for(var i=0;i<items.length;i++){if(items[i].type.indexOf('image/')===0) files.push(items[i].getAsFile());}
+    if(files.length) addFiles(files);
+  });
+  thumbsEl.addEventListener('click',function(e){
+    var b=e.target.closest('.padmin-del');if(!b) return;
+    PDB.del(parseInt(b.getAttribute('data-id'),10)).then(refresh);
+  });
+  $('pclear').addEventListener('click',function(){
+    if(!ALL.length) return;
+    if(!confirm('確定要清除這個瀏覽器裡所有暫存的照片嗎？這個動作沒辦法復原。')) return;
+    PDB.clear().then(refresh);
+  });
+  function blobToDataURL(blob){
+    return new Promise(function(res,rej){
+      var fr=new FileReader();
+      fr.onload=function(){res(fr.result);};
+      fr.onerror=function(){rej(fr.error);};
+      fr.readAsDataURL(blob);
+    });
+  }
+  $('pexport').addEventListener('click',function(){
+    if(!ALL.length){alert('目前還沒有任何照片可以匯出。');return;}
+    var btn=this,oldTxt=btn.textContent;btn.disabled=true;btn.textContent='處理中…';
+    var byTrim={};
+    ALL.forEach(function(r){(byTrim[r.trimId]=byTrim[r.trimId]||[]).push(r);});
+    var tids=Object.keys(byTrim),data={};
+    Promise.all(tids.map(function(tid){
+      var list=byTrim[tid].slice().sort(function(a,b){return a.addedAt-b.addedAt;});
+      return Promise.all(list.map(function(r){return blobToDataURL(r.blob);})).then(function(urls){data[tid]=urls;});
+    })).then(function(){
+      var blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);a.download='photos.json';
+      document.body.appendChild(a);a.click();a.remove();
+    }).catch(function(){
+      alert('匯出時發生錯誤，請再試一次。');
+    }).finally(function(){
+      btn.disabled=false;btn.textContent=oldTxt;
+    });
+  });
+
+  function checkAdmin(){
+    var on=location.hash==='#admin-photos';
+    panel.hidden=!on;
+    document.body.style.overflow=on?'hidden':'';
+    if(on) refresh();
+  }
+  window.addEventListener('hashchange',checkAdmin);
+  checkAdmin();
 })();
 
 /* ===== 手機版（iPhone 直向，640 px 以下）===== */
