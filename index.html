@@ -110,7 +110,7 @@
 </script>
 <link rel="icon" href="icon.png">
 <title>三大日系SUV規格對照</title>
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=11">
 </head>
 <body data-tab="compare">
 <a class="skip" href="#main">跳到主要內容</a>
@@ -2150,8 +2150,70 @@ function swatchesHTML(str){
     var t=TRIMS.filter(function(x){return x.id===curTid;})[0];
     cap.textContent=(t?t.brand+' '+t.name:'')+'　'+(curIdx+1)+' / '+curFiles.length;
   }
-  function closeLB(){scrim.hidden=true;box.hidden=true;document.body.style.overflow='';}
+  function resetDrag(){img.style.transition='';img.style.transform='';img.style.opacity='';scrim.style.transition='';scrim.style.opacity='';}
+  function closeLB(){scrim.hidden=true;box.hidden=true;document.body.style.overflow='';resetDrag();}
   function step(d){if(!curFiles.length) return;curIdx=(curIdx+d+curFiles.length)%curFiles.length;show();}
+
+  /* 點照片以外的空白處關閉（按鈕、照片、說明文字不算空白處） */
+  var dragged=false;
+  box.addEventListener('click',function(e){
+    if(dragged){dragged=false;return;}
+    if(e.target===box) closeLB();
+  });
+
+  /* 手勢：往下滑關閉、左右滑換照片；照片跟著手指 1:1 移動，放開時依距離或速度決定 */
+  var rmq=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var G=null;
+  box.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='mouse'||e.target.closest('button')) return;
+    G={id:e.pointerId,x0:e.clientX,y0:e.clientY,dx:0,dy:0,axis:null,hist:[{t:e.timeStamp,x:e.clientX,y:e.clientY}]};
+    img.style.transition='none';scrim.style.transition='none';
+  });
+  box.addEventListener('pointermove',function(e){
+    if(!G||e.pointerId!==G.id) return;
+    G.dx=e.clientX-G.x0;G.dy=e.clientY-G.y0;
+    if(!G.axis){
+      if(Math.abs(G.dx)<8&&Math.abs(G.dy)<8) return;
+      G.axis=Math.abs(G.dx)>Math.abs(G.dy)?'x':'y';
+      try{box.setPointerCapture(G.id);}catch(_){}
+    }
+    G.hist.push({t:e.timeStamp,x:e.clientX,y:e.clientY});
+    while(G.hist.length>2&&e.timeStamp-G.hist[0].t>100) G.hist.shift();
+    if(G.axis==='y'){
+      var dy=G.dy>0?G.dy:G.dy*0.25;              /* 往上拉有阻力 */
+      var k=Math.max(0,Math.min(1,dy/(window.innerHeight*0.6)));
+      img.style.transform='translate3d(0,'+dy+'px,0) scale('+(1-k*0.25)+')';
+      scrim.style.opacity=String(1-k*0.8);
+    }else{
+      var dx=curFiles.length>1?G.dx:G.dx*0.25;   /* 只有一張時左右拉有阻力 */
+      img.style.transform='translate3d('+dx+'px,0,0)';
+    }
+  });
+  function endDrag(e){
+    if(!G||e.pointerId!==G.id) return;
+    var g=G;G=null;
+    if(!g.axis){img.style.transition='';scrim.style.transition='';return;}
+    dragged=true;setTimeout(function(){dragged=false;},350);
+    var a=g.hist[0],b=g.hist[g.hist.length-1],dt=Math.max(1,b.t-a.t);
+    var vx=(b.x-a.x)/dt,vy=(b.y-a.y)/dt;         /* px/ms */
+    var ease=rmq.matches?'none':'transform .32s cubic-bezier(.2,.9,.3,1), opacity .32s ease';
+    if(g.axis==='y'&&(g.dy>110||vy>0.5)){
+      img.style.transition=ease;scrim.style.transition=rmq.matches?'none':'opacity .32s ease';
+      img.style.transform='translate3d(0,'+window.innerHeight+'px,0) scale(.75)';img.style.opacity='0';scrim.style.opacity='0';
+      setTimeout(closeLB,rmq.matches?0:260);
+      return;
+    }
+    if(g.axis==='x'&&curFiles.length>1&&(Math.abs(g.dx)>70||Math.abs(vx)>0.45)){
+      step(g.dx<0?1:-1);
+      img.style.transition='none';img.style.transform='translate3d('+(g.dx<0?60:-60)+'px,0,0)';img.style.opacity='0';
+      requestAnimationFrame(function(){requestAnimationFrame(function(){img.style.transition=ease;img.style.transform='';img.style.opacity='';});});
+      return;
+    }
+    img.style.transition=ease;scrim.style.transition=rmq.matches?'none':'opacity .32s ease';
+    img.style.transform='';scrim.style.opacity='';
+  }
+  box.addEventListener('pointerup',endDrag);
+  box.addEventListener('pointercancel',endDrag);
   grid.addEventListener('click',function(e){
     var b=e.target.closest('.photo-thumb');if(!b) return;
     openLB(b.getAttribute('data-tid'),parseInt(b.getAttribute('data-idx'),10));
