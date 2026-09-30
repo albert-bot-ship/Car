@@ -168,7 +168,7 @@ tr.cat td{padding:0;background:var(--panel2)}
 .empty{padding:1.375rem;color:var(--mute)}
 
 /* 官網介紹 */
-.info{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem;align-items:start}
+.info{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;align-items:start}
 .icol h3{margin:0 0 .625rem;font-size:.9375rem}
 .icol.r h3{color:var(--red-text)}
 .icol.c h3{color:var(--blue-text)}
